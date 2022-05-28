@@ -15,7 +15,7 @@ export const ShoeRareritySelector: FC<ShoeRareritySelectorProps> = ({ id, value,
         {Object.values(ShoeRarerity).map((rarerity) => (
           <ToggleButton
             key={rarerity}
-            id={`radio-${id}-${rarerity}`}
+            id={`radio-rarerity-${id}-${rarerity}`}
             type="radio"
             variant="light"
             name="radio"

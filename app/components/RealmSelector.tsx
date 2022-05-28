@@ -14,7 +14,7 @@ export const RealmSelector: FC<RealmSelectorProps> = ({ value, onChange }) => {
         {Object.values(Realm).map((realm) => (
           <ToggleButton
             key={realm}
-            id={`radio-${realm}`}
+            id={`radio-realm-${realm}`}
             type="radio"
             variant="light"
             name="radio"
