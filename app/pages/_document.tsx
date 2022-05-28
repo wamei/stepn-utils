@@ -1,4 +1,5 @@
-import { Document, Html, DocumentHead, Main, BlitzScript /*DocumentContext*/ } from "blitz"
+import { Document, Html, DocumentHead, Main, BlitzScript /*DocumentContext*/, Head } from "blitz"
+import React from "react"
 
 class MyDocument extends Document {
   // Only uncomment if you need to customize this behaviour
@@ -11,6 +12,9 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <DocumentHead />
+        <Head>
+          <title>ミント費用表</title>
+        </Head>
         <body>
           <Main />
           <BlitzScript />

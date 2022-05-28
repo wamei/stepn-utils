@@ -4,7 +4,7 @@ import { RealmSelector } from "app/components/RealmSelector"
 import { ShoeRareritySelector } from "app/components/ShoeRareritySelector"
 import { Cryptocurrency } from "app/models/Cryptcurrency"
 import { MintingRate } from "app/models/MintingRate"
-import { Realm } from "app/models/Realm"
+import { Realm, RealmToken } from "app/models/Realm"
 import { ShoeRarerity } from "app/models/ShoeRarerity"
 import { fetchCryptocurrencies } from "app/repositories/Cryptocurrency"
 import { BlitzPage } from "blitz"
@@ -27,7 +27,7 @@ const Home: BlitzPage = () => {
   }, [])
 
   return (
-    <Container className="mt-3 p-0">
+    <Container className="mt-0 p-0">
       <Accordion defaultActiveKey="0">
         <Accordion.Item eventKey="0">
           <Accordion.Header>仮想通貨価格</Accordion.Header>
@@ -52,7 +52,11 @@ const Home: BlitzPage = () => {
           <Accordion.Header>ミント費用</Accordion.Header>
           <Accordion.Body>
             <RealmSelector value={realm} onChange={setRealm} />
-            <MintingRateSelector value={mintingRate} onChange={setMintingRate} />
+            <MintingRateSelector
+              value={mintingRate}
+              onChange={setMintingRate}
+              gstPrice={crypts.find((v) => v.id === RealmToken[realm].gst)?.usd || 5}
+            />
             <ShoeRareritySelector id="r1" value={rarerity1} onChange={setRarerity1} />
             <ShoeRareritySelector id="r2" value={rarerity2} onChange={setRarerity2} />
             <MintingCostTable
