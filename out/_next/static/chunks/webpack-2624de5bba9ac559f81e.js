@@ -77,7 +77,7 @@
     (r.nmd = function (n) {
       return (n.paths = []), n.children || (n.children = []), n
     }),
-    (r.p = "/_next/"),
+    (r.p = "/out/_next/"),
     (function () {
       var n = { 272: 0 }
       r.O.j = function (e) {

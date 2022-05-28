@@ -9,5 +9,6 @@ const config: BlitzConfig = {
     return config
   },
   */
+  basePath: "/out",
 }
 module.exports = config
