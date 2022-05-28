@@ -70,7 +70,7 @@ const Block: FC<{
   return (
     <div>
       <div onClick={handleShow}>
-        {data.gst}-{data.gmt}
+        {data.gst} / {data.gmt}
       </div>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>

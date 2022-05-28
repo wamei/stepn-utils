@@ -9,7 +9,7 @@ import { ShoeRarerity } from "app/models/ShoeRarerity"
 import { fetchCryptocurrencies } from "app/repositories/Cryptocurrency"
 import { BlitzPage } from "blitz"
 import React, { useEffect, useState } from "react"
-import { Container, Table } from "react-bootstrap"
+import { Accordion, Container, Table } from "react-bootstrap"
 
 const Home: BlitzPage = () => {
   const [crypts, setCrypts] = useState<Cryptocurrency[]>([])
@@ -27,29 +27,44 @@ const Home: BlitzPage = () => {
   }, [])
 
   return (
-    <Container>
-      <Table striped bordered hover size="sm">
-        <tbody>
-          {crypts.map((c) => (
-            <tr key={c.id}>
-              <td>{c.symbol}</td>
-              <td>¥{c.jpy}</td>
-              <td>${c.usd}</td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-      <RealmSelector value={realm} onChange={setRealm} />
-      <MintingRateSelector value={mintingRate} onChange={setMintingRate} />
-      <ShoeRareritySelector value={rarerity1} onChange={setRarerity1} />
-      <ShoeRareritySelector value={rarerity2} onChange={setRarerity2} />
-      <MintingCostTable
-        mintingRate={mintingRate}
-        rarerity1={rarerity1}
-        rarerity2={rarerity2}
-        realm={realm}
-        crypts={crypts}
-      />
+    <Container className="mt-3 p-0">
+      <Accordion defaultActiveKey="0">
+        <Accordion.Item eventKey="0">
+          <Accordion.Header>仮想通貨価格</Accordion.Header>
+          <Accordion.Body>
+            {crypts.length === 0 && <p>Loading...</p>}
+            <Table striped bordered hover size="sm">
+              <tbody>
+                {crypts.map((c) => (
+                  <tr key={c.id}>
+                    <td>{c.symbol}</td>
+                    <td>¥{c.jpy}</td>
+                    <td>${c.usd}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </Accordion.Body>
+        </Accordion.Item>
+      </Accordion>
+      <Accordion defaultActiveKey="0">
+        <Accordion.Item eventKey="0">
+          <Accordion.Header>ミント費用</Accordion.Header>
+          <Accordion.Body>
+            <RealmSelector value={realm} onChange={setRealm} />
+            <MintingRateSelector value={mintingRate} onChange={setMintingRate} />
+            <ShoeRareritySelector value={rarerity1} onChange={setRarerity1} />
+            <ShoeRareritySelector value={rarerity2} onChange={setRarerity2} />
+            <MintingCostTable
+              mintingRate={mintingRate}
+              rarerity1={rarerity1}
+              rarerity2={rarerity2}
+              realm={realm}
+              crypts={crypts}
+            />
+          </Accordion.Body>
+        </Accordion.Item>
+      </Accordion>
     </Container>
   )
 }
