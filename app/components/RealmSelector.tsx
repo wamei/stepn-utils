@@ -1,6 +1,6 @@
 import { Realm } from "app/models/Realm"
-import { FC } from "react"
-import { Form } from "react-bootstrap"
+import React, { FC } from "react"
+import { ButtonGroup, ToggleButton } from "react-bootstrap"
 
 type RealmSelectorProps = {
   value: Realm
@@ -9,19 +9,23 @@ type RealmSelectorProps = {
 
 export const RealmSelector: FC<RealmSelectorProps> = ({ value, onChange }) => {
   return (
-    <Form.Select
-      value={value}
-      onChange={(e) => {
-        onChange(e.target.value as Realm)
-      }}
-    >
-      {Object.values(Realm).map((realm) => {
-        return (
-          <option key={realm} value={realm}>
+    <>
+      <ButtonGroup className="mb-2">
+        {Object.values(Realm).map((realm) => (
+          <ToggleButton
+            key={realm}
+            id={`radio-${realm}`}
+            type="radio"
+            variant="outline-secondary"
+            name="radio"
+            value={realm}
+            checked={value === realm}
+            onChange={(e) => onChange(e.currentTarget.value as Realm)}
+          >
             {realm}
-          </option>
-        )
-      })}
-    </Form.Select>
+          </ToggleButton>
+        ))}
+      </ButtonGroup>
+    </>
   )
 }

@@ -18,3 +18,8 @@ export const RealmToken = {
     gmt: "green-metaverse-token",
   },
 } as const
+
+export const RealmColor = {
+  [Realm.Solana]: "#00ffbd",
+  [Realm.BSC]: "#FCD535",
+} as const

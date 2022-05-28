@@ -14,6 +14,7 @@ export const ShoeRareritySelector: FC<ShoeRareritySelectorProps> = ({ value, onC
       onChange={(e) => {
         onChange(e.target.value as ShoeRarerity)
       }}
+      className="mb-2"
     >
       {Object.values(ShoeRarerity).map((rarerity) => {
         return (

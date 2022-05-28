@@ -41,6 +41,7 @@ export const MintingRateSelector: FC<MintingRateSelectorProps> = ({ value, onCha
       onChange={(e) => {
         onChange(JSON.parse(e.target.value) as MintingRate)
       }}
+      className="mb-2"
     >
       {MintingRateList.map((mr) => {
         const data = JSON.stringify(mr)
