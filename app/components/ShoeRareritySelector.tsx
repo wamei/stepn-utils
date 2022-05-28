@@ -1,28 +1,35 @@
-import { ShoeRarerity } from "app/models/ShoeRarerity"
-import { FC } from "react"
-import { Form } from "react-bootstrap"
+import { ShoeRarerity, ShoeRarerityColor } from "app/models/ShoeRarerity"
+import React, { FC } from "react"
+import { ButtonGroup, ToggleButton } from "react-bootstrap"
 
 type ShoeRareritySelectorProps = {
+  id: string
   value: ShoeRarerity
   onChange(v: ShoeRarerity): void
 }
 
-export const ShoeRareritySelector: FC<ShoeRareritySelectorProps> = ({ value, onChange }) => {
+export const ShoeRareritySelector: FC<ShoeRareritySelectorProps> = ({ id, value, onChange }) => {
   return (
-    <Form.Select
-      value={value}
-      onChange={(e) => {
-        onChange(e.target.value as ShoeRarerity)
-      }}
-      className="mb-2"
-    >
-      {Object.values(ShoeRarerity).map((rarerity) => {
-        return (
-          <option key={rarerity} value={rarerity}>
+    <>
+      <ButtonGroup className="mb-2">
+        {Object.values(ShoeRarerity).map((rarerity) => (
+          <ToggleButton
+            key={rarerity}
+            id={`radio-${id}-${rarerity}`}
+            type="radio"
+            variant="light"
+            name="radio"
+            value={rarerity}
+            checked={value === rarerity}
+            onChange={(e) => onChange(e.currentTarget.value as ShoeRarerity)}
+            style={{
+              backgroundColor: value === rarerity ? ShoeRarerityColor[rarerity] : "",
+            }}
+          >
             {rarerity}
-          </option>
-        )
-      })}
-    </Form.Select>
+          </ToggleButton>
+        ))}
+      </ButtonGroup>
+    </>
   )
 }

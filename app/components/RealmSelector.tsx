@@ -1,4 +1,4 @@
-import { Realm } from "app/models/Realm"
+import { Realm, RealmColor } from "app/models/Realm"
 import React, { FC } from "react"
 import { ButtonGroup, ToggleButton } from "react-bootstrap"
 
@@ -16,11 +16,14 @@ export const RealmSelector: FC<RealmSelectorProps> = ({ value, onChange }) => {
             key={realm}
             id={`radio-${realm}`}
             type="radio"
-            variant="outline-secondary"
+            variant="light"
             name="radio"
             value={realm}
             checked={value === realm}
             onChange={(e) => onChange(e.currentTarget.value as Realm)}
+            style={{
+              backgroundColor: value === realm ? RealmColor[realm] : "",
+            }}
           >
             {realm}
           </ToggleButton>

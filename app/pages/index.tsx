@@ -53,8 +53,8 @@ const Home: BlitzPage = () => {
           <Accordion.Body>
             <RealmSelector value={realm} onChange={setRealm} />
             <MintingRateSelector value={mintingRate} onChange={setMintingRate} />
-            <ShoeRareritySelector value={rarerity1} onChange={setRarerity1} />
-            <ShoeRareritySelector value={rarerity2} onChange={setRarerity2} />
+            <ShoeRareritySelector id="r1" value={rarerity1} onChange={setRarerity1} />
+            <ShoeRareritySelector id="r2" value={rarerity2} onChange={setRarerity2} />
             <MintingCostTable
               mintingRate={mintingRate}
               rarerity1={rarerity1}
