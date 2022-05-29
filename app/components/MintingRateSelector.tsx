@@ -40,23 +40,26 @@ export const MintingRateSelector: FC<MintingRateSelectorProps> = ({
   onChange,
   gstPrice,
 }) => {
-  const [_value, setValue] = useState<MintingRate>({ gst: 100, gmt: 100 })
+  const [_value, setValue] = useState<MintingRate>(value)
 
   useEffect(() => {
+    let mintingRate: MintingRate = { gst: 100, gmt: 100 }
     if (gstPrice < 2) {
-      setValue({ gst: 200, gmt: 0 })
+      mintingRate = { gst: 200, gmt: 0 }
     } else if (gstPrice >= 2 && gstPrice < 3) {
-      setValue({ gst: 160, gmt: 40 })
+      mintingRate = { gst: 160, gmt: 40 }
     } else if (gstPrice >= 3 && gstPrice < 4) {
-      setValue({ gst: 120, gmt: 80 })
+      mintingRate = { gst: 120, gmt: 80 }
     } else if (gstPrice >= 4 && gstPrice < 8) {
-      setValue({ gst: 100, gmt: 100 })
+      mintingRate = { gst: 100, gmt: 100 }
     } else if (gstPrice >= 8 && gstPrice < 10) {
-      setValue({ gst: 80, gmt: 120 })
+      mintingRate = { gst: 80, gmt: 120 }
     } else if (gstPrice >= 10) {
-      setValue({ gst: 40, gmt: 160 })
+      mintingRate = { gst: 40, gmt: 160 }
     }
-  }, [gstPrice])
+    setValue(mintingRate)
+    onChange(mintingRate)
+  }, [gstPrice, onChange])
 
   return (
     <Form.Select
