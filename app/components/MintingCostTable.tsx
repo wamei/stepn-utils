@@ -1,9 +1,9 @@
 import { Cryptocurrency } from "app/models/Cryptcurrency"
 import { MintingRate } from "app/models/MintingRate"
-import { Realm, RealmToken } from "app/models/Realm"
+import { Realm, RealmColor, RealmToken } from "app/models/Realm"
 import { ShoeRarerity, ShoeRarerityColor } from "app/models/ShoeRarerity"
 import React, { FC, useState } from "react"
-import { Button, Modal, Table } from "react-bootstrap"
+import { Col, Modal, Row, Table } from "react-bootstrap"
 
 type MintingCostTableProps = {
   mintingRate: MintingRate
@@ -73,33 +73,72 @@ const Block: FC<{
         {data.gst} / {data.gmt}
       </div>
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
+        <Modal.Header style={{ backgroundColor: RealmColor[realm] }} closeButton>
           <Modal.Title>
-            {realm} {r1} {m1} x {r2} {m2}
+            {r1} {m1} x {r2} {m2}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div>
-            ミント費用: GST{data.gst}-GMT{data.gmt}
-          </div>
-          <div>
-            ミント費用（BNB）: {(mintPrice / mainPrice).toFixed(2)}
-            {tokenData.unit}
-          </div>
-          <div>ミント費用（円）: ¥{mintPrice.toFixed(2)}</div>
-          <hr />
-          <div>
-            Lvup費用: ¥{(lvupPrice / mainPrice).toFixed(2)}
-            {tokenData.unit}
-          </div>
-          <div>
-            ミント費用（Lvup込）: ¥{((mintPrice + lvupPrice) / mainPrice).toFixed(2)}
-            {tokenData.unit}
+            <strong>
+              GST{data.gst}-GMT{data.gmt}
+            </strong>
           </div>
           <hr />
           <div>
-            最低販売価格: ¥{((mintPrice + lvupPrice) / 0.94 / mainPrice).toFixed(2)}
-            {tokenData.unit}
+            ミント費用
+            <br />
+            <Row>
+              <Col>
+                {(mintPrice / mainPrice).toFixed(2)}
+                {tokenData.unit}
+              </Col>
+              <Col>¥{mintPrice.toFixed(2)}</Col>
+            </Row>
+            最低販売価格
+            <br />
+            <Row>
+              <Col>
+                {(mintPrice / 0.94 / mainPrice).toFixed(2)}
+                {tokenData.unit}
+              </Col>
+              <Col>¥{(mintPrice / 0.94).toFixed(2)}</Col>
+            </Row>
+          </div>
+          <hr />
+          <div>
+            Lvup込費用
+            <br />
+            <Row>
+              <Col>
+                {((mintPrice + lvupPrice) / mainPrice).toFixed(2)}
+                {tokenData.unit}
+              </Col>
+              <Col>¥{(mintPrice + lvupPrice).toFixed(2)}</Col>
+            </Row>
+            最低販売価格
+            <br />
+            <Row>
+              <Col>
+                {((mintPrice + lvupPrice) / 0.94 / mainPrice).toFixed(2)}
+                {tokenData.unit}
+              </Col>
+              <Col>¥{((mintPrice + lvupPrice) / 0.94).toFixed(2)}</Col>
+            </Row>
+          </div>
+          <hr />
+          <div>
+            <small>
+              Lvup費用
+              <br />
+              <Row>
+                <Col>
+                  {(lvupPrice / mainPrice).toFixed(2)}
+                  {tokenData.unit}
+                </Col>
+                <Col>¥{lvupPrice.toFixed(2)}</Col>
+              </Row>
+            </small>
           </div>
         </Modal.Body>
       </Modal>
