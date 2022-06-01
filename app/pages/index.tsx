@@ -18,6 +18,7 @@ const Home: BlitzPage = () => {
   const [rarerity1, setRarerity1] = useState<ShoeRarerity>(ShoeRarerity.Common)
   const [rarerity2, setRarerity2] = useState<ShoeRarerity>(ShoeRarerity.Common)
   const [realm, setRealm] = useState<Realm>(Realm.BSC)
+  const [floorPriceString, setFloorPriceString] = useState("")
   const [floorPrice, setFloorPrice] = useState(6.0)
 
   const fetchData = async () => {
@@ -51,6 +52,7 @@ const Home: BlitzPage = () => {
       setRealm(router.query.realm as Realm)
     }
     if (router.query.floorPrice) {
+      setFloorPriceString(String(router.query.floorPrice))
       setFloorPrice(Number(router.query.floorPrice))
     }
   }, [router.query])
@@ -61,6 +63,10 @@ const Home: BlitzPage = () => {
       floorPrice,
     })
   }, [replaceUrl, realm, floorPrice])
+
+  useEffect(() => {
+    setFloorPrice(Number(floorPriceString))
+  }, [floorPriceString])
 
   return (
     <Container className="mt-0 p-0">
@@ -101,7 +107,13 @@ const Home: BlitzPage = () => {
                 label={`フロア価格(${RealmToken[realm].unit})`}
                 className="mb-3"
               >
-                <Form.Control type="number" placeholder="10.0" value={floorPrice} />
+                <Form.Control
+                  type="number"
+                  value={floorPriceString}
+                  onChange={(e) => {
+                    setFloorPriceString(e.target.value)
+                  }}
+                />
               </FloatingLabel>
             </>
             <MintingCostTable

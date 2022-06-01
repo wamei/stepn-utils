@@ -72,9 +72,23 @@ const Block: FC<{
   const mainPrice = crypts.find((v) => v.id === tokenData.main)?.jpy || 0
   const mintPrice = (data.gst * gstPrice + data.gmt * gmtPrice) * 1.02
   const lvupPrice = gstPrice * 20 + gmtPrice * 10
+
+  const lowestPrice = mintPrice / 0.94
+  const lowestLvupPrice = (mintPrice + lvupPrice) / 0.94
+
   return (
-    <div>
-      <div onClick={handleShow}>
+    <>
+      <div
+        onClick={handleShow}
+        className="p-1"
+        style={{
+          ...(floorPrice < lowestLvupPrice / mainPrice
+            ? {
+                backgroundColor: "rgba(255, 0, 0, 0.3)",
+              }
+            : {}),
+        }}
+      >
         {data.gst} / {data.gmt}
       </div>
       <Modal show={show} onHide={handleClose}>
@@ -105,10 +119,10 @@ const Block: FC<{
               <br />
               <Row>
                 <Col>
-                  {(mintPrice / 0.94 / mainPrice).toFixed(2)}
+                  {(lowestPrice / mainPrice).toFixed(2)}
                   {tokenData.unit}
                 </Col>
-                <Col>¥{(mintPrice / 0.94).toFixed(2)}</Col>
+                <Col>¥{lowestPrice.toFixed(2)}</Col>
               </Row>
             </strong>
             <small>
@@ -116,10 +130,10 @@ const Block: FC<{
               <br />
               <Row>
                 <Col>
-                  {(floorPrice - mintPrice / 0.94 / mainPrice).toFixed(2)}
+                  {(floorPrice - lowestPrice / mainPrice).toFixed(2)}
                   {tokenData.unit}
                 </Col>
-                <Col>¥{(floorPrice - mintPrice / 0.94).toFixed(2)}</Col>
+                <Col>¥{(floorPrice * mainPrice - lowestPrice).toFixed(2)}</Col>
               </Row>
             </small>
           </div>
@@ -139,10 +153,10 @@ const Block: FC<{
               <br />
               <Row>
                 <Col>
-                  {((mintPrice + lvupPrice) / 0.94 / mainPrice).toFixed(2)}
+                  {(lowestLvupPrice / mainPrice).toFixed(2)}
                   {tokenData.unit}
                 </Col>
-                <Col>¥{((mintPrice + lvupPrice) / 0.94).toFixed(2)}</Col>
+                <Col>¥{lowestLvupPrice.toFixed(2)}</Col>
               </Row>
             </strong>
             <small>
@@ -150,10 +164,10 @@ const Block: FC<{
               <br />
               <Row>
                 <Col>
-                  {(floorPrice - (mintPrice + lvupPrice) / 0.94 / mainPrice).toFixed(2)}
+                  {(floorPrice - lowestLvupPrice / mainPrice).toFixed(2)}
                   {tokenData.unit}
                 </Col>
-                <Col>¥{(floorPrice - (mintPrice + lvupPrice) / 0.94).toFixed(2)}</Col>
+                <Col>¥{(floorPrice * mainPrice - lowestLvupPrice).toFixed(2)}</Col>
               </Row>
             </small>
           </div>
@@ -173,7 +187,7 @@ const Block: FC<{
           </div>
         </Modal.Body>
       </Modal>
-    </div>
+    </>
   )
 }
 
@@ -200,7 +214,7 @@ export const MintingCostTable: FC<MintingCostTableProps> = ({
           <tr key={m2}>
             <td style={{ backgroundColor: ShoeRarerityColor[rarerity2] }}>{m2}</td>
             {mints.map((m1) => (
-              <td key={m1}>
+              <td key={m1} className="p-0">
                 <Block
                   realm={realm}
                   crypts={crypts}
