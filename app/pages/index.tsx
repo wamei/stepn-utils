@@ -7,16 +7,18 @@ import { MintingRate } from "app/models/MintingRate"
 import { Realm, RealmToken } from "app/models/Realm"
 import { ShoeRarerity } from "app/models/ShoeRarerity"
 import { fetchCryptocurrencies } from "app/repositories/Cryptocurrency"
-import { BlitzPage } from "blitz"
-import React, { useEffect, useState } from "react"
-import { Accordion, Container, Table } from "react-bootstrap"
+import { BlitzPage, useRouter } from "blitz"
+import React, { Suspense, useEffect, useState } from "react"
+import { Accordion, Container, FloatingLabel, Form, Table } from "react-bootstrap"
 
 const Home: BlitzPage = () => {
+  const router = useRouter()
   const [crypts, setCrypts] = useState<Cryptocurrency[]>([])
   const [mintingRate, setMintingRate] = useState<MintingRate>({ gst: 100, gmt: 100 })
   const [rarerity1, setRarerity1] = useState<ShoeRarerity>(ShoeRarerity.Common)
   const [rarerity2, setRarerity2] = useState<ShoeRarerity>(ShoeRarerity.Common)
   const [realm, setRealm] = useState<Realm>(Realm.BSC)
+  const [floorPrice, setFloorPrice] = useState(6.0)
 
   const fetchData = async () => {
     setCrypts(await fetchCryptocurrencies())
@@ -25,6 +27,40 @@ const Home: BlitzPage = () => {
   useEffect(() => {
     fetchData()
   }, [])
+
+  const replaceUrl = (params: any) => {
+    window.history.replaceState(
+      {},
+      "",
+      `${location.origin}${location.pathname}?${Object.entries({
+        ...params,
+      })
+        .flatMap((e) => {
+          if (e[1]) {
+            return [`${e[0]}=${e[1]}`]
+          } else {
+            return []
+          }
+        })
+        .join("&")}`
+    )
+  }
+
+  useEffect(() => {
+    if (router.query.realm) {
+      setRealm(router.query.realm as Realm)
+    }
+    if (router.query.floorPrice) {
+      setFloorPrice(Number(router.query.floorPrice))
+    }
+  }, [router.query])
+
+  useEffect(() => {
+    replaceUrl({
+      realm,
+      floorPrice,
+    })
+  }, [replaceUrl, realm, floorPrice])
 
   return (
     <Container className="mt-0 p-0">
@@ -59,12 +95,22 @@ const Home: BlitzPage = () => {
             />
             <ShoeRareritySelector id="r1" value={rarerity1} onChange={setRarerity1} />
             <ShoeRareritySelector id="r2" value={rarerity2} onChange={setRarerity2} />
+            <>
+              <FloatingLabel
+                controlId="floatingInput"
+                label={`フロア価格(${RealmToken[realm].unit})`}
+                className="mb-3"
+              >
+                <Form.Control type="number" placeholder="10.0" value={floorPrice} />
+              </FloatingLabel>
+            </>
             <MintingCostTable
               mintingRate={mintingRate}
               rarerity1={rarerity1}
               rarerity2={rarerity2}
               realm={realm}
               crypts={crypts}
+              floorPrice={floorPrice}
             />
           </Accordion.Body>
         </Accordion.Item>

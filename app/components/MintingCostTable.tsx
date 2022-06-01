@@ -11,6 +11,7 @@ type MintingCostTableProps = {
   rarerity2: ShoeRarerity
   realm: Realm
   crypts: Cryptocurrency[]
+  floorPrice: number
 }
 
 const mints = [0, 1, 2, 3, 4, 5, 6]
@@ -55,7 +56,11 @@ const Block: FC<{
   m1: number
   r2: ShoeRarerity
   m2: number
-}> = ({ realm, crypts, mintingRate, r1, m1, r2, m2 }) => {
+  floorPrice: number
+}> = ({ realm, crypts, mintingRate, r1, m1, r2, m2, floorPrice }) => {
+  if (!realm) {
+    throw new Promise(() => {})
+  }
   const [show, setShow] = useState(false)
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
@@ -95,15 +100,28 @@ const Block: FC<{
               </Col>
               <Col>¥{mintPrice.toFixed(2)}</Col>
             </Row>
-            最低販売価格
-            <br />
-            <Row>
-              <Col>
-                {(mintPrice / 0.94 / mainPrice).toFixed(2)}
-                {tokenData.unit}
-              </Col>
-              <Col>¥{(mintPrice / 0.94).toFixed(2)}</Col>
-            </Row>
+            <strong>
+              最低販売価格
+              <br />
+              <Row>
+                <Col>
+                  {(mintPrice / 0.94 / mainPrice).toFixed(2)}
+                  {tokenData.unit}
+                </Col>
+                <Col>¥{(mintPrice / 0.94).toFixed(2)}</Col>
+              </Row>
+            </strong>
+            <small>
+              利益
+              <br />
+              <Row>
+                <Col>
+                  {(floorPrice - mintPrice / 0.94 / mainPrice).toFixed(2)}
+                  {tokenData.unit}
+                </Col>
+                <Col>¥{(floorPrice - mintPrice / 0.94).toFixed(2)}</Col>
+              </Row>
+            </small>
           </div>
           <hr />
           <div>
@@ -116,15 +134,28 @@ const Block: FC<{
               </Col>
               <Col>¥{(mintPrice + lvupPrice).toFixed(2)}</Col>
             </Row>
-            最低販売価格
-            <br />
-            <Row>
-              <Col>
-                {((mintPrice + lvupPrice) / 0.94 / mainPrice).toFixed(2)}
-                {tokenData.unit}
-              </Col>
-              <Col>¥{((mintPrice + lvupPrice) / 0.94).toFixed(2)}</Col>
-            </Row>
+            <strong>
+              最低販売価格
+              <br />
+              <Row>
+                <Col>
+                  {((mintPrice + lvupPrice) / 0.94 / mainPrice).toFixed(2)}
+                  {tokenData.unit}
+                </Col>
+                <Col>¥{((mintPrice + lvupPrice) / 0.94).toFixed(2)}</Col>
+              </Row>
+            </strong>
+            <small>
+              利益
+              <br />
+              <Row>
+                <Col>
+                  {(floorPrice - (mintPrice + lvupPrice) / 0.94 / mainPrice).toFixed(2)}
+                  {tokenData.unit}
+                </Col>
+                <Col>¥{(floorPrice - (mintPrice + lvupPrice) / 0.94).toFixed(2)}</Col>
+              </Row>
+            </small>
           </div>
           <hr />
           <div>
@@ -152,6 +183,7 @@ export const MintingCostTable: FC<MintingCostTableProps> = ({
   rarerity2,
   realm,
   crypts,
+  floorPrice,
 }) => {
   return (
     <Table striped bordered hover size="sm">
@@ -177,6 +209,7 @@ export const MintingCostTable: FC<MintingCostTableProps> = ({
                   m1={m1}
                   r2={rarerity2}
                   m2={m2}
+                  floorPrice={floorPrice}
                 />
               </td>
             ))}
