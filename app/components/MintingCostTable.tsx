@@ -89,7 +89,9 @@ const Block: FC<{
             : {}),
         }}
       >
-        {data.gst} / {data.gmt}
+        {data.gst}
+        <br />
+        {data.gmt}
       </div>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header style={{ backgroundColor: RealmColor[realm] }} closeButton>
