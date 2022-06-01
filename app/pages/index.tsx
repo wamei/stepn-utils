@@ -6,9 +6,12 @@ import { Cryptocurrency } from "app/models/Cryptcurrency"
 import { MintingRate } from "app/models/MintingRate"
 import { Realm, RealmToken } from "app/models/Realm"
 import { ShoeRarerity } from "app/models/ShoeRarerity"
-import { fetchCryptocurrencies } from "app/repositories/Cryptocurrency"
+import {
+  fetchCryptocurrencies,
+  fetchCryptocurrenciesFromCache,
+} from "app/repositories/Cryptocurrency"
 import { BlitzPage, useRouter } from "blitz"
-import React, { Suspense, useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Accordion, Container, FloatingLabel, Form, Table } from "react-bootstrap"
 
 const Home: BlitzPage = () => {
@@ -22,7 +25,12 @@ const Home: BlitzPage = () => {
   const [floorPrice, setFloorPrice] = useState(6.0)
 
   const fetchData = async () => {
-    setCrypts(await fetchCryptocurrencies())
+    const cache = fetchCryptocurrenciesFromCache()
+    if (cache !== null) {
+      setCrypts(cache)
+    }
+    const crypts = await fetchCryptocurrencies()
+    setCrypts(crypts)
   }
 
   useEffect(() => {
@@ -75,7 +83,7 @@ const Home: BlitzPage = () => {
           <Accordion.Header>仮想通貨価格</Accordion.Header>
           <Accordion.Body>
             {crypts.length === 0 && <p>Loading...</p>}
-            <Table striped bordered hover size="sm">
+            <Table striped bordered hover size="sm" className="mb-0">
               <tbody>
                 {crypts.map((c) => (
                   <tr key={c.id}>
@@ -86,6 +94,9 @@ const Home: BlitzPage = () => {
                 ))}
               </tbody>
             </Table>
+            <div className="text-end">
+              <small>最終更新日時 {crypts[0]?.lastUpdatedAt.toLocaleString()}</small>
+            </div>
           </Accordion.Body>
         </Accordion.Item>
       </Accordion>
