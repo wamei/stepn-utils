@@ -13,6 +13,7 @@ import {
 import { BlitzPage, useRouter } from "blitz"
 import React, { useEffect, useState } from "react"
 import { Accordion, Container, FloatingLabel, Form, Table } from "react-bootstrap"
+import Image from "next/image"
 
 const Home: BlitzPage = () => {
   const router = useRouter()
@@ -104,7 +105,17 @@ const Home: BlitzPage = () => {
               <tbody>
                 {crypts.map((c) => (
                   <tr key={c.id}>
-                    <td>{c.symbol}</td>
+                    <td>
+                      <span className="me-1">
+                        <Image
+                          src={`/stepn-utils/${c.id}.png`}
+                          alt={c.name}
+                          width="15"
+                          height="15"
+                        />
+                      </span>
+                      {c.symbol}
+                    </td>
                     <td>¥{c.jpy}</td>
                     <td>${c.usd}</td>
                   </tr>

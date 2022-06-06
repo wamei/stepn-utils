@@ -75,7 +75,7 @@ export const MintingRateSelector: FC<MintingRateSelectorProps> = ({
         const data = JSON.stringify(mr)
         return (
           <option key={data} value={data}>
-            GST{mr.gst}-GMT{mr.gmt}
+            {mr.gst}GST-{mr.gmt}GMT
           </option>
         )
       })}
