@@ -1,3 +1,4 @@
+import { LevelUpCostTable } from "app/components/LevelUpCostTable"
 import { MintingCostTable } from "app/components/MintingCostTable"
 import { MintingRateSelector } from "app/components/MintingRateSelector"
 import { RealmSelector } from "app/components/RealmSelector"
@@ -164,6 +165,15 @@ const Home: BlitzPage = () => {
               crypts={crypts}
               floorPrice={floorPrices[realm] || 0}
             />
+          </Accordion.Body>
+        </Accordion.Item>
+      </Accordion>
+      <Accordion defaultActiveKey="0">
+        <Accordion.Item eventKey="0">
+          <Accordion.Header>レベルアップ費用</Accordion.Header>
+          <Accordion.Body>
+            <RealmSelector value={realm} onChange={setRealm} />
+            <LevelUpCostTable crypts={crypts} realm={realm} />
           </Accordion.Body>
         </Accordion.Item>
       </Accordion>
