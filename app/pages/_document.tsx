@@ -11,10 +11,10 @@ class MyDocument extends Document {
   render() {
     return (
       <Html lang="en">
-        <DocumentHead />
-        <Head>
-          <title>ミント費用表</title>
-        </Head>
+        <DocumentHead>
+          <title>STEPN utils</title>
+          <link rel="shortcut icon" href="/stepn-utils/favicon.ico" />
+        </DocumentHead>
         <body>
           <Main />
           <BlitzScript />
