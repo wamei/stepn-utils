@@ -244,36 +244,41 @@ export const MintingCostTable: FC<MintingCostTableProps> = ({
   floorPrice,
 }) => {
   return (
-    <Table striped bordered hover size="sm">
-      <tbody>
-        <tr>
-          <td></td>
-          {mints.map((m1) => (
-            <td key={m1} style={{ backgroundColor: ShoeRarerityColor[rarerity1] }}>
-              {m1}
-            </td>
-          ))}
-        </tr>
-        {mints.map((m2) => (
-          <tr key={m2}>
-            <td style={{ backgroundColor: ShoeRarerityColor[rarerity2] }}>{m2}</td>
+    <>
+      <div className="text-start">
+        <small>費用表タップで詳細を確認</small>
+      </div>
+      <Table striped bordered hover size="sm">
+        <tbody>
+          <tr>
+            <td></td>
             {mints.map((m1) => (
-              <td key={m1} className="p-0">
-                <Block
-                  realm={realm}
-                  crypts={crypts}
-                  mintingRate={mintingRate}
-                  r1={rarerity1}
-                  m1={m1}
-                  r2={rarerity2}
-                  m2={m2}
-                  floorPrice={floorPrice}
-                />
+              <td key={m1} style={{ backgroundColor: ShoeRarerityColor[rarerity1] }}>
+                {m1}
               </td>
             ))}
           </tr>
-        ))}
-      </tbody>
-    </Table>
+          {mints.map((m2) => (
+            <tr key={m2}>
+              <td style={{ backgroundColor: ShoeRarerityColor[rarerity2] }}>{m2}</td>
+              {mints.map((m1) => (
+                <td key={m1} className="p-0">
+                  <Block
+                    realm={realm}
+                    crypts={crypts}
+                    mintingRate={mintingRate}
+                    r1={rarerity1}
+                    m1={m1}
+                    r2={rarerity2}
+                    m2={m2}
+                    floorPrice={floorPrice}
+                  />
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    </>
   )
 }

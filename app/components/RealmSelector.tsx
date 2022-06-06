@@ -26,7 +26,7 @@ export const RealmSelector: FC<RealmSelectorProps> = ({ value, onChange }) => {
             }}
           >
             <img
-              className="pe-1 align-middle"
+              className="me-1 align-middle"
               src={`/stepn-utils/${RealmToken[realm].main}.png`}
               alt={realm}
               width="20"
