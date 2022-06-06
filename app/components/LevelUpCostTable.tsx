@@ -186,8 +186,10 @@ const Block: FC<{
 
   return (
     <tr key={data.level}>
-      <td>{data.level}</td>
       <td>
+        <small>{data.level}</small>
+      </td>
+      <td className="text-nowrap">
         <img
           className="align-middle"
           src={`/stepn-utils/${RealmToken[realm].gst}.png`}
@@ -195,24 +197,36 @@ const Block: FC<{
           width="15"
           height="15"
         />
-        <span className="align-middle">{data.gst}</span>
-      </td>
-      <td>
+        <span className="align-middle">
+          <small>{data.gst}</small>
+        </span>
         {data.gmt > 0 && (
           <>
             <img
-              className="align-middle"
+              className="ms-2 align-middle"
               src={`/stepn-utils/${RealmToken[realm].gmt}.png`}
               alt="GMT"
               width="15"
               height="15"
             />
-            <span className="align-middle">{data.gmt}</span>
+            <span className="align-middle">
+              <small>{data.gmt}</small>
+            </span>
           </>
         )}
       </td>
-      <td>{(cost / mainPrice).toFixed(3)}</td>
-      <td>{(sumCost / mainPrice).toFixed(3)}</td>
+      <td>
+        <small>{(cost / mainPrice).toFixed(3)}</small>
+      </td>
+      <td>
+        <small>¥{cost.toFixed(0)}</small>
+      </td>
+      <td>
+        <small>{(sumCost / mainPrice).toFixed(3)}</small>
+      </td>
+      <td>
+        <small>¥{sumCost.toFixed(0)}</small>
+      </td>
     </tr>
   )
 }
@@ -221,48 +235,25 @@ export const LevelUpCostTable: FC<LevelUpCostTableProps> = ({ crypts, realm }) =
   return (
     <>
       <Table striped bordered hover size="sm">
-        <thead>
-          <tr>
-            <th>Level</th>
+        <thead className="sticky-top">
+          <tr style={{ backgroundColor: "#ffffff" }}>
             <th>
-              <img
-                className="align-middle"
-                src={`/stepn-utils/${RealmToken[realm].gst}.png`}
-                alt="GST"
-                width="15"
-                height="15"
-              />
-              <span className="align-middle">GST</span>
+              <small>Level</small>
             </th>
             <th>
-              <img
-                className="align-middle"
-                src={`/stepn-utils/${RealmToken[realm].gmt}.png`}
-                alt="GMT"
-                width="15"
-                height="15"
-              />
-              <span className="align-middle">GMT</span>
+              <small>費用</small>
             </th>
             <th>
-              <img
-                className="align-middle"
-                src={`/stepn-utils/${RealmToken[realm].main}.png`}
-                alt={RealmToken[realm].unit}
-                width="15"
-                height="15"
-              />
-              <span className="align-middle">{RealmToken[realm].unit}</span>
+              <small>{RealmToken[realm].unit}</small>
             </th>
             <th>
-              <img
-                className="align-middle"
-                src={`/stepn-utils/${RealmToken[realm].main}.png`}
-                alt={RealmToken[realm].unit}
-                width="15"
-                height="15"
-              />
-              <span className="align-middle">累計</span>
+              <small>円</small>
+            </th>
+            <th>
+              <small>累計</small>
+            </th>
+            <th>
+              <small>円</small>
             </th>
           </tr>
         </thead>
