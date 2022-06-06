@@ -1,7 +1,6 @@
 import { Realm, RealmColor, RealmToken } from "app/models/Realm"
 import React, { FC } from "react"
 import { ButtonGroup, Col, Row, ToggleButton } from "react-bootstrap"
-import Image from "next/image"
 
 type RealmSelectorProps = {
   value: Realm
@@ -25,20 +24,15 @@ export const RealmSelector: FC<RealmSelectorProps> = ({ value, onChange }) => {
             style={{
               backgroundColor: value === realm ? RealmColor[realm] : "",
             }}
-            className="align-items-center"
           >
-            <Row>
-              <Col className="pe-1">
-                <Image
-                  src={`/stepn-utils/${RealmToken[realm].main}.png`}
-                  alt={realm}
-                  width="20"
-                  height="20"
-                  objectFit="contain"
-                />
-              </Col>
-              <Col className="ps-0">{realm}</Col>
-            </Row>
+            <img
+              className="pe-1 align-middle"
+              src={`/stepn-utils/${RealmToken[realm].main}.png`}
+              alt={realm}
+              width="20"
+              height="20"
+            />
+            <span className="align-middle">{realm}</span>
           </ToggleButton>
         ))}
       </ButtonGroup>

@@ -4,7 +4,6 @@ import { Realm, RealmColor, RealmToken } from "app/models/Realm"
 import { ShoeRarerity, ShoeRarerityColor } from "app/models/ShoeRarerity"
 import React, { FC, useState } from "react"
 import { Col, Modal, Row, Table } from "react-bootstrap"
-import Image from "next/image"
 
 type MintingCostTableProps = {
   mintingRate: MintingRate
@@ -91,59 +90,61 @@ const Block: FC<{
         }}
       >
         <small className="text-nowrap">
-          <Image
+          <img
+            className="align-middle"
             src={`/stepn-utils/${RealmToken[realm].gst}.png`}
             alt="GST"
             width="10"
             height="10"
           />
-          {data.gst}
+          <span className="align-middle">{data.gst}</span>
         </small>
         <br />
         <small className="text-nowrap">
-          <Image
+          <img
+            className="align-middle"
             src={`/stepn-utils/${RealmToken[realm].gmt}.png`}
             alt="GMT"
             width="10"
             height="10"
           />
-          {data.gmt}
+          <span className="align-middle">{data.gmt}</span>
         </small>
       </div>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header style={{ backgroundColor: RealmColor[realm] }} closeButton>
           <Modal.Title>
-            <span className="me-2">
-              <Image
-                src={`/stepn-utils/${RealmToken[realm].main}.png`}
-                alt={realm}
-                width="20"
-                height="20"
-                objectFit="contain"
-              />
+            <img
+              className="me-2 align-middle"
+              src={`/stepn-utils/${RealmToken[realm].main}.png`}
+              alt={realm}
+              width="20"
+              height="20"
+            />
+            <span className="align-middle">
+              {r1} {m1} x {r2} {m2}
             </span>
-            {r1} {m1} x {r2} {m2}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div>
             <strong>
-              <span className="me-2">
-                <Image
-                  src={`/stepn-utils/${RealmToken[realm].gst}.png`}
-                  alt="GST"
-                  width="15"
-                  height="15"
-                />
-                {data.gst}GST
-              </span>
-              <Image
+              <img
+                className="align-middle"
+                src={`/stepn-utils/${RealmToken[realm].gst}.png`}
+                alt="GST"
+                width="15"
+                height="15"
+              />
+              <span className="me-2 align-middle">{data.gst}GST</span>
+              <img
+                className="align-middle"
                 src={`/stepn-utils/${RealmToken[realm].gmt}.png`}
                 alt="GMT"
                 width="15"
                 height="15"
               />
-              {data.gmt}GMT
+              <span className="align-middle">{data.gmt}GMT</span>
             </strong>
           </div>
           <hr />
