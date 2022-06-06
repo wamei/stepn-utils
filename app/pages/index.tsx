@@ -22,7 +22,9 @@ const Home: BlitzPage = () => {
   const [rarerity2, setRarerity2] = useState<ShoeRarerity>(ShoeRarerity.Common)
   const [realm, setRealm] = useState<Realm>(Realm.BSC)
   const [floorPriceString, setFloorPriceString] = useState("")
-  const [floorPrice, setFloorPrice] = useState(6.0)
+  const [floorPrices, setFloorPrices] = useState<{
+    [key: string]: number
+  }>({})
 
   const fetchData = async () => {
     const cache = fetchCryptocurrenciesFromCache()
@@ -56,24 +58,39 @@ const Home: BlitzPage = () => {
   }
 
   useEffect(() => {
+    const qRealm = router.query.realm as Realm
     if (router.query.realm) {
-      setRealm(router.query.realm as Realm)
+      setRealm(qRealm)
     }
-    if (router.query.floorPrice) {
-      setFloorPriceString(String(router.query.floorPrice))
-      setFloorPrice(Number(router.query.floorPrice))
+    if (router.query[qRealm]) {
+      setFloorPriceString(String(router.query[qRealm]))
     }
+    Object.values(Realm).forEach((realm) => {
+      if (router.query[realm]) {
+        setFloorPrices((old) => ({
+          ...old,
+          [realm]: Number(router.query[realm]),
+        }))
+      }
+    })
   }, [router.query])
 
   useEffect(() => {
     replaceUrl({
       realm,
-      floorPrice,
+      ...floorPrices,
     })
-  }, [replaceUrl, realm, floorPrice])
+  }, [replaceUrl, realm, floorPrices])
 
   useEffect(() => {
-    setFloorPrice(Number(floorPriceString))
+    setFloorPriceString(String(floorPrices[realm]))
+  }, [realm])
+
+  useEffect(() => {
+    setFloorPrices((old) => ({
+      ...old,
+      [realm]: Number(floorPriceString),
+    }))
   }, [floorPriceString])
 
   return (
@@ -133,7 +150,7 @@ const Home: BlitzPage = () => {
               rarerity2={rarerity2}
               realm={realm}
               crypts={crypts}
-              floorPrice={floorPrice}
+              floorPrice={floorPrices[realm] || 0}
             />
           </Accordion.Body>
         </Accordion.Item>
