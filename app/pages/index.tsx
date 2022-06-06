@@ -30,6 +30,9 @@ const Home: BlitzPage = () => {
     const cache = fetchCryptocurrenciesFromCache()
     if (cache !== null) {
       setCrypts(cache)
+      if (new Date().getTime() < (cache[0]?.lastUpdatedAt.getTime() || 0) + 60 * 5 * 1000) {
+        return
+      }
     }
     const crypts = await fetchCryptocurrencies()
     setCrypts(crypts)
