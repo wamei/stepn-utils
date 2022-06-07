@@ -4,11 +4,11 @@ import {
   ErrorComponent,
   ErrorFallbackProps,
   useQueryErrorResetBoundary,
-} from "blitz"
-import "bootstrap/dist/css/bootstrap.min.css"
+} from 'blitz'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 export default function App({ Component, pageProps }: AppProps) {
-  const getLayout = Component.getLayout || ((page) => page)
+  const getLayout = Component.getLayout || (page => page)
 
   return (
     <ErrorBoundary

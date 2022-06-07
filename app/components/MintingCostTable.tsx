@@ -1,9 +1,9 @@
-import { Cryptocurrency } from "app/models/Cryptcurrency"
-import { MintingRate } from "app/models/MintingRate"
-import { Realm, RealmColor, RealmToken } from "app/models/Realm"
-import { ShoeRarerity, ShoeRarerityColor } from "app/models/ShoeRarerity"
-import React, { FC, useState } from "react"
-import { Button, Col, Modal, Row, Table } from "react-bootstrap"
+import { Cryptocurrency } from 'app/models/Cryptcurrency'
+import { MintingRate } from 'app/models/MintingRate'
+import { Realm, RealmColor, RealmToken } from 'app/models/Realm'
+import { ShoeRarerity, ShoeRarerityColor } from 'app/models/ShoeRarerity'
+import React, { FC, useState } from 'react'
+import { Button, Col, Modal, Row, Table } from 'react-bootstrap'
 
 type MintingCostTableProps = {
   mintingRate: MintingRate
@@ -28,7 +28,7 @@ const calc = (
   r1: ShoeRarerity,
   m1: number,
   r2: ShoeRarerity,
-  m2: number
+  m2: number,
 ) => {
   const base1gst = (mintingRate.gst / 2) * calcMag(r1)
   const base2gst = (mintingRate.gst / 2) * calcMag(r2)
@@ -59,8 +59,8 @@ const Block: FC<{
   floorPrice: number
 }> = ({ realm, crypts, mintingRate, r1, m1, r2, m2, floorPrice }) => {
   if (!realm) {
-    throw new Promise((r) => {
-      r("realm not found")
+    throw new Promise(r => {
+      r('realm not found')
     })
   }
   const [show, setShow] = useState(false)
@@ -69,9 +69,9 @@ const Block: FC<{
 
   const data = calc(mintingRate, r1, m1, r2, m2)
   const tokenData = RealmToken[realm]
-  const gstPrice = crypts.find((v) => v.id === tokenData.gst)?.jpy || 0
-  const gmtPrice = crypts.find((v) => v.id === tokenData.gmt)?.jpy || 0
-  const mainPrice = crypts.find((v) => v.id === tokenData.main)?.jpy || 0
+  const gstPrice = crypts.find(v => v.id === tokenData.gst)?.jpy || 0
+  const gmtPrice = crypts.find(v => v.id === tokenData.gmt)?.jpy || 0
+  const mainPrice = crypts.find(v => v.id === tokenData.main)?.jpy || 0
   const mintPrice = (data.gst * gstPrice + data.gmt * gmtPrice) * 1.02
   const lvupPrice = gstPrice * 20 + gmtPrice * 10
 
@@ -81,40 +81,40 @@ const Block: FC<{
   return (
     <>
       <div
-        className="p-1"
+        className='p-1'
         style={{
           ...(floorPrice < lowestLvupPrice / mainPrice
             ? {
-                backgroundColor: "rgba(255, 0, 0, 0.3)",
+                backgroundColor: 'rgba(255, 0, 0, 0.3)',
               }
             : {}),
         }}
       >
         <Button
-          variant="link"
+          variant='link'
           onClick={handleShow}
-          className="text-start d-block p-0 text-body text-decoration-none"
+          className='text-start d-block p-0 text-body text-decoration-none'
         >
-          <small className="text-nowrap">
+          <small className='text-nowrap'>
             <img
-              className="align-middle"
+              className='align-middle'
               src={`/stepn-utils/${RealmToken[realm].gst}.png`}
-              alt="GST"
-              width="10"
-              height="10"
+              alt='GST'
+              width='10'
+              height='10'
             />
-            <span className="align-middle">{data.gst}</span>
+            <span className='align-middle'>{data.gst}</span>
           </small>
           <br />
-          <small className="text-nowrap">
+          <small className='text-nowrap'>
             <img
-              className="align-middle"
+              className='align-middle'
               src={`/stepn-utils/${RealmToken[realm].gmt}.png`}
-              alt="GMT"
-              width="10"
-              height="10"
+              alt='GMT'
+              width='10'
+              height='10'
             />
-            <span className="align-middle">{data.gmt}</span>
+            <span className='align-middle'>{data.gmt}</span>
           </small>
         </Button>
       </div>
@@ -122,13 +122,13 @@ const Block: FC<{
         <Modal.Header style={{ backgroundColor: RealmColor[realm] }} closeButton>
           <Modal.Title>
             <img
-              className="me-2 align-middle"
+              className='me-2 align-middle'
               src={`/stepn-utils/${RealmToken[realm].main}.png`}
               alt={realm}
-              width="20"
-              height="20"
+              width='20'
+              height='20'
             />
-            <span className="align-middle">
+            <span className='align-middle'>
               {r1} {m1} x {r2} {m2}
             </span>
           </Modal.Title>
@@ -137,21 +137,21 @@ const Block: FC<{
           <div>
             <strong>
               <img
-                className="align-middle"
+                className='align-middle'
                 src={`/stepn-utils/${RealmToken[realm].gst}.png`}
-                alt="GST"
-                width="15"
-                height="15"
+                alt='GST'
+                width='15'
+                height='15'
               />
-              <span className="me-2 align-middle">{data.gst}GST</span>
+              <span className='me-2 align-middle'>{data.gst}GST</span>
               <img
-                className="align-middle"
+                className='align-middle'
                 src={`/stepn-utils/${RealmToken[realm].gmt}.png`}
-                alt="GMT"
-                width="15"
-                height="15"
+                alt='GMT'
+                width='15'
+                height='15'
               />
-              <span className="align-middle">{data.gmt}GMT</span>
+              <span className='align-middle'>{data.gmt}GMT</span>
             </strong>
           </div>
           <hr />
@@ -252,24 +252,24 @@ export const MintingCostTable: FC<MintingCostTableProps> = ({
 }) => {
   return (
     <>
-      <div className="text-start">
+      <div className='text-start'>
         <small>費用表タップで詳細を確認</small>
       </div>
-      <Table striped bordered hover size="sm">
+      <Table striped bordered hover size='sm'>
         <tbody>
           <tr>
             <td></td>
-            {mints.map((m1) => (
+            {mints.map(m1 => (
               <td key={m1} style={{ backgroundColor: ShoeRarerityColor[rarerity1] }}>
                 {m1}
               </td>
             ))}
           </tr>
-          {mints.map((m2) => (
+          {mints.map(m2 => (
             <tr key={m2}>
               <td style={{ backgroundColor: ShoeRarerityColor[rarerity2] }}>{m2}</td>
-              {mints.map((m1) => (
-                <td key={m1} className="p-0">
+              {mints.map(m1 => (
+                <td key={m1} className='p-0'>
                   <Block
                     realm={realm}
                     crypts={crypts}

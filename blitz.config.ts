@@ -1,4 +1,4 @@
-import { BlitzConfig } from "blitz"
+import { BlitzConfig } from 'blitz'
 
 const config: BlitzConfig = {
   /* Uncomment this to customize the webpack config
@@ -9,6 +9,6 @@ const config: BlitzConfig = {
     return config
   },
   */
-  basePath: "/stepn-utils",
+  basePath: '/stepn-utils',
 }
 module.exports = config

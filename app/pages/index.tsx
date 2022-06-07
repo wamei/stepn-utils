@@ -1,21 +1,21 @@
-import { CryptExchangeSection } from "app/components/CryptExchangeSection"
-import { CryptPriceTable } from "app/components/CryptPriceTable"
-import { LevelUpCostTable } from "app/components/LevelUpCostTable"
-import { MintingCostTable } from "app/components/MintingCostTable"
-import { MintingRateSelector } from "app/components/MintingRateSelector"
-import { RealmSelector } from "app/components/RealmSelector"
-import { ShoeRareritySelector } from "app/components/ShoeRareritySelector"
-import { Cryptocurrency } from "app/models/Cryptcurrency"
-import { MintingRate } from "app/models/MintingRate"
-import { Realm, RealmToken } from "app/models/Realm"
-import { ShoeRarerity } from "app/models/ShoeRarerity"
+import { CryptExchangeSection } from 'app/components/CryptExchangeSection'
+import { CryptPriceTable } from 'app/components/CryptPriceTable'
+import { LevelUpCostTable } from 'app/components/LevelUpCostTable'
+import { MintingCostTable } from 'app/components/MintingCostTable'
+import { MintingRateSelector } from 'app/components/MintingRateSelector'
+import { RealmSelector } from 'app/components/RealmSelector'
+import { ShoeRareritySelector } from 'app/components/ShoeRareritySelector'
+import { Cryptocurrency } from 'app/models/Cryptcurrency'
+import { MintingRate } from 'app/models/MintingRate'
+import { Realm, RealmToken } from 'app/models/Realm'
+import { ShoeRarerity } from 'app/models/ShoeRarerity'
 import {
   fetchCryptocurrencies,
   fetchCryptocurrenciesFromCache,
-} from "app/repositories/Cryptocurrency"
-import { BlitzPage, useRouter } from "blitz"
-import React, { useEffect, useState } from "react"
-import { Container, FloatingLabel, Form, Tab, Tabs } from "react-bootstrap"
+} from 'app/repositories/Cryptocurrency'
+import { BlitzPage, useRouter } from 'blitz'
+import React, { useEffect, useState } from 'react'
+import { Container, FloatingLabel, Form, Tab, Tabs } from 'react-bootstrap'
 
 const Home: BlitzPage = () => {
   const router = useRouter()
@@ -24,12 +24,12 @@ const Home: BlitzPage = () => {
   const [rarerity1, setRarerity1] = useState<ShoeRarerity>(ShoeRarerity.Common)
   const [rarerity2, setRarerity2] = useState<ShoeRarerity>(ShoeRarerity.Common)
   const [realm, setRealm] = useState<Realm>(Realm.Solana)
-  const [floorPriceString, setFloorPriceString] = useState("")
+  const [floorPriceString, setFloorPriceString] = useState('')
   const [floorPrices, setFloorPrices] = useState<{
     [key: string]: number
   }>({})
-  type TabKey = "home" | "crypts" | "levelup"
-  const [tab, setTab] = useState<TabKey>("home")
+  type TabKey = 'home' | 'crypts' | 'levelup'
+  const [tab, setTab] = useState<TabKey>('home')
 
   const fetchData = async () => {
     const cache = fetchCryptocurrenciesFromCache()
@@ -51,18 +51,18 @@ const Home: BlitzPage = () => {
   const replaceUrl = (params: any) => {
     window.history.replaceState(
       {},
-      "",
+      '',
       `${window.location.origin}${window.location.pathname}?${Object.entries({
         ...params,
       })
-        .flatMap((e) => {
+        .flatMap(e => {
           if (e[1]) {
             return [`${e[0]}=${e[1]}`]
           } else {
             return []
           }
         })
-        .join("&")}`
+        .join('&')}`,
     )
   }
 
@@ -79,7 +79,7 @@ const Home: BlitzPage = () => {
   }, [realm])
 
   useEffect(() => {
-    setFloorPrices((old) => ({
+    setFloorPrices(old => ({
       ...old,
       [realm]: Number(floorPriceString),
     }))
@@ -96,9 +96,9 @@ const Home: BlitzPage = () => {
     if (router.query[qRealm]) {
       setFloorPriceString(String(router.query[qRealm]))
     }
-    Object.values(Realm).forEach((realm) => {
+    Object.values(Realm).forEach(realm => {
       if (router.query[realm]) {
-        setFloorPrices((old) => ({
+        setFloorPrices(old => ({
           ...old,
           [realm]: Number(router.query[realm]),
         }))
@@ -109,41 +109,41 @@ const Home: BlitzPage = () => {
   return (
     <>
       <Tabs
-        className="fs-6 justify-content-center"
+        className='fs-6 justify-content-center'
         activeKey={tab}
         onSelect={(tab: TabKey) => {
           setTab(tab)
         }}
       >
-        <Tab eventKey="home" title="ミント費用">
-          <Container className="mt-2">
+        <Tab eventKey='home' title='ミント費用'>
+          <Container className='mt-2'>
             <CryptPriceTable
               crypts={crypts.filter(
-                (c) =>
+                c =>
                   c.id === RealmToken[realm].main ||
                   c.id === RealmToken[realm].gst ||
-                  c.id === RealmToken[realm].gmt
+                  c.id === RealmToken[realm].gmt,
               )}
-              className="mb-2"
+              className='mb-2'
             />
             <RealmSelector value={realm} onChange={setRealm} />
             <MintingRateSelector
               value={mintingRate}
               onChange={setMintingRate}
-              gstPrice={crypts.find((v) => v.id === RealmToken[realm].gst)?.usd || 5}
+              gstPrice={crypts.find(v => v.id === RealmToken[realm].gst)?.usd || 5}
             />
-            <ShoeRareritySelector id="r1" value={rarerity1} onChange={setRarerity1} />
-            <ShoeRareritySelector id="r2" value={rarerity2} onChange={setRarerity2} />
+            <ShoeRareritySelector id='r1' value={rarerity1} onChange={setRarerity1} />
+            <ShoeRareritySelector id='r2' value={rarerity2} onChange={setRarerity2} />
             <>
               <FloatingLabel
-                controlId="floatingInput"
+                controlId='floatingInput'
                 label={`フロア価格(${RealmToken[realm].unit})`}
-                className="mb-3"
+                className='mb-3'
               >
                 <Form.Control
-                  type="number"
+                  type='number'
                   value={floorPriceString}
-                  onChange={(e) => {
+                  onChange={e => {
                     setFloorPriceString(e.target.value)
                   }}
                 />
@@ -159,17 +159,17 @@ const Home: BlitzPage = () => {
             />
           </Container>
         </Tab>
-        <Tab eventKey="crypts" title="通貨価格">
-          <Container className="mt-2">
-            <CryptPriceTable crypts={crypts} className="mb-3" />
+        <Tab eventKey='crypts' title='通貨価格'>
+          <Container className='mt-2'>
+            <CryptPriceTable crypts={crypts} className='mb-3' />
             <CryptExchangeSection crypts={crypts} realm={realm} />
           </Container>
         </Tab>
-        <Tab eventKey="levelup" title="Lvup費用">
-          <Container className="mt-2">
+        <Tab eventKey='levelup' title='Lvup費用'>
+          <Container className='mt-2'>
             <RealmSelector value={realm} onChange={setRealm} />
             <LevelUpCostTable crypts={crypts} realm={realm} />
-            <div className="text-end">
+            <div className='text-end'>
               <small>最終更新日時 {crypts[0]?.lastUpdatedAt.toLocaleString()}</small>
             </div>
           </Container>

@@ -1,6 +1,6 @@
-import { MintingRate } from "app/models/MintingRate"
-import { FC, useEffect, useState } from "react"
-import { Form } from "react-bootstrap"
+import { MintingRate } from 'app/models/MintingRate'
+import { FC, useEffect, useState } from 'react'
+import { Form } from 'react-bootstrap'
 
 const MintingRateList: MintingRate[] = [
   {
@@ -64,14 +64,14 @@ export const MintingRateSelector: FC<MintingRateSelectorProps> = ({
   return (
     <Form.Select
       value={JSON.stringify(_value)}
-      onChange={(e) => {
+      onChange={e => {
         const mintingRate = JSON.parse(e.target.value) as MintingRate
         setValue(mintingRate)
         onChange(mintingRate)
       }}
-      className="mb-2"
+      className='mb-2'
     >
-      {MintingRateList.map((mr) => {
+      {MintingRateList.map(mr => {
         const data = JSON.stringify(mr)
         return (
           <option key={data} value={data}>

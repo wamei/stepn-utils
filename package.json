@@ -16,7 +16,7 @@
   },
   "lint-staged": {
     "*.{ts,tsx}": [
-      "eslint --fix"
+      "yarn lint --fix"
     ]
   },
   "dependencies": {

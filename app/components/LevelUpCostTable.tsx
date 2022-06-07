@@ -1,7 +1,7 @@
-import { Cryptocurrency } from "app/models/Cryptcurrency"
-import { Realm, RealmToken } from "app/models/Realm"
-import React, { FC } from "react"
-import { Table } from "react-bootstrap"
+import { Cryptocurrency } from 'app/models/Cryptcurrency'
+import { Realm, RealmToken } from 'app/models/Realm'
+import React, { FC } from 'react'
+import { Table } from 'react-bootstrap'
 
 type LevelUpCostTableProps = {
   crypts: Cryptocurrency[]
@@ -173,13 +173,13 @@ const Block: FC<{
   data: LevelUpCostTableDataType
 }> = ({ realm, crypts, data }) => {
   const tokenData = RealmToken[realm]
-  const gstPrice = crypts.find((v) => v.id === tokenData.gst)?.jpy || 0
-  const gmtPrice = crypts.find((v) => v.id === tokenData.gmt)?.jpy || 0
-  const mainPrice = crypts.find((v) => v.id === tokenData.main)?.jpy || 0
+  const gstPrice = crypts.find(v => v.id === tokenData.gst)?.jpy || 0
+  const gmtPrice = crypts.find(v => v.id === tokenData.gmt)?.jpy || 0
+  const mainPrice = crypts.find(v => v.id === tokenData.main)?.jpy || 0
 
   const cost = data.gst * gstPrice + data.gmt * gmtPrice
 
-  const prevData = LevelUpCostTableData.filter((d) => d.level <= data.level)
+  const prevData = LevelUpCostTableData.filter(d => d.level <= data.level)
   const sumGst = prevData.reduce((prev, d) => prev + d.gst, 0)
   const sumGmt = prevData.reduce((prev, d) => prev + d.gmt, 0)
   const sumCost = sumGst * gstPrice + sumGmt * gmtPrice
@@ -189,27 +189,27 @@ const Block: FC<{
       <td>
         <small>{data.level}</small>
       </td>
-      <td className="text-nowrap">
+      <td className='text-nowrap'>
         <img
-          className="align-middle"
+          className='align-middle'
           src={`/stepn-utils/${RealmToken[realm].gst}.png`}
-          alt="GST"
-          width="15"
-          height="15"
+          alt='GST'
+          width='15'
+          height='15'
         />
-        <span className="align-middle">
+        <span className='align-middle'>
           <small>{data.gst}</small>
         </span>
         {data.gmt > 0 && (
           <>
             <img
-              className="ms-2 align-middle"
+              className='ms-2 align-middle'
               src={`/stepn-utils/${RealmToken[realm].gmt}.png`}
-              alt="GMT"
-              width="15"
-              height="15"
+              alt='GMT'
+              width='15'
+              height='15'
             />
-            <span className="align-middle">
+            <span className='align-middle'>
               <small>{data.gmt}</small>
             </span>
           </>
@@ -234,9 +234,9 @@ const Block: FC<{
 export const LevelUpCostTable: FC<LevelUpCostTableProps> = ({ crypts, realm }) => {
   return (
     <>
-      <Table striped bordered hover size="sm" className="mb-0">
-        <thead className="sticky-top">
-          <tr style={{ backgroundColor: "#ffffff" }}>
+      <Table striped bordered hover size='sm' className='mb-0'>
+        <thead className='sticky-top'>
+          <tr style={{ backgroundColor: '#ffffff' }}>
             <th>
               <small>Level</small>
             </th>
@@ -258,7 +258,7 @@ export const LevelUpCostTable: FC<LevelUpCostTableProps> = ({ crypts, realm }) =
           </tr>
         </thead>
         <tbody>
-          {LevelUpCostTableData.map((data) => (
+          {LevelUpCostTableData.map(data => (
             <Block key={data.level} crypts={crypts} realm={realm} data={data} />
           ))}
         </tbody>
