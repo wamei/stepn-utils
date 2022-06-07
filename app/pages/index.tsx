@@ -28,6 +28,8 @@ const Home: BlitzPage = () => {
   const [floorPrices, setFloorPrices] = useState<{
     [key: string]: number
   }>({})
+  type TabKey = "home" | "crypts" | "levelup"
+  const [tab, setTab] = useState<TabKey>("home")
 
   const fetchData = async () => {
     const cache = fetchCryptocurrenciesFromCache()
@@ -66,6 +68,7 @@ const Home: BlitzPage = () => {
 
   useEffect(() => {
     replaceUrl({
+      tab,
       realm,
       ...floorPrices,
     })
@@ -84,6 +87,9 @@ const Home: BlitzPage = () => {
 
   useEffect(() => {
     const qRealm = router.query.realm as Realm
+    if (router.query.tab) {
+      setTab(router.query.tab as TabKey)
+    }
     if (router.query.realm) {
       setRealm(qRealm)
     }
@@ -102,7 +108,13 @@ const Home: BlitzPage = () => {
 
   return (
     <>
-      <Tabs defaultActiveKey="home" className="fs-6 justify-content-center">
+      <Tabs
+        className="fs-6 justify-content-center"
+        activeKey={tab}
+        onSelect={(tab: TabKey) => {
+          setTab(tab)
+        }}
+      >
         <Tab eventKey="home" title="ミント費用">
           <Container className="mt-2">
             <CryptPriceTable
