@@ -234,7 +234,7 @@ const Block: FC<{
 export const LevelUpCostTable: FC<LevelUpCostTableProps> = ({ crypts, realm }) => {
   return (
     <>
-      <Table striped bordered hover size="sm">
+      <Table striped bordered hover size="sm" className="mb-0">
         <thead className="sticky-top">
           <tr style={{ backgroundColor: "#ffffff" }}>
             <th>

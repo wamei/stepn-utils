@@ -1,3 +1,4 @@
+import { CryptPriceTable } from "app/components/CryptPriceTable"
 import { LevelUpCostTable } from "app/components/LevelUpCostTable"
 import { MintingCostTable } from "app/components/MintingCostTable"
 import { MintingRateSelector } from "app/components/MintingRateSelector"
@@ -13,7 +14,7 @@ import {
 } from "app/repositories/Cryptocurrency"
 import { BlitzPage, useRouter } from "blitz"
 import React, { useEffect, useState } from "react"
-import { Accordion, Container, FloatingLabel, Form, Table } from "react-bootstrap"
+import { Col, Container, FloatingLabel, Form, Row, Tab, Tabs } from "react-bootstrap"
 
 const Home: BlitzPage = () => {
   const router = useRouter()
@@ -98,42 +99,19 @@ const Home: BlitzPage = () => {
   }, [floorPriceString])
 
   return (
-    <Container className="mt-0 p-0">
-      <Accordion defaultActiveKey="0">
-        <Accordion.Item eventKey="0">
-          <Accordion.Header>仮想通貨価格</Accordion.Header>
-          <Accordion.Body>
-            {crypts.length === 0 && <p>Loading...</p>}
-            <Table striped bordered hover size="sm" className="mb-0">
-              <tbody>
-                {crypts.map((c) => (
-                  <tr key={c.id}>
-                    <td>
-                      <img
-                        className="me-1 align-middle"
-                        src={`/stepn-utils/${c.id}.png`}
-                        alt={c.name}
-                        width="15"
-                        height="15"
-                      />
-                      <span className="align-middle">{c.symbol}</span>
-                    </td>
-                    <td>¥{c.jpy}</td>
-                    <td>${c.usd}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-            <div className="text-end">
-              <small>最終更新日時 {crypts[0]?.lastUpdatedAt.toLocaleString()}</small>
-            </div>
-          </Accordion.Body>
-        </Accordion.Item>
-      </Accordion>
-      <Accordion defaultActiveKey="0">
-        <Accordion.Item eventKey="0">
-          <Accordion.Header>ミント費用</Accordion.Header>
-          <Accordion.Body>
+    <>
+      <Tabs defaultActiveKey="home" className="fs-6 justify-content-center">
+        <Tab eventKey="home" title="ミント費用">
+          <Container className="mt-2">
+            <CryptPriceTable
+              crypts={crypts.filter(
+                (c) =>
+                  c.id === RealmToken[realm].main ||
+                  c.id === RealmToken[realm].gst ||
+                  c.id === RealmToken[realm].gmt
+              )}
+              className="mb-2"
+            />
             <RealmSelector value={realm} onChange={setRealm} />
             <MintingRateSelector
               value={mintingRate}
@@ -165,19 +143,24 @@ const Home: BlitzPage = () => {
               crypts={crypts}
               floorPrice={floorPrices[realm] || 0}
             />
-          </Accordion.Body>
-        </Accordion.Item>
-      </Accordion>
-      <Accordion defaultActiveKey="0">
-        <Accordion.Item eventKey="0">
-          <Accordion.Header>レベルアップ費用</Accordion.Header>
-          <Accordion.Body>
+          </Container>
+        </Tab>
+        <Tab eventKey="crypts" title="通貨価格">
+          <Container className="mt-2">
+            <CryptPriceTable crypts={crypts} />
+          </Container>
+        </Tab>
+        <Tab eventKey="levelup" title="Lvup費用">
+          <Container className="mt-2">
             <RealmSelector value={realm} onChange={setRealm} />
             <LevelUpCostTable crypts={crypts} realm={realm} />
-          </Accordion.Body>
-        </Accordion.Item>
-      </Accordion>
-    </Container>
+            <div className="text-end">
+              <small>最終更新日時 {crypts[0]?.lastUpdatedAt.toLocaleString()}</small>
+            </div>
+          </Container>
+        </Tab>
+      </Tabs>
+    </>
   )
 }
 
