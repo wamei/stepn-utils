@@ -52,7 +52,7 @@ const Home: BlitzPage = () => {
     window.history.replaceState(
       {},
       "",
-      `${location.origin}${location.pathname}?${Object.entries({
+      `${window.location.origin}${window.location.pathname}?${Object.entries({
         ...params,
       })
         .flatMap((e) => {

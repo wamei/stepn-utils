@@ -3,7 +3,7 @@ import { MintingRate } from "app/models/MintingRate"
 import { Realm, RealmColor, RealmToken } from "app/models/Realm"
 import { ShoeRarerity, ShoeRarerityColor } from "app/models/ShoeRarerity"
 import React, { FC, useState } from "react"
-import { Col, Modal, Row, Table } from "react-bootstrap"
+import { Button, Col, Modal, Row, Table } from "react-bootstrap"
 
 type MintingCostTableProps = {
   mintingRate: MintingRate
@@ -59,7 +59,9 @@ const Block: FC<{
   floorPrice: number
 }> = ({ realm, crypts, mintingRate, r1, m1, r2, m2, floorPrice }) => {
   if (!realm) {
-    throw new Promise(() => {})
+    throw new Promise((r) => {
+      r("realm not found")
+    })
   }
   const [show, setShow] = useState(false)
   const handleClose = () => setShow(false)
@@ -79,7 +81,6 @@ const Block: FC<{
   return (
     <>
       <div
-        onClick={handleShow}
         className="p-1"
         style={{
           ...(floorPrice < lowestLvupPrice / mainPrice
@@ -89,27 +90,33 @@ const Block: FC<{
             : {}),
         }}
       >
-        <small className="text-nowrap">
-          <img
-            className="align-middle"
-            src={`/stepn-utils/${RealmToken[realm].gst}.png`}
-            alt="GST"
-            width="10"
-            height="10"
-          />
-          <span className="align-middle">{data.gst}</span>
-        </small>
-        <br />
-        <small className="text-nowrap">
-          <img
-            className="align-middle"
-            src={`/stepn-utils/${RealmToken[realm].gmt}.png`}
-            alt="GMT"
-            width="10"
-            height="10"
-          />
-          <span className="align-middle">{data.gmt}</span>
-        </small>
+        <Button
+          variant="link"
+          onClick={handleShow}
+          className="text-start d-block p-0 text-body text-decoration-none"
+        >
+          <small className="text-nowrap">
+            <img
+              className="align-middle"
+              src={`/stepn-utils/${RealmToken[realm].gst}.png`}
+              alt="GST"
+              width="10"
+              height="10"
+            />
+            <span className="align-middle">{data.gst}</span>
+          </small>
+          <br />
+          <small className="text-nowrap">
+            <img
+              className="align-middle"
+              src={`/stepn-utils/${RealmToken[realm].gmt}.png`}
+              alt="GMT"
+              width="10"
+              height="10"
+            />
+            <span className="align-middle">{data.gmt}</span>
+          </small>
+        </Button>
       </div>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header style={{ backgroundColor: RealmColor[realm] }} closeButton>
