@@ -23,7 +23,7 @@ const Home: BlitzPage = () => {
   const [mintingRate, setMintingRate] = useState<MintingRate>({ gst: 100, gmt: 100 })
   const [rarerity1, setRarerity1] = useState<ShoeRarerity>(ShoeRarerity.Common)
   const [rarerity2, setRarerity2] = useState<ShoeRarerity>(ShoeRarerity.Common)
-  const [realm, setRealm] = useState<Realm>(Realm.BSC)
+  const [realm, setRealm] = useState<Realm>(Realm.Solana)
   const [floorPriceString, setFloorPriceString] = useState("")
   const [floorPrices, setFloorPrices] = useState<{
     [key: string]: number
@@ -64,24 +64,6 @@ const Home: BlitzPage = () => {
   }
 
   useEffect(() => {
-    const qRealm = router.query.realm as Realm
-    if (router.query.realm) {
-      setRealm(qRealm)
-    }
-    if (router.query[qRealm]) {
-      setFloorPriceString(String(router.query[qRealm]))
-    }
-    Object.values(Realm).forEach((realm) => {
-      if (router.query[realm]) {
-        setFloorPrices((old) => ({
-          ...old,
-          [realm]: Number(router.query[realm]),
-        }))
-      }
-    })
-  }, [router.query])
-
-  useEffect(() => {
     replaceUrl({
       realm,
       ...floorPrices,
@@ -98,6 +80,24 @@ const Home: BlitzPage = () => {
       [realm]: Number(floorPriceString),
     }))
   }, [floorPriceString])
+
+  useEffect(() => {
+    const qRealm = router.query.realm as Realm
+    if (router.query.realm) {
+      setRealm(qRealm)
+    }
+    if (router.query[qRealm]) {
+      setFloorPriceString(String(router.query[qRealm]))
+    }
+    Object.values(Realm).forEach((realm) => {
+      if (router.query[realm]) {
+        setFloorPrices((old) => ({
+          ...old,
+          [realm]: Number(router.query[realm]),
+        }))
+      }
+    })
+  }, [router.query])
 
   return (
     <>
@@ -149,7 +149,7 @@ const Home: BlitzPage = () => {
         <Tab eventKey="crypts" title="通貨価格">
           <Container className="mt-2">
             <CryptPriceTable crypts={crypts} className="mb-3" />
-            <CryptExchangeSection crypts={crypts} />
+            <CryptExchangeSection crypts={crypts} realm={realm} />
           </Container>
         </Tab>
         <Tab eventKey="levelup" title="Lvup費用">

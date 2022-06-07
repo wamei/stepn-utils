@@ -1,14 +1,20 @@
 import { Cryptocurrency } from "app/models/Cryptcurrency"
+import { Realm, RealmToken } from "app/models/Realm"
 import React, { FC, useEffect, useState } from "react"
 import { FloatingLabel, Form, InputGroup, Table } from "react-bootstrap"
 import { CryptSelector } from "./CryptSelector"
 
 type CryptExchangeSectionProps = {
   crypts: Cryptocurrency[]
+  realm: Realm
   className?: string
 }
 
-export const CryptExchangeSection: FC<CryptExchangeSectionProps> = ({ crypts, className }) => {
+export const CryptExchangeSection: FC<CryptExchangeSectionProps> = ({
+  crypts,
+  className,
+  realm,
+}) => {
   const [price, setPrice] = useState(1)
   const [priceString, setPriceString] = useState("1")
   const [crypt, setCrypt] = useState<Cryptocurrency>(crypts[0] as Cryptocurrency)
@@ -17,7 +23,7 @@ export const CryptExchangeSection: FC<CryptExchangeSectionProps> = ({ crypts, cl
     if (crypts.length === 0) {
       return
     }
-    setCrypt(crypts[0] as Cryptocurrency)
+    setCrypt(crypts.find((c) => c.id === RealmToken[realm].main) as Cryptocurrency)
   }, [crypts])
 
   useEffect(() => {
