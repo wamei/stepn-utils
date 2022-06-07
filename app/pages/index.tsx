@@ -15,7 +15,7 @@ import {
 } from "app/repositories/Cryptocurrency"
 import { BlitzPage, useRouter } from "blitz"
 import React, { useEffect, useState } from "react"
-import { Col, Container, FloatingLabel, Form, Row, Tab, Tabs } from "react-bootstrap"
+import { Container, FloatingLabel, Form, Tab, Tabs } from "react-bootstrap"
 
 const Home: BlitzPage = () => {
   const router = useRouter()
@@ -43,6 +43,7 @@ const Home: BlitzPage = () => {
 
   useEffect(() => {
     fetchData()
+    setInterval(fetchData, 1000 * 60)
   }, [])
 
   const replaceUrl = (params: any) => {
