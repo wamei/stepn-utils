@@ -23,6 +23,9 @@ export const CryptExchangeSection: FC<CryptExchangeSectionProps> = ({
     if (crypts.length === 0) {
       return
     }
+    if (crypt) {
+      return
+    }
     setCrypt(crypts.find((c) => c.id === RealmToken[realm].main) as Cryptocurrency)
   }, [crypts])
 
