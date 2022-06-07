@@ -1,3 +1,4 @@
+import { CryptExchangeSection } from "app/components/CryptExchangeSection"
 import { CryptPriceTable } from "app/components/CryptPriceTable"
 import { LevelUpCostTable } from "app/components/LevelUpCostTable"
 import { MintingCostTable } from "app/components/MintingCostTable"
@@ -147,7 +148,8 @@ const Home: BlitzPage = () => {
         </Tab>
         <Tab eventKey="crypts" title="通貨価格">
           <Container className="mt-2">
-            <CryptPriceTable crypts={crypts} />
+            <CryptPriceTable crypts={crypts} className="mb-3" />
+            <CryptExchangeSection crypts={crypts} />
           </Container>
         </Tab>
         <Tab eventKey="levelup" title="Lvup費用">

@@ -4,6 +4,7 @@ type CryptocurrenciesResponse = {
   id: string
   symbol: string
   name: string
+  short: string
   jpy: number
   usd: number
   lastUpdatedAt: string
@@ -21,6 +22,7 @@ export const fetchCryptocurrencies = async (): Promise<Cryptocurrency[]> => {
     id: c.id,
     symbol: c.symbol,
     name: c.name,
+    short: c.short,
     jpy: c.jpy,
     usd: c.usd,
     lastUpdatedAt: new Date(c.lastUpdatedAt),
@@ -36,6 +38,7 @@ export const fetchCryptocurrenciesFromCache = (): Cryptocurrency[] | null => {
     id: c.id,
     symbol: c.symbol,
     name: c.name,
+    short: c.short,
     jpy: c.jpy,
     usd: c.usd,
     lastUpdatedAt: new Date(c.lastUpdatedAt),

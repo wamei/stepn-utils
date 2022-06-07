@@ -23,7 +23,7 @@ export const CryptPriceTable: FC<CryptPriceTableProps> = ({ crypts, className })
                   width="15"
                   height="15"
                 />
-                <span className="align-middle">{c.symbol}</span>
+                <span className="align-middle">{c.short}</span>
               </td>
               <td>¥{c.jpy}</td>
               <td>${c.usd}</td>
