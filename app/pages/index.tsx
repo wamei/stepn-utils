@@ -63,7 +63,7 @@ const Home: BlitzPage = () => {
   }, [router.query])
 
   return (
-    <>
+    <div>
       <Tabs
         className='fs-6 justify-content-center'
         activeKey={tab}
@@ -72,7 +72,7 @@ const Home: BlitzPage = () => {
         }}
       >
         <Tab eventKey='home' title='ミント費用'>
-          <Container className='mt-2'>
+          <Container className='mt-2' style={{ maxWidth: '540px' }}>
             <Alert variant='warning'>
               <small>2022/06/08のミント費用変更暫定対応</small>
             </Alert>
@@ -89,13 +89,13 @@ const Home: BlitzPage = () => {
           </Container>
         </Tab>
         <Tab eventKey='crypts' title='通貨価格'>
-          <Container className='mt-2'>
+          <Container className='mt-2' style={{ maxWidth: '540px' }}>
             <CryptPriceTable crypts={crypts} className='mb-3' />
             <CryptExchangeSection crypts={crypts} realm={realm} />
           </Container>
         </Tab>
         <Tab eventKey='levelup' title='Lvup費用'>
-          <Container className='mt-2'>
+          <Container className='mt-2' style={{ maxWidth: '540px' }}>
             <RealmSelector className='mb-2' value={realm} onChange={setRealm} />
             <LevelUpCostTable crypts={crypts} realm={realm} />
             <div className='text-end'>
@@ -104,8 +104,11 @@ const Home: BlitzPage = () => {
           </Container>
         </Tab>
       </Tabs>
-      <DonationCard className='mt-4 border-0 border-top border-bottom' />
-    </>
+      <hr />
+      <Container style={{ maxWidth: '540px' }}>
+        <DonationCard className='border-0' />
+      </Container>
+    </div>
   )
 }
 
