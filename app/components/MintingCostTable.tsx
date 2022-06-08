@@ -194,7 +194,13 @@ const Block: FC<{
               height='20'
             />
             <span className='align-middle'>
-              {r1} {m1} x {r2} {m2}
+              <span className='rounded p-1' style={{ backgroundColor: ShoeRarerityColor[r1] }}>
+                {r1} {m1}
+              </span>{' '}
+              x{' '}
+              <span className='rounded p-1' style={{ backgroundColor: ShoeRarerityColor[r2] }}>
+                {r2} {m2}
+              </span>
             </span>
           </Modal.Title>
         </Modal.Header>
