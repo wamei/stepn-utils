@@ -6,7 +6,8 @@ import React, { FC, useState } from 'react'
 import { Button, Col, Modal, Row, Table } from 'react-bootstrap'
 
 type MintingCostTableProps = {
-  mintingRate: MintingRate
+  mintingRateCommon: MintingRate
+  mintingRateUncommon: MintingRate
   rarerity1: ShoeRarerity
   rarerity2: ShoeRarerity
   realm: Realm
@@ -16,30 +17,22 @@ type MintingCostTableProps = {
 
 const mints = [0, 1, 2, 3, 4, 5, 6]
 
-const calcRarerityForGst = (rarerity: ShoeRarerity) => {
-  if (rarerity === ShoeRarerity.Uncommon) {
-    return 1000
-  }
-  return 0
-}
-const calcRarerityForGmt = (rarerity: ShoeRarerity) => {
-  if (rarerity === ShoeRarerity.Uncommon) {
-    return 200
-  }
-  return 0
-}
-
 const calc = (
-  mintingRate: MintingRate,
+  mintingRateCommon: MintingRate,
+  mintingRateUncommon: MintingRate,
   r1: ShoeRarerity,
   m1: number,
   r2: ShoeRarerity,
   m2: number,
 ) => {
-  const base1gst = (mintingRate.gst + calcRarerityForGst(r1)) / 2
-  const base2gst = (mintingRate.gst + calcRarerityForGst(r2)) / 2
-  const base1gmt = (mintingRate.gmt + calcRarerityForGmt(r1)) / 2
-  const base2gmt = (mintingRate.gmt + calcRarerityForGmt(r2)) / 2
+  const mintingRate = {
+    [ShoeRarerity.Common]: mintingRateCommon,
+    [ShoeRarerity.Uncommon]: mintingRateUncommon,
+  }
+  const base1gst = mintingRate[r1].gst / 2
+  const base2gst = mintingRate[r2].gst / 2
+  const base1gmt = mintingRate[r1].gmt / 2
+  const base2gmt = mintingRate[r2].gmt / 2
   return {
     gst:
       base1gst +
@@ -57,13 +50,14 @@ const calc = (
 const Block: FC<{
   realm: Realm
   crypts: Cryptocurrency[]
-  mintingRate: MintingRate
+  mintingRateCommon: MintingRate
+  mintingRateUncommon: MintingRate
   r1: ShoeRarerity
   m1: number
   r2: ShoeRarerity
   m2: number
   floorPrice: number
-}> = ({ realm, crypts, mintingRate, r1, m1, r2, m2, floorPrice }) => {
+}> = ({ realm, crypts, mintingRateCommon, mintingRateUncommon, r1, m1, r2, m2, floorPrice }) => {
   if (!realm) {
     throw new Promise(r => {
       r('realm not found')
@@ -78,7 +72,7 @@ const Block: FC<{
   const LEVELUP_TO_5_GST = 20
   const LEVELUP_TO_5_GMT = 10
 
-  const data = calc(mintingRate, r1, m1, r2, m2)
+  const data = calc(mintingRateCommon, mintingRateUncommon, r1, m1, r2, m2)
   const tokenData = RealmToken[realm]
   const gstPrice = crypts.find(v => v.id === tokenData.gst)?.jpy || 0
   const gmtPrice = crypts.find(v => v.id === tokenData.gmt)?.jpy || 0
@@ -164,7 +158,7 @@ const Block: FC<{
         <Button
           variant='link'
           onClick={handleShow}
-          className='text-start d-block p-0 text-body text-decoration-none'
+          className='w-100 text-start d-block p-0 text-body text-decoration-none'
         >
           <small className='text-nowrap'>
             <img
@@ -254,7 +248,8 @@ const Block: FC<{
 }
 
 export const MintingCostTable: FC<MintingCostTableProps> = ({
-  mintingRate,
+  mintingRateCommon,
+  mintingRateUncommon,
   rarerity1,
   rarerity2,
   realm,
@@ -271,20 +266,27 @@ export const MintingCostTable: FC<MintingCostTableProps> = ({
           <tr>
             <td></td>
             {mints.map(m1 => (
-              <td key={m1} style={{ backgroundColor: ShoeRarerityColor[rarerity1] }}>
-                {m1}
+              <td
+                key={m1}
+                className='pt-0 pb-0'
+                style={{ backgroundColor: ShoeRarerityColor[rarerity1] }}
+              >
+                <small>{m1}</small>
               </td>
             ))}
           </tr>
           {mints.map(m2 => (
             <tr key={m2}>
-              <td style={{ backgroundColor: ShoeRarerityColor[rarerity2] }}>{m2}</td>
+              <td className='pe-0' style={{ backgroundColor: ShoeRarerityColor[rarerity2] }}>
+                <small>{m2}</small>
+              </td>
               {mints.map(m1 => (
                 <td key={m1} className='p-0'>
                   <Block
                     realm={realm}
                     crypts={crypts}
-                    mintingRate={mintingRate}
+                    mintingRateCommon={mintingRateCommon}
+                    mintingRateUncommon={mintingRateUncommon}
                     r1={rarerity1}
                     m1={m1}
                     r2={rarerity2}

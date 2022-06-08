@@ -8,7 +8,7 @@ import React, { FC, useEffect, useState } from 'react'
 import { FloatingLabel, Form, Row } from 'react-bootstrap'
 import { LabeledForm } from './LabeledForm'
 import { MintingCostTable } from './MintingCostTable'
-import { MintingRateList, MintingRateSelector } from './MintingRateSelector'
+import { MintingRateSelector } from './MintingRateSelector'
 import { RealmSelector } from './RealmSelector'
 import { ShoeRareritySelector } from './ShoeRareritySelector'
 import QueryString from 'query-string'
@@ -19,9 +19,28 @@ type HomeSectionProps = {
   setRealm(realm: Realm): void
 }
 
+const MintingRateListCommon: MintingRate[] = [
+  {
+    gst: 360,
+    gmt: 40,
+  },
+]
+
+export const MintingRateListUncommon: MintingRate[] = [
+  {
+    gst: 1360,
+    gmt: 240,
+  },
+]
+
 export const HomeSection: FC<HomeSectionProps> = ({ crypts, realm, setRealm }) => {
   const router = useRouter()
-  const [mintingRate, setMintingRate] = useState<MintingRate>(MintingRateList[0] as MintingRate)
+  const [mintingRateCommon, setMintingRateCommon] = useState<MintingRate>(
+    MintingRateListCommon[0] as MintingRate,
+  )
+  const [mintingRateUncommon, setMintingRateUncommon] = useState<MintingRate>(
+    MintingRateListUncommon[0] as MintingRate,
+  )
   const [rarerity1, setRarerity1] = useState<ShoeRarerity>(ShoeRarerity.Common)
   const [rarerity2, setRarerity2] = useState<ShoeRarerity>(ShoeRarerity.Common)
   const [floorPriceString, setFloorPriceString] = useState('')
@@ -36,8 +55,12 @@ export const HomeSection: FC<HomeSectionProps> = ({ crypts, realm, setRealm }) =
       r1: rarerity1,
       r2: rarerity2,
       ...floorPrices,
+      gstC: mintingRateCommon.gst,
+      gmtC: mintingRateCommon.gmt,
+      gstU: mintingRateUncommon.gst,
+      gmtU: mintingRateUncommon.gmt,
     })
-  }, [replaceUrl, floorPrices, rarerity1, rarerity2])
+  }, [replaceUrl, floorPrices, rarerity1, rarerity2, mintingRateCommon, mintingRateUncommon])
 
   useEffect(() => {
     setFloorPriceString(String(floorPrices[realm]))
@@ -61,6 +84,18 @@ export const HomeSection: FC<HomeSectionProps> = ({ crypts, realm, setRealm }) =
     if (router.query.r2) {
       setRarerity2(router.query.r2 as ShoeRarerity)
     }
+    if (router.query.gstC || router.query.gmtC) {
+      setMintingRateCommon({
+        gst: Number(router.query.gstC),
+        gmt: Number(router.query.gmtC),
+      })
+    }
+    if (router.query.gstU || router.query.gmtU) {
+      setMintingRateUncommon({
+        gst: Number(router.query.gstU),
+        gmt: Number(router.query.gmtU),
+      })
+    }
     Object.values(Realm).forEach(realm => {
       if (router.query[realm]) {
         setFloorPrices(old => ({
@@ -78,12 +113,24 @@ export const HomeSection: FC<HomeSectionProps> = ({ crypts, realm, setRealm }) =
           <LabeledForm label='チェーン'>
             <RealmSelector value={realm} onChange={setRealm} />
           </LabeledForm>
-          <LabeledForm label='割合'>
+        </Row>
+        <Row className='mb-2'>
+          <LabeledForm label='Common費用'>
             <MintingRateSelector
               realm={realm}
               crypts={crypts}
-              value={mintingRate}
-              onChange={setMintingRate}
+              mintingRateList={MintingRateListCommon}
+              value={mintingRateCommon}
+              onChange={setMintingRateCommon}
+            />
+          </LabeledForm>
+          <LabeledForm label='Uncommon費用'>
+            <MintingRateSelector
+              realm={realm}
+              crypts={crypts}
+              mintingRateList={MintingRateListUncommon}
+              value={mintingRateUncommon}
+              onChange={setMintingRateUncommon}
             />
           </LabeledForm>
         </Row>
@@ -110,7 +157,8 @@ export const HomeSection: FC<HomeSectionProps> = ({ crypts, realm, setRealm }) =
         </FloatingLabel>
       </Form>
       <MintingCostTable
-        mintingRate={mintingRate}
+        mintingRateCommon={mintingRateCommon}
+        mintingRateUncommon={mintingRateUncommon}
         rarerity1={rarerity1}
         rarerity2={rarerity2}
         realm={realm}

@@ -1,22 +1,13 @@
 import { Cryptocurrency } from 'app/models/Cryptcurrency'
 import { MintingRate } from 'app/models/MintingRate'
 import { Realm, RealmToken } from 'app/models/Realm'
-import { useRouter } from 'blitz'
 import React, { FC, useEffect, useState } from 'react'
 import { ButtonGroup, Col, Dropdown, DropdownButton, Form, Row } from 'react-bootstrap'
-import QueryString from 'query-string'
-import { replaceUrl } from 'app/utils'
-
-export const MintingRateList: MintingRate[] = [
-  {
-    gst: 360,
-    gmt: 40,
-  },
-]
 
 type MintingRateSelectorProps = {
   realm: Realm
   crypts: Cryptocurrency[]
+  mintingRateList: MintingRate[]
   value: MintingRate
   onChange(rate: MintingRate): void
   className?: string
@@ -25,13 +16,13 @@ type MintingRateSelectorProps = {
 export const MintingRateSelector: FC<MintingRateSelectorProps> = ({
   realm,
   crypts,
+  mintingRateList,
   value,
   onChange,
   className,
 }) => {
-  const router = useRouter()
-  const [baseGst, setBaseGst] = useState(MintingRateList[0]?.gst || 0)
-  const [baseGmt, setBaseGmt] = useState(MintingRateList[0]?.gmt || 0)
+  const [baseGst, setBaseGst] = useState(String(value.gst))
+  const [baseGmt, setBaseGmt] = useState(String(value.gmt))
 
   const [isFreeInput, setIsFreeInput] = useState(false)
 
@@ -58,29 +49,16 @@ export const MintingRateSelector: FC<MintingRateSelectorProps> = ({
   }, [crypts, onChange])
 
   useEffect(() => {
-    const query = QueryString.parse(location.search)
-    replaceUrl({
-      ...query,
-      baseGst,
-      baseGmt,
-    })
-  }, [replaceUrl, baseGst, baseGmt])
-
-  useEffect(() => {
     onChange({
-      gst: baseGst,
-      gmt: baseGmt,
+      gst: Number(baseGst),
+      gmt: Number(baseGmt),
     })
   }, [baseGst, baseGmt])
 
   useEffect(() => {
-    if (router.query.baseGst) {
-      setBaseGst(Number(router.query.baseGst))
-    }
-    if (router.query.baseGmt) {
-      setBaseGmt(Number(router.query.baseGmt))
-    }
-  }, [router.query])
+    setBaseGst(String(value.gst))
+    setBaseGmt(String(value.gmt))
+  }, [value])
 
   return (
     <DropdownButton
@@ -106,7 +84,7 @@ export const MintingRateSelector: FC<MintingRateSelectorProps> = ({
               value={baseGst}
               onClick={e => e.stopPropagation()}
               onChange={e => {
-                setBaseGst(Number(e.target.value))
+                setBaseGst(e.target.value)
               }}
             />
             <img
@@ -124,7 +102,7 @@ export const MintingRateSelector: FC<MintingRateSelectorProps> = ({
               value={baseGmt}
               onClick={e => e.stopPropagation()}
               onChange={e => {
-                setBaseGmt(Number(e.target.value))
+                setBaseGmt(e.target.value)
               }}
             />
           </>
@@ -150,14 +128,12 @@ export const MintingRateSelector: FC<MintingRateSelectorProps> = ({
         )
       }
     >
-      {MintingRateList.flatMap((mr, i) => {
+      {mintingRateList.flatMap((mr, i) => {
         const ret = (
           <Dropdown.Item
             key={`${mr.gst}-${mr.gmt}`}
             onClick={() => {
               onChange(mr)
-              setBaseGst(mr.gst)
-              setBaseGmt(mr.gmt)
               setIsFreeInput(false)
             }}
           >
