@@ -5,11 +5,12 @@ import { ButtonGroup, ToggleButton } from 'react-bootstrap'
 type RealmSelectorProps = {
   value: Realm
   onChange(v: Realm): void
+  className?: string
 }
 
-export const RealmSelector: FC<RealmSelectorProps> = ({ value, onChange }) => {
+export const RealmSelector: FC<RealmSelectorProps> = ({ value, onChange, className }) => {
   return (
-    <ButtonGroup className='mb-2'>
+    <ButtonGroup className={className}>
       {Object.values(Realm).map(realm => (
         <ToggleButton
           key={realm}
@@ -23,6 +24,7 @@ export const RealmSelector: FC<RealmSelectorProps> = ({ value, onChange }) => {
           style={{
             backgroundColor: value === realm ? RealmColor[realm] : '',
           }}
+          size='sm'
         >
           <img
             className='me-1 align-middle'

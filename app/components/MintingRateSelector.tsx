@@ -2,7 +2,7 @@ import { Cryptocurrency } from 'app/models/Cryptcurrency'
 import { MintingRate } from 'app/models/MintingRate'
 import { Realm, RealmToken } from 'app/models/Realm'
 import React, { FC, useEffect } from 'react'
-import { Col, Dropdown, Row } from 'react-bootstrap'
+import { ButtonGroup, Col, Dropdown, DropdownButton, Row } from 'react-bootstrap'
 
 const MintingRateList: MintingRate[] = [
   {
@@ -69,71 +69,68 @@ export const MintingRateSelector: FC<MintingRateSelectorProps> = ({
   }, [crypts, onChange])
 
   return (
-    <Dropdown className={className}>
-      <Dropdown.Toggle variant='outline-secondary'>
-        <img
-          className='me-1 align-middle'
-          src={`/stepn-utils/${RealmToken[realm].gst}.png`}
-          alt={gst?.name}
-          width='20'
-          height='20'
-        />
-        <span className='me-2 align-middle'>
-          {value.gst}
-          {gst?.symbol}
-        </span>
-        <img
-          className='me-1 align-middle'
-          src={`/stepn-utils/${RealmToken[realm].gmt}.png`}
-          alt={gmt?.name}
-          width='20'
-          height='20'
-        />
-        <span className='align-middle'>
-          {value.gmt}
-          {gmt?.symbol}
-        </span>
-      </Dropdown.Toggle>
-      <Dropdown.Menu>
-        {MintingRateList.flatMap((mr, i) => {
-          const ret = (
-            <Dropdown.Item key={`${mr.gst}-${mr.gmt}`} onClick={() => onChange(mr)}>
-              <Row>
-                <Col>
-                  <img
-                    className='me-1 align-middle'
-                    src={`/stepn-utils/${RealmToken[realm].gst}.png`}
-                    alt={gst?.name}
-                    width='20'
-                    height='20'
-                  />
-                  <span className='me-2 align-middle'>
-                    {mr.gst}
-                    {gst?.symbol}
-                  </span>
-                </Col>
-                <Col>
-                  <img
-                    className='me-1 align-middle'
-                    src={`/stepn-utils/${RealmToken[realm].gmt}.png`}
-                    alt={gmt?.name}
-                    width='20'
-                    height='20'
-                  />
-                  <span className='align-middle'>
-                    {mr.gmt}
-                    {gmt?.symbol}
-                  </span>
-                </Col>
-              </Row>
-            </Dropdown.Item>
-          )
-          if (i === 0) {
-            return ret
-          }
-          return [<Dropdown.Divider key={`divine-${i}`} />, ret]
-        })}
-      </Dropdown.Menu>
-    </Dropdown>
+    <DropdownButton
+      as={ButtonGroup}
+      className={className}
+      variant='outline-secondary'
+      size='sm'
+      title={
+        <>
+          <img
+            className='me-1 align-middle'
+            src={`/stepn-utils/${RealmToken[realm].gst}.png`}
+            alt={gst?.name}
+            width='20'
+            height='20'
+          />
+          <span className='me-2 align-middle'>{value.gst}</span>
+          <img
+            className='me-1 align-middle'
+            src={`/stepn-utils/${RealmToken[realm].gmt}.png`}
+            alt={gmt?.name}
+            width='20'
+            height='20'
+          />
+          <span className='align-middle'>{value.gmt}</span>
+        </>
+      }
+    >
+      {MintingRateList.flatMap((mr, i) => {
+        const ret = (
+          <Dropdown.Item key={`${mr.gst}-${mr.gmt}`} onClick={() => onChange(mr)}>
+            <Row>
+              <Col xs={6}>
+                <img
+                  className='me-1 align-middle'
+                  src={`/stepn-utils/${RealmToken[realm].gst}.png`}
+                  alt={gst?.name}
+                  width='15'
+                  height='15'
+                />
+                <span className='align-middle'>
+                  <small>{mr.gst}</small>
+                </span>
+              </Col>
+              <Col xs={6}>
+                <img
+                  className='me-1 align-middle'
+                  src={`/stepn-utils/${RealmToken[realm].gmt}.png`}
+                  alt={gmt?.name}
+                  width='15'
+                  height='15'
+                />
+                <span className='align-middle'>
+                  <small>{mr.gmt}</small>
+                </span>
+              </Col>
+            </Row>
+          </Dropdown.Item>
+        )
+        if (i === 0) {
+          return ret
+        }
+        return [<Dropdown.Divider key={`divine-${i}`} />, ret]
+      })}
+    </DropdownButton>
   )
 }

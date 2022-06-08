@@ -110,19 +110,15 @@ const Block: FC<{
           </Col>
           <Col>¥{cost.toFixed(2)}</Col>
         </Row>
-        <Row>
-          <Col xs={5}>
-            <strong>最低販売価格</strong>
-          </Col>
+        <Row className='fw-bold'>
+          <Col xs={5}>最低販売価格</Col>
           <Col>
             <strong>
               {(lowestPrice / mainPrice).toFixed(2)}
               {tokenData.unit}
             </strong>
           </Col>
-          <Col>
-            <strong>¥{lowestPrice.toFixed(2)}</strong>
-          </Col>
+          <Col>¥{lowestPrice.toFixed(2)}</Col>
         </Row>
         <Row>
           <Col xs={5}>
@@ -205,25 +201,23 @@ const Block: FC<{
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className='ps-0 pe-0'>
-          <div className='pb-3 ms-3 me-3'>
-            <strong>
-              <img
-                className='align-middle'
-                src={`/stepn-utils/${RealmToken[realm].gst}.png`}
-                alt='GST'
-                width='15'
-                height='15'
-              />
-              <span className='me-2 align-middle'>{data.gst}GST</span>
-              <img
-                className='align-middle'
-                src={`/stepn-utils/${RealmToken[realm].gmt}.png`}
-                alt='GMT'
-                width='15'
-                height='15'
-              />
-              <span className='align-middle'>{data.gmt}GMT</span>
-            </strong>
+          <div className='pb-3 ms-3 me-3 fw-bold'>
+            <img
+              className='align-middle'
+              src={`/stepn-utils/${RealmToken[realm].gst}.png`}
+              alt='GST'
+              width='15'
+              height='15'
+            />
+            <span className='me-2 align-middle'>{data.gst}GST</span>
+            <img
+              className='align-middle'
+              src={`/stepn-utils/${RealmToken[realm].gmt}.png`}
+              alt='GMT'
+              width='15'
+              height='15'
+            />
+            <span className='align-middle'>{data.gmt}GMT</span>
           </div>
           <CostTable className='p-3 border-bottom border-top' label='ミント費用' cost={mintPrice} />
           <CostTable

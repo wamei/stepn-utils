@@ -25,6 +25,7 @@ export const ShoeRareritySelector: FC<ShoeRareritySelectorProps> = ({ id, value,
             style={{
               backgroundColor: value === rarerity ? ShoeRarerityColor[rarerity] : '',
             }}
+            size='sm'
           >
             {rarerity}
           </ToggleButton>
