@@ -30,25 +30,6 @@ export const MintingRateSelector: FC<MintingRateSelectorProps> = ({
   const gmt = crypts.find(v => v.id === RealmToken[realm].gmt)
 
   useEffect(() => {
-    /* const gstPrice = crypts.find(v => v.id === RealmToken[realm].gst)?.usd || 5
-     * let mintingRate: MintingRate = { gst: 100, gmt: 100 }
-     * if (gstPrice < 2) {
-     *   mintingRate = { gst: 200, gmt: 0 }
-     * } else if (gstPrice >= 2 && gstPrice < 3) {
-     *   mintingRate = { gst: 160, gmt: 40 }
-     * } else if (gstPrice >= 3 && gstPrice < 4) {
-     *   mintingRate = { gst: 120, gmt: 80 }
-     * } else if (gstPrice >= 4 && gstPrice < 8) {
-     *   mintingRate = { gst: 100, gmt: 100 }
-     * } else if (gstPrice >= 8 && gstPrice < 10) {
-     *   mintingRate = { gst: 80, gmt: 120 }
-     * } else if (gstPrice >= 10) {
-     *   mintingRate = { gst: 40, gmt: 160 }
-     * }
-     * onChange(mintingRate) */
-  }, [crypts, onChange])
-
-  useEffect(() => {
     onChange({
       gst: Number(baseGst),
       gmt: Number(baseGmt),

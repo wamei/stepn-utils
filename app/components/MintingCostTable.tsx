@@ -1,5 +1,5 @@
 import { Cryptocurrency } from 'app/models/Cryptcurrency'
-import { MintingRate } from 'app/models/MintingRate'
+import { calcAdditionalGmt, MintingRate } from 'app/models/MintingRate'
 import { Realm, RealmColor, RealmToken } from 'app/models/Realm'
 import { ShoeRarerity, ShoeRarerityColor } from 'app/models/ShoeRarerity'
 import React, { FC, useState } from 'react'
@@ -18,6 +18,8 @@ type MintingCostTableProps = {
 const mints = [0, 1, 2, 3, 4, 5, 6]
 
 const calc = (
+  realm: Realm,
+  crypts: Cryptocurrency[],
   mintingRateCommon: MintingRate,
   mintingRateUncommon: MintingRate,
   r1: ShoeRarerity,
@@ -33,7 +35,9 @@ const calc = (
   const base2gst = mintingRate[r2].gst / 2
   const base1gmt = mintingRate[r1].gmt / 2
   const base2gmt = mintingRate[r2].gmt / 2
-  return {
+
+  const gstPrice = crypts.find(c => c.id === RealmToken[realm].gst)?.usd || 0
+  const base = {
     gst:
       base1gst +
       (base1gst / 2) * Math.max(0, m1 - 1) +
@@ -44,6 +48,11 @@ const calc = (
       (base1gmt / 2) * Math.max(0, m1 - 1) +
       base2gmt +
       (base2gmt / 2) * Math.max(0, m2 - 1),
+  }
+  const additionalGmt = calcAdditionalGmt(base, gstPrice)
+  return {
+    gst: base.gst,
+    gmt: base.gmt + additionalGmt,
   }
 }
 
@@ -72,7 +81,7 @@ const Block: FC<{
   const LEVELUP_TO_5_GST = 20
   const LEVELUP_TO_5_GMT = 10
 
-  const data = calc(mintingRateCommon, mintingRateUncommon, r1, m1, r2, m2)
+  const data = calc(realm, crypts, mintingRateCommon, mintingRateUncommon, r1, m1, r2, m2)
   const tokenData = RealmToken[realm]
   const gstPrice = crypts.find(v => v.id === tokenData.gst)?.jpy || 0
   const gmtPrice = crypts.find(v => v.id === tokenData.gmt)?.jpy || 0
