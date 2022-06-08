@@ -67,25 +67,97 @@ const Block: FC<{
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
 
+  const ETC_FEE = 0.02
+  const SELLING_FEE = 0.06
+  const LEVELUP_TO_5_GST = 20
+  const LEVELUP_TO_5_GMT = 10
+
   const data = calc(mintingRate, r1, m1, r2, m2)
   const tokenData = RealmToken[realm]
   const gstPrice = crypts.find(v => v.id === tokenData.gst)?.jpy || 0
   const gmtPrice = crypts.find(v => v.id === tokenData.gmt)?.jpy || 0
   const mainPrice = crypts.find(v => v.id === tokenData.main)?.jpy || 0
-  const mintPrice = (data.gst * gstPrice + data.gmt * gmtPrice) * 1.02
-  const lvupPrice = gstPrice * 20 + gmtPrice * 10
+  const mintPrice = (data.gst * gstPrice + data.gmt * gmtPrice) * (1 + ETC_FEE)
+  const lvupPrice = gstPrice * LEVELUP_TO_5_GST + gmtPrice * LEVELUP_TO_5_GMT
 
-  const lowestPrice = mintPrice / 0.94
-  const lowestLvupPrice = (mintPrice + lvupPrice) / 0.94
+  const lowestPrice = mintPrice / (1 - SELLING_FEE)
+  const lowestLvupPrice = (mintPrice + lvupPrice) / (1 - SELLING_FEE)
+  const lowest2LvupPrice = (mintPrice + 2 * lvupPrice) / (1 - SELLING_FEE)
+
+  const CostTable: FC<{
+    label: string
+    cost: number
+    className?: string
+  }> = ({ label, cost, className }) => {
+    const lowestPrice = cost / (1 - SELLING_FEE)
+    const benefit = floorPrice * mainPrice - lowestPrice
+    return (
+      <div
+        style={{
+          ...(floorPrice < lowestPrice / mainPrice
+            ? {
+                backgroundColor: 'rgba(255, 0, 0, 0.1)',
+              }
+            : {}),
+        }}
+        className={className}
+      >
+        <Row>
+          <Col xs={5}>{label}</Col>
+          <Col>
+            {(cost / mainPrice).toFixed(2)}
+            {tokenData.unit}
+          </Col>
+          <Col>¥{cost.toFixed(2)}</Col>
+        </Row>
+        <Row>
+          <Col xs={5}>
+            <strong>最低販売価格</strong>
+          </Col>
+          <Col>
+            <strong>
+              {(lowestPrice / mainPrice).toFixed(2)}
+              {tokenData.unit}
+            </strong>
+          </Col>
+          <Col>
+            <strong>¥{lowestPrice.toFixed(2)}</strong>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={5}>
+            <small>利益</small>
+          </Col>
+          <Col>
+            <small>
+              {(benefit / mainPrice).toFixed(2)}
+              {tokenData.unit}
+            </small>
+          </Col>
+          <Col>
+            <small>¥{benefit.toFixed(2)}</small>
+          </Col>
+        </Row>
+      </div>
+    )
+  }
 
   return (
     <>
       <div
         className='p-1'
         style={{
-          ...(floorPrice < lowestLvupPrice / mainPrice
+          ...(floorPrice < lowestPrice / mainPrice
             ? {
                 backgroundColor: 'rgba(255, 0, 0, 0.3)',
+              }
+            : floorPrice < lowestLvupPrice / mainPrice
+            ? {
+                backgroundColor: 'rgba(255, 0, 0, 0.2)',
+              }
+            : floorPrice < lowest2LvupPrice / mainPrice
+            ? {
+                backgroundColor: 'rgba(255, 0, 0, 0.1)',
               }
             : {}),
         }}
@@ -133,8 +205,8 @@ const Block: FC<{
             </span>
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <div>
+        <Modal.Body className='ps-0 pe-0'>
+          <div className='pb-3 ms-3 me-3'>
             <strong>
               <img
                 className='align-middle'
@@ -154,78 +226,20 @@ const Block: FC<{
               <span className='align-middle'>{data.gmt}GMT</span>
             </strong>
           </div>
-          <hr />
-          <div>
-            ミント費用
-            <br />
-            <Row>
-              <Col>
-                {(mintPrice / mainPrice).toFixed(2)}
-                {tokenData.unit}
-              </Col>
-              <Col>¥{mintPrice.toFixed(2)}</Col>
-            </Row>
-            <strong>
-              最低販売価格
-              <br />
-              <Row>
-                <Col>
-                  {(lowestPrice / mainPrice).toFixed(2)}
-                  {tokenData.unit}
-                </Col>
-                <Col>¥{lowestPrice.toFixed(2)}</Col>
-              </Row>
-            </strong>
+          <CostTable className='p-3 border-bottom border-top' label='ミント費用' cost={mintPrice} />
+          <CostTable
+            className='p-3 border-bottom'
+            label='1足Lvup費用込み'
+            cost={mintPrice + lvupPrice}
+          />
+          <CostTable
+            className='p-3 border-bottom'
+            label='2足Lvup費用込み'
+            cost={mintPrice + 2 * lvupPrice}
+          />
+          <div className='ms-3 me-3 mt-3'>
             <small>
-              利益
-              <br />
-              <Row>
-                <Col>
-                  {(floorPrice - lowestPrice / mainPrice).toFixed(2)}
-                  {tokenData.unit}
-                </Col>
-                <Col>¥{(floorPrice * mainPrice - lowestPrice).toFixed(2)}</Col>
-              </Row>
-            </small>
-          </div>
-          <hr />
-          <div>
-            Lvup込費用
-            <br />
-            <Row>
-              <Col>
-                {((mintPrice + lvupPrice) / mainPrice).toFixed(2)}
-                {tokenData.unit}
-              </Col>
-              <Col>¥{(mintPrice + lvupPrice).toFixed(2)}</Col>
-            </Row>
-            <strong>
-              最低販売価格
-              <br />
-              <Row>
-                <Col>
-                  {(lowestLvupPrice / mainPrice).toFixed(2)}
-                  {tokenData.unit}
-                </Col>
-                <Col>¥{lowestLvupPrice.toFixed(2)}</Col>
-              </Row>
-            </strong>
-            <small>
-              利益
-              <br />
-              <Row>
-                <Col>
-                  {(floorPrice - lowestLvupPrice / mainPrice).toFixed(2)}
-                  {tokenData.unit}
-                </Col>
-                <Col>¥{(floorPrice * mainPrice - lowestLvupPrice).toFixed(2)}</Col>
-              </Row>
-            </small>
-          </div>
-          <hr />
-          <div>
-            <small>
-              Lvup費用
+              1足Lvup費用
               <br />
               <Row>
                 <Col>
