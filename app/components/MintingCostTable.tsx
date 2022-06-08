@@ -145,7 +145,6 @@ const Block: FC<{
   return (
     <>
       <div
-        className='p-1'
         style={{
           ...(floorPrice < lowestPrice / mainPrice
             ? {
