@@ -5,7 +5,7 @@ import { ShoeRarerity } from 'app/models/ShoeRarerity'
 import { replaceUrl } from 'app/utils'
 import { useRouter } from 'blitz'
 import React, { FC, useEffect, useState } from 'react'
-import { FloatingLabel, Form, Row } from 'react-bootstrap'
+import { Button, FloatingLabel, Form, OverlayTrigger, Popover, Row } from 'react-bootstrap'
 import { LabeledForm } from './LabeledForm'
 import { MintingCostTable } from './MintingCostTable'
 import { MintingRateSelector } from './MintingRateSelector'
@@ -113,25 +113,42 @@ export const HomeSection: FC<HomeSectionProps> = ({ crypts, realm, setRealm }) =
           <LabeledForm label='チェーン'>
             <RealmSelector value={realm} onChange={setRealm} />
           </LabeledForm>
-        </Row>
-        <Row className='mb-2'>
-          <LabeledForm label='Common費用'>
-            <MintingRateSelector
-              realm={realm}
-              crypts={crypts}
-              mintingRateList={MintingRateListCommon}
-              value={mintingRateCommon}
-              onChange={setMintingRateCommon}
-            />
-          </LabeledForm>
-          <LabeledForm label='Uncommon費用'>
-            <MintingRateSelector
-              realm={realm}
-              crypts={crypts}
-              mintingRateList={MintingRateListUncommon}
-              value={mintingRateUncommon}
-              onChange={setMintingRateUncommon}
-            />
+          <LabeledForm label='　'>
+            <OverlayTrigger
+              trigger='click'
+              rootClose
+              placement={'bottom'}
+              overlay={
+                <Popover>
+                  <Popover.Body>
+                    <Row>
+                      <LabeledForm label='Common費用' className='mb-2'>
+                        <MintingRateSelector
+                          realm={realm}
+                          crypts={crypts}
+                          mintingRateList={MintingRateListCommon}
+                          value={mintingRateCommon}
+                          onChange={setMintingRateCommon}
+                        />
+                      </LabeledForm>
+                      <LabeledForm label='Uncommon費用' className='mb-2'>
+                        <MintingRateSelector
+                          realm={realm}
+                          crypts={crypts}
+                          mintingRateList={MintingRateListUncommon}
+                          value={mintingRateUncommon}
+                          onChange={setMintingRateUncommon}
+                        />
+                      </LabeledForm>
+                    </Row>
+                  </Popover.Body>
+                </Popover>
+              }
+            >
+              <Button variant='secondary' size='sm' className='mt-'>
+                費用設定
+              </Button>
+            </OverlayTrigger>
           </LabeledForm>
         </Row>
         <Row className='mb-2'>
