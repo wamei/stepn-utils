@@ -13,7 +13,7 @@ import {
 import { replaceUrl } from 'app/utils'
 import { BlitzPage, useRouter } from 'blitz'
 import React, { useEffect, useState } from 'react'
-import { Container, Tab, Tabs } from 'react-bootstrap'
+import { Alert, Container, Tab, Tabs } from 'react-bootstrap'
 import QueryString from 'query-string'
 
 const Home: BlitzPage = () => {
@@ -72,6 +72,9 @@ const Home: BlitzPage = () => {
       >
         <Tab eventKey='home' title='ミント費用'>
           <Container className='mt-2'>
+            <Alert variant='danger'>
+              <small>2022/06/08のミント費用変更に未対応です</small>
+            </Alert>
             <CryptPriceTable
               crypts={crypts.filter(
                 c =>
