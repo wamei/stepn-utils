@@ -29,7 +29,8 @@ const Home: BlitzPage = () => {
       if (crypts.length === 0) {
         setCrypts(cache)
       }
-      if (new Date().getTime() < (cache[0]?.lastUpdatedAt.getTime() || 0) + 60 * 5 * 1000) {
+      const now = new Date().getTime()
+      if (cache.every(c => now < (c.lastUpdatedAt.getTime() || 0) + 60 * 5 * 1000)) {
         return
       }
       setCrypts(cache)
