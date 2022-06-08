@@ -83,7 +83,6 @@ const Home: BlitzPage = () => {
                   c.id === RealmToken[realm].gst ||
                   c.id === RealmToken[realm].gmt,
               )}
-              className='mb-3'
             />
             <HomeSection crypts={crypts} realm={realm} setRealm={setRealm} />
           </Container>
