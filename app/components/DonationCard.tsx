@@ -1,7 +1,7 @@
 import { RealmToken } from 'app/models/Realm'
 import Link from 'next/link'
 import React, { FC } from 'react'
-import { Card, FloatingLabel, Form } from 'react-bootstrap'
+import { Card, Col, FloatingLabel, Form, Row } from 'react-bootstrap'
 
 type DonationCardProps = {
   className?: string
@@ -15,10 +15,14 @@ export const DonationCard: FC<DonationCardProps> = ({ className }) => {
     <Card className={className}>
       <Card.Body>
         <div className='mb-2'>
-          チップはこちら{' '}
-          <Link href='https://twitter.com/Wam_Ei'>
-            <small>@Wam_Ei</small>
-          </Link>
+          <Row>
+            <Col>チップはこちら</Col>
+            <Col className='text-end'>
+              <Link href='https://twitter.com/Wam_Ei'>
+                <small>@Wam_Ei</small>
+              </Link>
+            </Col>
+          </Row>
         </div>
         <FloatingLabel
           onClick={() => {
@@ -26,7 +30,6 @@ export const DonationCard: FC<DonationCardProps> = ({ className }) => {
             text.select()
             document.execCommand('copy')
           }}
-          controlId='solanaInput'
           label={
             <>
               <img
@@ -41,7 +44,12 @@ export const DonationCard: FC<DonationCardProps> = ({ className }) => {
           }
           className='mb-3'
         >
-          <Form.Control id='donation_sol_address' type='text' value={Solana_Address} />
+          <Form.Control
+            id='donation_sol_address'
+            type='text'
+            value={Solana_Address}
+            onChange={e => e}
+          />
         </FloatingLabel>
         <FloatingLabel
           onClick={() => {
@@ -49,7 +57,6 @@ export const DonationCard: FC<DonationCardProps> = ({ className }) => {
             text.select()
             document.execCommand('copy')
           }}
-          controlId='bscInput'
           label={
             <>
               <img
@@ -64,7 +71,12 @@ export const DonationCard: FC<DonationCardProps> = ({ className }) => {
           }
           className='mb-3'
         >
-          <Form.Control id='donation_bsc_address' type='text' value={BSC_Address} />
+          <Form.Control
+            id='donation_bsc_address'
+            type='text'
+            value={BSC_Address}
+            onChange={e => e}
+          />
         </FloatingLabel>
       </Card.Body>
     </Card>
