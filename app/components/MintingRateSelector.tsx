@@ -1,6 +1,8 @@
+import { Cryptocurrency } from 'app/models/Cryptcurrency'
 import { MintingRate } from 'app/models/MintingRate'
-import { FC, useEffect, useState } from 'react'
-import { Form } from 'react-bootstrap'
+import { Realm, RealmToken } from 'app/models/Realm'
+import React, { FC, useEffect } from 'react'
+import { Col, Dropdown, Row } from 'react-bootstrap'
 
 const MintingRateList: MintingRate[] = [
   {
@@ -30,19 +32,25 @@ const MintingRateList: MintingRate[] = [
 ]
 
 type MintingRateSelectorProps = {
+  realm: Realm
+  crypts: Cryptocurrency[]
   value: MintingRate
   onChange(rate: MintingRate): void
-  gstPrice: number
+  className?: string
 }
 
 export const MintingRateSelector: FC<MintingRateSelectorProps> = ({
+  realm,
+  crypts,
   value,
   onChange,
-  gstPrice,
+  className,
 }) => {
-  const [_value, setValue] = useState<MintingRate>(value)
+  const gst = crypts.find(v => v.id === RealmToken[realm].gst)
+  const gmt = crypts.find(v => v.id === RealmToken[realm].gmt)
 
   useEffect(() => {
+    const gstPrice = crypts.find(v => v.id === RealmToken[realm].gst)?.usd || 5
     let mintingRate: MintingRate = { gst: 100, gmt: 100 }
     if (gstPrice < 2) {
       mintingRate = { gst: 200, gmt: 0 }
@@ -57,28 +65,75 @@ export const MintingRateSelector: FC<MintingRateSelectorProps> = ({
     } else if (gstPrice >= 10) {
       mintingRate = { gst: 40, gmt: 160 }
     }
-    setValue(mintingRate)
     onChange(mintingRate)
-  }, [gstPrice, onChange])
+  }, [crypts, onChange])
 
   return (
-    <Form.Select
-      value={JSON.stringify(_value)}
-      onChange={e => {
-        const mintingRate = JSON.parse(e.target.value) as MintingRate
-        setValue(mintingRate)
-        onChange(mintingRate)
-      }}
-      className='mb-2'
-    >
-      {MintingRateList.map(mr => {
-        const data = JSON.stringify(mr)
-        return (
-          <option key={data} value={data}>
-            {mr.gst}GST-{mr.gmt}GMT
-          </option>
-        )
-      })}
-    </Form.Select>
+    <Dropdown className={className}>
+      <Dropdown.Toggle variant='outline-secondary'>
+        <img
+          className='me-1 align-middle'
+          src={`/stepn-utils/${RealmToken[realm].gst}.png`}
+          alt={gst?.name}
+          width='20'
+          height='20'
+        />
+        <span className='me-2 align-middle'>
+          {value.gst}
+          {gst?.symbol}
+        </span>
+        <img
+          className='me-1 align-middle'
+          src={`/stepn-utils/${RealmToken[realm].gmt}.png`}
+          alt={gmt?.name}
+          width='20'
+          height='20'
+        />
+        <span className='align-middle'>
+          {value.gmt}
+          {gmt?.symbol}
+        </span>
+      </Dropdown.Toggle>
+      <Dropdown.Menu>
+        {MintingRateList.flatMap((mr, i) => {
+          const ret = (
+            <Dropdown.Item key={`${mr.gst}-${mr.gmt}`} onClick={() => onChange(mr)}>
+              <Row>
+                <Col>
+                  <img
+                    className='me-1 align-middle'
+                    src={`/stepn-utils/${RealmToken[realm].gst}.png`}
+                    alt={gst?.name}
+                    width='20'
+                    height='20'
+                  />
+                  <span className='me-2 align-middle'>
+                    {mr.gst}
+                    {gst?.symbol}
+                  </span>
+                </Col>
+                <Col>
+                  <img
+                    className='me-1 align-middle'
+                    src={`/stepn-utils/${RealmToken[realm].gmt}.png`}
+                    alt={gmt?.name}
+                    width='20'
+                    height='20'
+                  />
+                  <span className='align-middle'>
+                    {mr.gmt}
+                    {gmt?.symbol}
+                  </span>
+                </Col>
+              </Row>
+            </Dropdown.Item>
+          )
+          if (i === 0) {
+            return ret
+          }
+          return [<Dropdown.Divider key={`divine-${i}`} />, ret]
+        })}
+      </Dropdown.Menu>
+    </Dropdown>
   )
 }

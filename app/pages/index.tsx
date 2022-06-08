@@ -128,9 +128,11 @@ const Home: BlitzPage = () => {
             />
             <RealmSelector value={realm} onChange={setRealm} />
             <MintingRateSelector
+              className='mb-2'
+              realm={realm}
+              crypts={crypts}
               value={mintingRate}
               onChange={setMintingRate}
-              gstPrice={crypts.find(v => v.id === RealmToken[realm].gst)?.usd || 5}
             />
             <ShoeRareritySelector id='r1' value={rarerity1} onChange={setRarerity1} />
             <ShoeRareritySelector id='r2' value={rarerity2} onChange={setRarerity2} />
