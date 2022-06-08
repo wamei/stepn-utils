@@ -222,17 +222,17 @@ const Block: FC<{
           <CostTable className='p-3 border-bottom border-top' label='ミント費用' cost={mintPrice} />
           <CostTable
             className='p-3 border-bottom'
-            label='1足Lvup費用込み'
+            label='1足分Lvup費用込'
             cost={mintPrice + lvupPrice}
           />
           <CostTable
             className='p-3 border-bottom'
-            label='2足Lvup費用込み'
+            label='2足分Lvup費用込'
             cost={mintPrice + 2 * lvupPrice}
           />
           <div className='ms-3 me-3 mt-3'>
             <small>
-              1足Lvup費用
+              1足分Lvup費用
               <br />
               <Row>
                 <Col>
