@@ -10,6 +10,9 @@ type CryptExchangeSectionProps = {
   className?: string
 }
 
+const WSU_Key_CryptExchange_SelectedCryptId = 'WSU_Key_CryptExchange_SelectedCryptId'
+const WSU_Key_CryptExchange_Price = 'WSU_Key_CryptExchange_Price'
+
 export const CryptExchangeSection: FC<CryptExchangeSectionProps> = ({
   crypts,
   className,
@@ -26,15 +29,35 @@ export const CryptExchangeSection: FC<CryptExchangeSectionProps> = ({
     if (crypt) {
       return
     }
+    const id = localStorage.getItem(WSU_Key_CryptExchange_SelectedCryptId)
+    if (id) {
+      setCrypt(crypts.find(c => c.id === id) as Cryptocurrency)
+      return
+    }
     setCrypt(crypts.find(c => c.id === RealmToken[realm].main) as Cryptocurrency)
   }, [crypts])
+
+  useEffect(() => {
+    const price = localStorage.getItem(WSU_Key_CryptExchange_Price)
+    if (price) {
+      setPriceString(price)
+    }
+  }, [])
 
   useEffect(() => {
     if (!priceString) {
       return
     }
     setPrice(Number(priceString))
+    localStorage.setItem(WSU_Key_CryptExchange_Price, priceString)
   }, [priceString])
+
+  useEffect(() => {
+    if (!crypt) {
+      return
+    }
+    localStorage.setItem(WSU_Key_CryptExchange_SelectedCryptId, crypt.id)
+  }, [crypt])
 
   if (!crypt) {
     return <p>Loading...</p>

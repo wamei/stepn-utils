@@ -13,7 +13,8 @@ import {
 import { replaceUrl } from 'app/utils'
 import { BlitzPage, useRouter } from 'blitz'
 import React, { useEffect, useState } from 'react'
-import { Card, Container, Tab, Tabs } from 'react-bootstrap'
+import { Container, Tab, Tabs } from 'react-bootstrap'
+import QueryString from 'query-string'
 
 const Home: BlitzPage = () => {
   const router = useRouter()
@@ -42,8 +43,9 @@ const Home: BlitzPage = () => {
   }, [])
 
   useEffect(() => {
+    const query = QueryString.parse(location.search)
     replaceUrl({
-      ...router.query,
+      ...query,
       tab,
       realm,
     })

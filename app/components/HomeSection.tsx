@@ -5,13 +5,13 @@ import { ShoeRarerity } from 'app/models/ShoeRarerity'
 import { replaceUrl } from 'app/utils'
 import { useRouter } from 'blitz'
 import React, { FC, useEffect, useState } from 'react'
-import { Col, FloatingLabel, Form, Row } from 'react-bootstrap'
-import { ReactNode } from 'react-transition-group/node_modules/@types/react'
+import { FloatingLabel, Form, Row } from 'react-bootstrap'
 import { LabeledForm } from './LabeledForm'
 import { MintingCostTable } from './MintingCostTable'
 import { MintingRateSelector } from './MintingRateSelector'
 import { RealmSelector } from './RealmSelector'
 import { ShoeRareritySelector } from './ShoeRareritySelector'
+import QueryString from 'query-string'
 
 type HomeSectionProps = {
   crypts: Cryptocurrency[]
@@ -30,12 +30,14 @@ export const HomeSection: FC<HomeSectionProps> = ({ crypts, realm, setRealm }) =
   }>({})
 
   useEffect(() => {
+    const query = QueryString.parse(location.search)
     replaceUrl({
-      ...router.query,
-      realm,
+      ...query,
+      r1: rarerity1,
+      r2: rarerity2,
       ...floorPrices,
     })
-  }, [replaceUrl, floorPrices])
+  }, [replaceUrl, floorPrices, rarerity1, rarerity2])
 
   useEffect(() => {
     setFloorPriceString(String(floorPrices[realm]))
@@ -52,6 +54,12 @@ export const HomeSection: FC<HomeSectionProps> = ({ crypts, realm, setRealm }) =
     const qRealm = router.query.realm as Realm
     if (router.query[qRealm]) {
       setFloorPriceString(String(router.query[qRealm]))
+    }
+    if (router.query.r1) {
+      setRarerity1(router.query.r1 as ShoeRarerity)
+    }
+    if (router.query.r2) {
+      setRarerity2(router.query.r2 as ShoeRarerity)
     }
     Object.values(Realm).forEach(realm => {
       if (router.query[realm]) {

@@ -10,7 +10,7 @@ type CryptocurrenciesResponse = {
   lastUpdatedAt: string
 }[]
 
-const CryptocurrenciesResponseKey = 'CryptocurrenciesResponse'
+const CryptocurrenciesResponseKey = 'WSU_CryptocurrenciesResponse'
 
 export const fetchCryptocurrencies = async (): Promise<Cryptocurrency[]> => {
   const response = await fetch(
