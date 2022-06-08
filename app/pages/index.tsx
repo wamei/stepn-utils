@@ -72,8 +72,8 @@ const Home: BlitzPage = () => {
       >
         <Tab eventKey='home' title='ミント費用'>
           <Container className='mt-2'>
-            <Alert variant='danger'>
-              <small>2022/06/08のミント費用変更に未対応です</small>
+            <Alert variant='warning'>
+              <small>2022/06/08のミント費用変更暫定対応</small>
             </Alert>
             <CryptPriceTable
               crypts={crypts.filter(
