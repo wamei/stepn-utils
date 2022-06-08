@@ -125,13 +125,13 @@ const Block: FC<{
             <small>利益</small>
           </Col>
           <Col>
-            <small>
+            <small className={`${benefit < 0 ? 'text-danger' : ''}`}>
               {(benefit / mainPrice).toFixed(2)}
               {tokenData.unit}
             </small>
           </Col>
           <Col>
-            <small>¥{benefit.toFixed(2)}</small>
+            <small className={`${benefit < 0 ? 'text-danger' : ''}`}>¥{benefit.toFixed(2)}</small>
           </Col>
         </Row>
       </div>
