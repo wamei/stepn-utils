@@ -1,5 +1,6 @@
 import { CryptExchangeSection } from 'app/components/CryptExchangeSection'
 import { CryptPriceTable } from 'app/components/CryptPriceTable'
+import { DonationCard } from 'app/components/DonationCard'
 import { HomeSection } from 'app/components/HomeSection'
 import { LevelUpCostTable } from 'app/components/LevelUpCostTable'
 import { RealmSelector } from 'app/components/RealmSelector'
@@ -12,7 +13,7 @@ import {
 import { replaceUrl } from 'app/utils'
 import { BlitzPage, useRouter } from 'blitz'
 import React, { useEffect, useState } from 'react'
-import { Container, Tab, Tabs } from 'react-bootstrap'
+import { Card, Container, Tab, Tabs } from 'react-bootstrap'
 
 const Home: BlitzPage = () => {
   const router = useRouter()
@@ -97,6 +98,7 @@ const Home: BlitzPage = () => {
           </Container>
         </Tab>
       </Tabs>
+      <DonationCard className='mt-4 border-0 border-top border-bottom' />
     </>
   )
 }
