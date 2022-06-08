@@ -8,7 +8,7 @@ import React, { FC, useEffect, useState } from 'react'
 import { FloatingLabel, Form, Row } from 'react-bootstrap'
 import { LabeledForm } from './LabeledForm'
 import { MintingCostTable } from './MintingCostTable'
-import { MintingRateSelector } from './MintingRateSelector'
+import { MintingRateList, MintingRateSelector } from './MintingRateSelector'
 import { RealmSelector } from './RealmSelector'
 import { ShoeRareritySelector } from './ShoeRareritySelector'
 import QueryString from 'query-string'
@@ -21,7 +21,7 @@ type HomeSectionProps = {
 
 export const HomeSection: FC<HomeSectionProps> = ({ crypts, realm, setRealm }) => {
   const router = useRouter()
-  const [mintingRate, setMintingRate] = useState<MintingRate>({ gst: 360, gmt: 40 })
+  const [mintingRate, setMintingRate] = useState<MintingRate>(MintingRateList[0] as MintingRate)
   const [rarerity1, setRarerity1] = useState<ShoeRarerity>(ShoeRarerity.Common)
   const [rarerity2, setRarerity2] = useState<ShoeRarerity>(ShoeRarerity.Common)
   const [floorPriceString, setFloorPriceString] = useState('')
