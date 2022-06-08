@@ -21,7 +21,7 @@ type HomeSectionProps = {
 
 export const HomeSection: FC<HomeSectionProps> = ({ crypts, realm, setRealm }) => {
   const router = useRouter()
-  const [mintingRate, setMintingRate] = useState<MintingRate>({ gst: 100, gmt: 100 })
+  const [mintingRate, setMintingRate] = useState<MintingRate>({ gst: 360, gmt: 40 })
   const [rarerity1, setRarerity1] = useState<ShoeRarerity>(ShoeRarerity.Common)
   const [rarerity2, setRarerity2] = useState<ShoeRarerity>(ShoeRarerity.Common)
   const [floorPriceString, setFloorPriceString] = useState('')

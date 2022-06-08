@@ -113,10 +113,8 @@ const Block: FC<{
         <Row className='fw-bold'>
           <Col xs={5}>最低販売価格</Col>
           <Col>
-            <strong>
-              {(lowestPrice / mainPrice).toFixed(2)}
-              {tokenData.unit}
-            </strong>
+            {(lowestPrice / mainPrice).toFixed(2)}
+            {tokenData.unit}
           </Col>
           <Col>¥{lowestPrice.toFixed(2)}</Col>
         </Row>
