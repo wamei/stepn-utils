@@ -16,11 +16,17 @@ type MintingCostTableProps = {
 
 const mints = [0, 1, 2, 3, 4, 5, 6]
 
-const calcMag = (rarerity: ShoeRarerity) => {
+const calcRarerityForGst = (rarerity: ShoeRarerity) => {
   if (rarerity === ShoeRarerity.Uncommon) {
-    return 4
+    return 1000
   }
-  return 1
+  return 0
+}
+const calcRarerityForGmt = (rarerity: ShoeRarerity) => {
+  if (rarerity === ShoeRarerity.Uncommon) {
+    return 200
+  }
+  return 0
 }
 
 const calc = (
@@ -30,10 +36,10 @@ const calc = (
   r2: ShoeRarerity,
   m2: number,
 ) => {
-  const base1gst = (mintingRate.gst / 2) * calcMag(r1)
-  const base2gst = (mintingRate.gst / 2) * calcMag(r2)
-  const base1gmt = (mintingRate.gmt / 2) * calcMag(r1)
-  const base2gmt = (mintingRate.gmt / 2) * calcMag(r2)
+  const base1gst = (mintingRate.gst + calcRarerityForGst(r1)) / 2
+  const base2gst = (mintingRate.gst + calcRarerityForGst(r2)) / 2
+  const base1gmt = (mintingRate.gmt + calcRarerityForGmt(r1)) / 2
+  const base2gmt = (mintingRate.gmt + calcRarerityForGmt(r2)) / 2
   return {
     gst:
       base1gst +
