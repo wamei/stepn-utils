@@ -14,6 +14,7 @@ class MyDocument extends Document {
         <DocumentHead>
           <title>STEPN utils</title>
           <link rel='shortcut icon' href='/stepn-utils/favicon.ico' />
+          <meta name='description' content='STEPN役立ちツール' />
         </DocumentHead>
         <body>
           <Main />
