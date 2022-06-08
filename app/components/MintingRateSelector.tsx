@@ -1,5 +1,5 @@
 import { Cryptocurrency } from 'app/models/Cryptcurrency'
-import { MintingRate } from 'app/models/MintingRate'
+import { calcAdditionalGmt, MintingRate } from 'app/models/MintingRate'
 import { Realm, RealmToken } from 'app/models/Realm'
 import React, { FC, useEffect, useState } from 'react'
 import { ButtonGroup, Col, Dropdown, DropdownButton, Form, Row } from 'react-bootstrap'
@@ -86,6 +86,7 @@ export const MintingRateSelector: FC<MintingRateSelectorProps> = ({
                 setBaseGmt(e.target.value)
               }}
             />
+            +{calcAdditionalGmt(value, gst?.usd || 0)}
           </>
         ) : (
           <>
@@ -104,7 +105,9 @@ export const MintingRateSelector: FC<MintingRateSelectorProps> = ({
               width='20'
               height='20'
             />
-            <span className='align-middle'>{value.gmt}</span>
+            <span className='align-middle'>
+              {value.gmt}+{calcAdditionalGmt(value, gst?.usd || 0)}
+            </span>
           </>
         )
       }
@@ -119,7 +122,7 @@ export const MintingRateSelector: FC<MintingRateSelectorProps> = ({
             }}
           >
             <Row>
-              <Col xs={6}>
+              <Col xs={5}>
                 <img
                   className='me-1 align-middle'
                   src={`/stepn-utils/${RealmToken[realm].gst}.png`}
@@ -131,7 +134,7 @@ export const MintingRateSelector: FC<MintingRateSelectorProps> = ({
                   <small>{mr.gst}</small>
                 </span>
               </Col>
-              <Col xs={6}>
+              <Col xs={7}>
                 <img
                   className='me-1 align-middle'
                   src={`/stepn-utils/${RealmToken[realm].gmt}.png`}
@@ -140,7 +143,9 @@ export const MintingRateSelector: FC<MintingRateSelectorProps> = ({
                   height='15'
                 />
                 <span className='align-middle'>
-                  <small>{mr.gmt}</small>
+                  <small>
+                    {mr.gmt}+{calcAdditionalGmt(mr, gst?.usd || 0)}
+                  </small>
                 </span>
               </Col>
             </Row>
@@ -159,7 +164,7 @@ export const MintingRateSelector: FC<MintingRateSelectorProps> = ({
       >
         <small>自由入力</small>
         <Row>
-          <Col xs={6}>
+          <Col xs={5}>
             <img
               className='me-1 align-middle'
               src={`/stepn-utils/${RealmToken[realm].gst}.png`}
@@ -171,7 +176,7 @@ export const MintingRateSelector: FC<MintingRateSelectorProps> = ({
               <small>{baseGst}</small>
             </span>
           </Col>
-          <Col xs={6}>
+          <Col xs={7}>
             <img
               className='me-1 align-middle'
               src={`/stepn-utils/${RealmToken[realm].gmt}.png`}
@@ -180,7 +185,9 @@ export const MintingRateSelector: FC<MintingRateSelectorProps> = ({
               height='15'
             />
             <span className='align-middle'>
-              <small>{baseGmt}</small>
+              <small>
+                {baseGmt}+{calcAdditionalGmt(value, gst?.usd || 0)}
+              </small>
             </span>
           </Col>
         </Row>
