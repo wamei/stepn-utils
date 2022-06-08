@@ -262,7 +262,7 @@ export const MintingCostTable: FC<MintingCostTableProps> = ({
       <div className='text-start'>
         <small>費用表タップで詳細を確認</small>
       </div>
-      <Table bordered hover size='sm'>
+      <Table bordered size='sm'>
         <tbody>
           <tr>
             <td></td>
