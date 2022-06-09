@@ -12,22 +12,24 @@ export const CryptPriceTable: FC<CryptPriceTableProps> = ({ crypts, className })
     <div className={className}>
       <Table striped bordered hover size='sm' className='mb-0'>
         <tbody>
-          {crypts.map(c => (
-            <tr key={c.id}>
-              <td>
-                <img
-                  className='me-1 align-middle'
-                  src={`/stepn-utils/${c.id}.png`}
-                  alt={c.name}
-                  width='15'
-                  height='15'
-                />
-                <span className='align-middle'>{c.short}</span>
-              </td>
-              <td>¥{c.jpy}</td>
-              <td>${c.usd}</td>
-            </tr>
-          ))}
+          {crypts
+            .filter(c => c.id !== 'bitcoin')
+            .map(c => (
+              <tr key={c.id}>
+                <td className='text-nowrap'>
+                  <img
+                    className='me-1 align-middle'
+                    src={`/stepn-utils/${c.id}.png`}
+                    alt={c.name}
+                    width='15'
+                    height='15'
+                  />
+                  <span className='align-middle'>{c.name}</span>
+                </td>
+                <td>¥{c.jpy.toFixed(3)}</td>
+                <td>${c.usd.toFixed(3)}</td>
+              </tr>
+            ))}
         </tbody>
       </Table>
       <div className='text-end' style={{ marginTop: '-6px' }}>

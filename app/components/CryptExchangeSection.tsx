@@ -1,6 +1,7 @@
 import { Cryptocurrency } from 'app/models/Cryptcurrency'
 import React, { FC, useEffect, useState } from 'react'
-import { FloatingLabel, Form, InputGroup, Table } from 'react-bootstrap'
+import { Col, FloatingLabel, Form, InputGroup, Row, Table } from 'react-bootstrap'
+import { CryptPriceTable } from './CryptPriceTable'
 import { CryptSelector } from './CryptSelector'
 
 type CryptExchangeSectionProps = {
@@ -69,25 +70,28 @@ export const CryptExchangeSection: FC<CryptExchangeSectionProps> = ({ crypts, cl
       name: 'Japanese Yen',
       short: 'JPY',
       jpy: 1,
-      usd: crypts.find(c => c.id === 'usdc')?.usd as number,
+      usd: 1 / (crypts.find(c => c.id === 'usd-coin')?.jpy as number),
       lastUpdatedAt: crypts[0]?.lastUpdatedAt as Date,
     },
-  ]
+  ].filter(c => c.id !== 'bitcoin')
 
   return (
     <div className={className}>
-      <InputGroup className='mb-3'>
-        <>
-          <FloatingLabel label={`${crypt.name}`}>
-            <Form.Control
-              type='number'
-              value={priceString}
-              onChange={e => {
-                setPriceString(e.target.value)
-              }}
-            />
-          </FloatingLabel>
-        </>
+      <Row className='mb-3 mt-3'>
+        <Col className='text-center'>
+          <h5>両替エミュレータ</h5>
+        </Col>
+      </Row>
+      <InputGroup className='mb-3 flex-nowrap'>
+        <FloatingLabel label={`${crypt.name}`}>
+          <Form.Control
+            type='number'
+            value={priceString}
+            onChange={e => {
+              setPriceString(e.target.value)
+            }}
+          />
+        </FloatingLabel>
         <CryptSelector crypts={jpyAddedCrypts} value={crypt} onChange={setCrypt} />
       </InputGroup>
       <Table striped bordered hover size='sm' className='mb-0'>
@@ -102,7 +106,7 @@ export const CryptExchangeSection: FC<CryptExchangeSectionProps> = ({ crypts, cl
                   width='15'
                   height='15'
                 />
-                <span className='align-middle'>{c.short}</span>
+                <span className='align-middle'>{c.name}</span>
               </td>
               <td className='text-end'>{((crypt.jpy * price * 0.9936) / c.jpy).toFixed(2)}</td>
               <td>{c.symbol}</td>
@@ -110,6 +114,12 @@ export const CryptExchangeSection: FC<CryptExchangeSectionProps> = ({ crypts, cl
           ))}
         </tbody>
       </Table>
+      <Row className='mb-3 mt-3'>
+        <Col className='text-center'>
+          <h5>価格一覧</h5>
+        </Col>
+      </Row>
+      <CryptPriceTable crypts={jpyAddedCrypts} />
     </div>
   )
 }
