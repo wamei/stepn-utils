@@ -23,6 +23,8 @@ type FloorPrices = {
   [key: string]: number
 }
 
+export type UnitType = 'realm' | 'jpy' | 'usd'
+
 type Context = {
   crypts: Cryptocurrency[]
   realm: Realm
@@ -39,6 +41,10 @@ type Context = {
   setShoe1: React.Dispatch<React.SetStateAction<Shoe>>
   shoe2: Shoe
   setShoe2: React.Dispatch<React.SetStateAction<Shoe>>
+  lvupSneakerNum: number
+  setLvupSneakerNum: React.Dispatch<React.SetStateAction<number>>
+  unitType: UnitType
+  setUnitType: React.Dispatch<React.SetStateAction<UnitType>>
 }
 
 export const Context = createContext<Context>({
@@ -68,6 +74,10 @@ export const Context = createContext<Context>({
     mint: 0,
   },
   setShoe2: v => v,
+  lvupSneakerNum: 0,
+  setLvupSneakerNum: v => v,
+  unitType: 'realm',
+  setUnitType: v => v,
 })
 
 const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
@@ -92,6 +102,10 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
   })
   const [floorPriceString, setFloorPriceString] = useState('')
   const [floorPrices, setFloorPrices] = useState<FloorPrices>({})
+
+  const [lvupSneakerNum, setLvupSneakerNum] = useState(0)
+  const [unitType, setUnitType] = useState<UnitType>('realm')
+
   const [isInited, setIsInited] = useState(false)
 
   const fetchData = async () => {
@@ -137,9 +151,21 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
         gmtC: mintingRateCommon.gmt,
         gstU: mintingRateUncommon.gst,
         gmtU: mintingRateUncommon.gmt,
+        lvsn: lvupSneakerNum,
+        unitType: unitType,
       }),
     })
-  }, [router.isReady, realm, floorPrices, shoe1, shoe2, mintingRateCommon, mintingRateUncommon])
+  }, [
+    router.isReady,
+    realm,
+    floorPrices,
+    shoe1,
+    shoe2,
+    mintingRateCommon,
+    mintingRateUncommon,
+    lvupSneakerNum,
+    unitType,
+  ])
 
   useEffect(() => {
     setFloorPriceString(String(floorPrices[realm]))
@@ -204,6 +230,14 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
         mint: qM2,
       }))
     }
+    const qLvsn = Number(router.query.lvsn)
+    if (router.query.lvsn && qLvsn !== lvupSneakerNum) {
+      setLvupSneakerNum(qLvsn)
+    }
+    const qUnitType = router.query.unitType as UnitType
+    if (qUnitType && qUnitType != unitType) {
+      setUnitType(qUnitType)
+    }
     const qGstC = Number(router.query.gstC)
     const qGmtC = Number(router.query.gmtC)
     if (
@@ -257,6 +291,10 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
         setMintingRateCommon,
         mintingRateUncommon,
         setMintingRateUncommon,
+        lvupSneakerNum,
+        setLvupSneakerNum,
+        unitType,
+        setUnitType,
       }}
     >
       <div className='d-flex flex-column vh-100'>

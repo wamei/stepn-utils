@@ -1,9 +1,7 @@
-import { Context } from 'app/layouts/Layout'
-import { Cryptocurrency } from 'app/models/Cryptcurrency'
-import { MintingRate } from 'app/models/MintingRate'
-import { Realm, RealmToken } from 'app/models/Realm'
-import { ShoeRarerity, ShoeRarerityColor } from 'app/models/ShoeRarerity'
-import React, { FC, useContext, useState } from 'react'
+import { Context, UnitType } from 'app/layouts/Layout'
+import { RealmToken } from 'app/models/Realm'
+import { ShoeRarerityColor } from 'app/models/ShoeRarerity'
+import React, { FC, useContext } from 'react'
 import { ButtonGroup, Card, Col, FloatingLabel, Form, Row, ToggleButton } from 'react-bootstrap'
 import { CryptPriceTable } from './CryptPriceTable'
 import { LabeledForm } from './LabeledForm'
@@ -29,6 +27,10 @@ export const MintSection: FC = () => {
     setShoe1,
     shoe2,
     setShoe2,
+    lvupSneakerNum,
+    setLvupSneakerNum,
+    unitType,
+    setUnitType,
   } = context
 
   const {
@@ -58,10 +60,6 @@ export const MintSection: FC = () => {
 
   const gst = crypts.find(v => v.id === RealmToken[realm].gst)
   const gmt = crypts.find(v => v.id === RealmToken[realm].gmt)
-
-  const [lvupSneakerNum, setLvupSneakerNum] = useState(0)
-  type UnitType = 'realm' | 'jpy' | 'usd'
-  const [unitType, setUnitType] = useState<UnitType>('realm')
 
   const unit = unitType === 'realm' ? RealmToken[realm].unit : unitType === 'jpy' ? 'JPY' : 'USD'
 
