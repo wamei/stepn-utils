@@ -36,6 +36,10 @@ export const CryptExchangeSection: FC<CryptExchangeSectionProps> = ({ crypts, cl
     if (price) {
       setPriceString(price)
     }
+    const id = localStorage.getItem(WSU_Key_CryptExchange_SelectedCryptId)
+    if (id) {
+      setCrypt(crypts.find(c => c.id === id) as Cryptocurrency)
+    }
   }, [])
 
   useEffect(() => {
