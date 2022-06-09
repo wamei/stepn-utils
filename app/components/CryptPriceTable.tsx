@@ -10,7 +10,6 @@ type CryptPriceTableProps = {
 export const CryptPriceTable: FC<CryptPriceTableProps> = ({ crypts, className }) => {
   return (
     <div className={className}>
-      {crypts.length === 0 && <p>Loading...</p>}
       <Table striped bordered hover size='sm' className='mb-0'>
         <tbody>
           {crypts.map(c => (

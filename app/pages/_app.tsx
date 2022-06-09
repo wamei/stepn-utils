@@ -6,6 +6,7 @@ import {
   useQueryErrorResetBoundary,
 } from 'blitz'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import './app.css'
 
 export default function App({ Component, pageProps }: AppProps) {
   const getLayout = Component.getLayout || (page => page)

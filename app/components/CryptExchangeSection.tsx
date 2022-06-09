@@ -1,23 +1,17 @@
 import { Cryptocurrency } from 'app/models/Cryptcurrency'
-import { Realm, RealmToken } from 'app/models/Realm'
 import React, { FC, useEffect, useState } from 'react'
 import { FloatingLabel, Form, InputGroup, Table } from 'react-bootstrap'
 import { CryptSelector } from './CryptSelector'
 
 type CryptExchangeSectionProps = {
   crypts: Cryptocurrency[]
-  realm: Realm
   className?: string
 }
 
 const WSU_Key_CryptExchange_SelectedCryptId = 'WSU_Key_CryptExchange_SelectedCryptId'
 const WSU_Key_CryptExchange_Price = 'WSU_Key_CryptExchange_Price'
 
-export const CryptExchangeSection: FC<CryptExchangeSectionProps> = ({
-  crypts,
-  className,
-  realm,
-}) => {
+export const CryptExchangeSection: FC<CryptExchangeSectionProps> = ({ crypts, className }) => {
   const [price, setPrice] = useState(1)
   const [priceString, setPriceString] = useState('1')
   const [crypt, setCrypt] = useState<Cryptocurrency>(crypts[0] as Cryptocurrency)
@@ -34,7 +28,7 @@ export const CryptExchangeSection: FC<CryptExchangeSectionProps> = ({
       setCrypt(crypts.find(c => c.id === id) as Cryptocurrency)
       return
     }
-    setCrypt(crypts.find(c => c.id === RealmToken[realm].main) as Cryptocurrency)
+    setCrypt(crypts[0] as Cryptocurrency)
   }, [crypts])
 
   useEffect(() => {
@@ -65,7 +59,7 @@ export const CryptExchangeSection: FC<CryptExchangeSectionProps> = ({
 
   return (
     <div className={className}>
-      <h4>通貨変換</h4>
+      <h5>通貨変換</h5>
       <InputGroup className='mb-3'>
         <>
           <FloatingLabel controlId='floatingInput' label={`${crypt.name}`}>

@@ -4,4 +4,5 @@ import { ShoeType } from './ShoeType'
 export type Shoe = {
   type: ShoeType
   rarerity: ShoeRarerity
+  mint: number
 }
