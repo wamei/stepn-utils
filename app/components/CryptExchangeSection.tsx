@@ -57,6 +57,19 @@ export const CryptExchangeSection: FC<CryptExchangeSectionProps> = ({ crypts, cl
     return <p>Loading...</p>
   }
 
+  const jpyAddedCrypts: Cryptocurrency[] = [
+    {
+      id: 'jpy',
+      symbol: 'JPY',
+      name: 'Japanese Yen',
+      short: 'JPY',
+      jpy: 1,
+      usd: crypts.find(c => c.id === 'usdc')?.usd as number,
+      lastUpdatedAt: crypts[0]?.lastUpdatedAt as Date,
+    },
+    ...crypts,
+  ]
+
   return (
     <div className={className}>
       <InputGroup className='mb-3'>
@@ -71,20 +84,11 @@ export const CryptExchangeSection: FC<CryptExchangeSectionProps> = ({ crypts, cl
             />
           </FloatingLabel>
         </>
-        <CryptSelector crypts={crypts} value={crypt} onChange={setCrypt} />
+        <CryptSelector crypts={jpyAddedCrypts} value={crypt} onChange={setCrypt} />
       </InputGroup>
       <Table striped bordered hover size='sm' className='mb-0'>
         <tbody>
-          {[
-            {
-              id: 'jpy',
-              symbol: 'JPY',
-              name: 'Japanese Yen',
-              short: 'JPY',
-              jpy: 1,
-            },
-            ...crypts,
-          ]
+          {jpyAddedCrypts
             .filter(c => c.id !== crypt.id)
             .map(c => (
               <tr key={c.id}>

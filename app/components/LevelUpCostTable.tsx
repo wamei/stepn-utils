@@ -247,13 +247,13 @@ export const LevelUpCostTable: FC<LevelUpCostTableProps> = ({ crypts, realm }) =
               <small>{RealmToken[realm].unit}</small>
             </th>
             <th>
-              <small>円</small>
+              <small>JPY</small>
             </th>
             <th>
               <small>累計</small>
             </th>
             <th>
-              <small>円</small>
+              <small>JPY</small>
             </th>
           </tr>
         </thead>
