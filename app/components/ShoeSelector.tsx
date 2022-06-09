@@ -26,7 +26,6 @@ export const ShoeSelector: FC<ShoeSelectorProps> = ({ id, shoe, setShoe }) => {
         }
       />
       <ShoeRareritySelector
-        id={id}
         value={shoe.rarerity}
         onChange={r =>
           setShoe(old => ({
@@ -34,6 +33,7 @@ export const ShoeSelector: FC<ShoeSelectorProps> = ({ id, shoe, setShoe }) => {
             rarerity: r,
           }))
         }
+        className='mb-2'
       />
       <Form.Range
         value={shoe.mint}

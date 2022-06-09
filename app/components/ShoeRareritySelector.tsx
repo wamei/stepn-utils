@@ -1,36 +1,45 @@
 import { ShoeRarerity, ShoeRarerityColor } from 'app/models/ShoeRarerity'
 import React, { FC } from 'react'
-import { ButtonGroup, ToggleButton } from 'react-bootstrap'
+import { ButtonGroup, Dropdown } from 'react-bootstrap'
 
 type ShoeRareritySelectorProps = {
-  id: string
   value: ShoeRarerity
   onChange(v: ShoeRarerity): void
+  className?: string
 }
 
-export const ShoeRareritySelector: FC<ShoeRareritySelectorProps> = ({ id, value, onChange }) => {
+export const ShoeRareritySelector: FC<ShoeRareritySelectorProps> = ({
+  value,
+  onChange,
+  className,
+}) => {
   return (
     <>
-      <ButtonGroup className='mb-2'>
-        {[ShoeRarerity.Common, ShoeRarerity.Uncommon].map(rarerity => (
-          <ToggleButton
-            key={rarerity}
-            id={`radio-rarerity-${id}-${rarerity}`}
-            type='radio'
-            variant='light'
-            name='radio'
-            value={rarerity}
-            checked={value === rarerity}
-            onChange={e => onChange(e.currentTarget.value as ShoeRarerity)}
-            style={{
-              backgroundColor: value === rarerity ? ShoeRarerityColor[rarerity] : '',
-            }}
-            size='sm'
-          >
-            {rarerity}
-          </ToggleButton>
-        ))}
-      </ButtonGroup>
+      <Dropdown className={className}>
+        <Dropdown.Toggle
+          variant='light'
+          style={{
+            backgroundColor: ShoeRarerityColor[value],
+          }}
+          className='w-100'
+          size='sm'
+        >
+          {value}
+        </Dropdown.Toggle>
+        <Dropdown.Menu>
+          {[ShoeRarerity.Common, ShoeRarerity.Uncommon, ShoeRarerity.Rare].map(rarerity => (
+            <Dropdown.Item
+              key={rarerity}
+              onClick={() => onChange(rarerity)}
+              style={{
+                backgroundColor: ShoeRarerityColor[rarerity],
+              }}
+            >
+              {rarerity}
+            </Dropdown.Item>
+          ))}
+        </Dropdown.Menu>
+      </Dropdown>
     </>
   )
 }

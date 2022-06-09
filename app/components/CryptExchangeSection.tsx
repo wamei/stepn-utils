@@ -62,6 +62,7 @@ export const CryptExchangeSection: FC<CryptExchangeSectionProps> = ({ crypts, cl
   }
 
   const jpyAddedCrypts: Cryptocurrency[] = [
+    ...crypts,
     {
       id: 'jpy',
       symbol: 'JPY',
@@ -71,7 +72,6 @@ export const CryptExchangeSection: FC<CryptExchangeSectionProps> = ({ crypts, cl
       usd: crypts.find(c => c.id === 'usdc')?.usd as number,
       lastUpdatedAt: crypts[0]?.lastUpdatedAt as Date,
     },
-    ...crypts,
   ]
 
   return (
@@ -92,24 +92,22 @@ export const CryptExchangeSection: FC<CryptExchangeSectionProps> = ({ crypts, cl
       </InputGroup>
       <Table striped bordered hover size='sm' className='mb-0'>
         <tbody>
-          {jpyAddedCrypts
-            .filter(c => c.id !== crypt.id)
-            .map(c => (
-              <tr key={c.id}>
-                <td>
-                  <img
-                    className='me-1 align-middle'
-                    src={`/stepn-utils/${c.id}.png`}
-                    alt={c.name}
-                    width='15'
-                    height='15'
-                  />
-                  <span className='align-middle'>{c.short}</span>
-                </td>
-                <td className='text-end'>{((crypt.jpy * price * 0.9936) / c.jpy).toFixed(2)}</td>
-                <td>{c.symbol}</td>
-              </tr>
-            ))}
+          {jpyAddedCrypts.map(c => (
+            <tr key={c.id}>
+              <td>
+                <img
+                  className='me-1 align-middle'
+                  src={`/stepn-utils/${c.id}.png`}
+                  alt={c.name}
+                  width='15'
+                  height='15'
+                />
+                <span className='align-middle'>{c.short}</span>
+              </td>
+              <td className='text-end'>{((crypt.jpy * price * 0.9936) / c.jpy).toFixed(2)}</td>
+              <td>{c.symbol}</td>
+            </tr>
+          ))}
         </tbody>
       </Table>
     </div>
