@@ -1,6 +1,11 @@
 import { DonationCard } from 'app/components/DonationCard'
 import { Cryptocurrency } from 'app/models/Cryptcurrency'
-import { MintingRate, MintingRateListCommon, MintingRateListUncommon } from 'app/models/MintingRate'
+import {
+  MintingRate,
+  MintingRateListCommon,
+  MintingRateListRare,
+  MintingRateListUncommon,
+} from 'app/models/MintingRate'
 import { Realm } from 'app/models/Realm'
 import { Shoe } from 'app/models/Shoe'
 import { ShoeRarerity } from 'app/models/ShoeRarerity'
@@ -37,6 +42,8 @@ type Context = {
   setMintingRateCommon: React.Dispatch<React.SetStateAction<MintingRate>>
   mintingRateUncommon: MintingRate
   setMintingRateUncommon: React.Dispatch<React.SetStateAction<MintingRate>>
+  mintingRateRare: MintingRate
+  setMintingRateRare: React.Dispatch<React.SetStateAction<MintingRate>>
   shoe1: Shoe
   setShoe1: React.Dispatch<React.SetStateAction<Shoe>>
   shoe2: Shoe
@@ -62,6 +69,8 @@ export const Context = createContext<Context>({
   setMintingRateCommon: v => v,
   mintingRateUncommon: MintingRateListUncommon[0] as MintingRate,
   setMintingRateUncommon: v => v,
+  mintingRateRare: MintingRateListRare[0] as MintingRate,
+  setMintingRateRare: v => v,
   shoe1: {
     type: ShoeType.Walker,
     rarerity: ShoeRarerity.Common,
@@ -89,6 +98,9 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
   )
   const [mintingRateUncommon, setMintingRateUncommon] = useState<MintingRate>(
     MintingRateListUncommon[0] as MintingRate,
+  )
+  const [mintingRateRare, setMintingRateRare] = useState<MintingRate>(
+    MintingRateListRare[0] as MintingRate,
   )
   const [shoe1, setShoe1] = useState<Shoe>({
     type: ShoeType.Walker,
@@ -151,6 +163,8 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
         gmtC: mintingRateCommon.gmt,
         gstU: mintingRateUncommon.gst,
         gmtU: mintingRateUncommon.gmt,
+        gstR: mintingRateRare.gst,
+        gmtR: mintingRateRare.gmt,
         lvsn: lvupSneakerNum,
         unitType: unitType,
       }),
@@ -163,6 +177,7 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
     shoe2,
     mintingRateCommon,
     mintingRateUncommon,
+    mintingRateRare,
     lvupSneakerNum,
     unitType,
   ])
@@ -189,7 +204,7 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
     if (qRealm && qRealm != realm) {
       setRealm(qRealm)
     }
-    if (floorPriceString !== router.query[qRealm]) {
+    if (Number(floorPriceString) !== Number(router.query[qRealm])) {
       setFloorPriceString(String(router.query[qRealm]))
     }
     if (router.query.t1 && router.query.t1 !== shoe1.type) {
@@ -262,6 +277,18 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
         gmt: Number(qGmtU),
       })
     }
+    const qGstR = Number(router.query.gstR)
+    const qGmtR = Number(router.query.gmtR)
+    if (
+      router.query.gstR &&
+      router.query.gmtR &&
+      (qGstR != mintingRateRare.gst || qGmtR != mintingRateRare.gmt)
+    ) {
+      setMintingRateRare({
+        gst: Number(qGstR),
+        gmt: Number(qGmtR),
+      })
+    }
     Object.values(Realm).forEach(realm => {
       if (router.query[realm] && router.query[realm] != floorPrices[realm]) {
         setFloorPrices(old => ({
@@ -291,6 +318,8 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
         setMintingRateCommon,
         mintingRateUncommon,
         setMintingRateUncommon,
+        mintingRateRare,
+        setMintingRateRare,
         lvupSneakerNum,
         setLvupSneakerNum,
         unitType,

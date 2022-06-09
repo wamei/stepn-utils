@@ -1,6 +1,6 @@
 import { ShoeType } from 'app/models/ShoeType'
 import React, { FC } from 'react'
-import { ButtonGroup, Dropdown, DropdownButton, ToggleButton } from 'react-bootstrap'
+import { ButtonGroup, Dropdown, DropdownButton } from 'react-bootstrap'
 
 type ShoeTypeSelectorProps = {
   value: ShoeType

@@ -8,6 +8,7 @@ import { Button, Col, Modal, Row, Table } from 'react-bootstrap'
 type MintingCostTableProps = {
   mintingRateCommon: MintingRate
   mintingRateUncommon: MintingRate
+  mintingRateRare: MintingRate
   rarerity1: ShoeRarerity
   rarerity2: ShoeRarerity
   realm: Realm
@@ -22,6 +23,7 @@ export const calcMintCost = (
   crypts: Cryptocurrency[],
   mintingRateCommon: MintingRate,
   mintingRateUncommon: MintingRate,
+  mintingRateRare: MintingRate,
   r1: ShoeRarerity,
   m1: number,
   r2: ShoeRarerity,
@@ -31,7 +33,7 @@ export const calcMintCost = (
   const mintingRate = {
     [ShoeRarerity.Common]: mintingRateCommon,
     [ShoeRarerity.Uncommon]: mintingRateUncommon,
-    [ShoeRarerity.Rare]: mintingRateUncommon,
+    [ShoeRarerity.Rare]: mintingRateRare,
     [ShoeRarerity.Epic]: mintingRateUncommon,
     [ShoeRarerity.Legendary]: mintingRateUncommon,
   }
@@ -103,12 +105,24 @@ const Block: FC<{
   crypts: Cryptocurrency[]
   mintingRateCommon: MintingRate
   mintingRateUncommon: MintingRate
+  mintingRateRare: MintingRate
   r1: ShoeRarerity
   m1: number
   r2: ShoeRarerity
   m2: number
   floorPrice: number
-}> = ({ realm, crypts, mintingRateCommon, mintingRateUncommon, r1, m1, r2, m2, floorPrice }) => {
+}> = ({
+  realm,
+  crypts,
+  mintingRateCommon,
+  mintingRateUncommon,
+  mintingRateRare,
+  r1,
+  m1,
+  r2,
+  m2,
+  floorPrice,
+}) => {
   if (!realm) {
     throw new Promise(r => {
       r('realm not found')
@@ -135,6 +149,7 @@ const Block: FC<{
     crypts,
     mintingRateCommon,
     mintingRateUncommon,
+    mintingRateRare,
     r1,
     m1,
     r2,
@@ -325,6 +340,7 @@ const Block: FC<{
 export const MintingCostTable: FC<MintingCostTableProps> = ({
   mintingRateCommon,
   mintingRateUncommon,
+  mintingRateRare,
   rarerity1,
   rarerity2,
   realm,
@@ -362,6 +378,7 @@ export const MintingCostTable: FC<MintingCostTableProps> = ({
                     crypts={crypts}
                     mintingRateCommon={mintingRateCommon}
                     mintingRateUncommon={mintingRateUncommon}
+                    mintingRateRare={mintingRateRare}
                     r1={rarerity1}
                     m1={m1}
                     r2={rarerity2}

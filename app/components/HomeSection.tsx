@@ -7,7 +7,11 @@ import { MintingRateSelector } from './MintingRateSelector'
 import { RealmSelector } from './RealmSelector'
 import { CryptPriceTable } from './CryptPriceTable'
 import { Context } from 'app/layouts/Layout'
-import { MintingRateListCommon, MintingRateListUncommon } from 'app/models/MintingRate'
+import {
+  MintingRateListCommon,
+  MintingRateListRare,
+  MintingRateListUncommon,
+} from 'app/models/MintingRate'
 import { ShoeRarerity } from 'app/models/ShoeRarerity'
 
 export const HomeSection: FC = () => {
@@ -20,14 +24,11 @@ export const HomeSection: FC = () => {
     setMintingRateCommon,
     mintingRateUncommon,
     setMintingRateUncommon,
+    mintingRateRare,
+    setMintingRateRare,
     floorPriceString,
     setFloorPriceString,
     floorPrices,
-    setFloorPrices,
-    shoe1,
-    setShoe1,
-    shoe2,
-    setShoe2,
   } = context
 
   return (
@@ -88,6 +89,15 @@ export const HomeSection: FC = () => {
                         onChange={setMintingRateUncommon}
                       />
                     </LabeledForm>
+                    <LabeledForm label='Rare費用' className='mb-2'>
+                      <MintingRateSelector
+                        realm={realm}
+                        crypts={crypts}
+                        mintingRateList={MintingRateListRare}
+                        value={mintingRateRare}
+                        onChange={setMintingRateRare}
+                      />
+                    </LabeledForm>
                   </Row>
                 </Popover.Body>
               </Popover>
@@ -102,6 +112,7 @@ export const HomeSection: FC = () => {
       <MintingCostTable
         mintingRateCommon={mintingRateCommon}
         mintingRateUncommon={mintingRateUncommon}
+        mintingRateRare={mintingRateRare}
         rarerity1={ShoeRarerity.Common}
         rarerity2={ShoeRarerity.Common}
         realm={realm}
@@ -111,6 +122,7 @@ export const HomeSection: FC = () => {
       <MintingCostTable
         mintingRateCommon={mintingRateCommon}
         mintingRateUncommon={mintingRateUncommon}
+        mintingRateRare={mintingRateRare}
         rarerity1={ShoeRarerity.Uncommon}
         rarerity2={ShoeRarerity.Common}
         realm={realm}
@@ -120,8 +132,39 @@ export const HomeSection: FC = () => {
       <MintingCostTable
         mintingRateCommon={mintingRateCommon}
         mintingRateUncommon={mintingRateUncommon}
+        mintingRateRare={mintingRateRare}
         rarerity1={ShoeRarerity.Uncommon}
         rarerity2={ShoeRarerity.Uncommon}
+        realm={realm}
+        crypts={crypts}
+        floorPrice={floorPrices[realm] || 0}
+      />
+      <MintingCostTable
+        mintingRateCommon={mintingRateCommon}
+        mintingRateUncommon={mintingRateUncommon}
+        mintingRateRare={mintingRateRare}
+        rarerity1={ShoeRarerity.Rare}
+        rarerity2={ShoeRarerity.Common}
+        realm={realm}
+        crypts={crypts}
+        floorPrice={floorPrices[realm] || 0}
+      />
+      <MintingCostTable
+        mintingRateCommon={mintingRateCommon}
+        mintingRateUncommon={mintingRateUncommon}
+        mintingRateRare={mintingRateRare}
+        rarerity1={ShoeRarerity.Rare}
+        rarerity2={ShoeRarerity.Uncommon}
+        realm={realm}
+        crypts={crypts}
+        floorPrice={floorPrices[realm] || 0}
+      />
+      <MintingCostTable
+        mintingRateCommon={mintingRateCommon}
+        mintingRateUncommon={mintingRateUncommon}
+        mintingRateRare={mintingRateRare}
+        rarerity1={ShoeRarerity.Rare}
+        rarerity2={ShoeRarerity.Rare}
         realm={realm}
         crypts={crypts}
         floorPrice={floorPrices[realm] || 0}

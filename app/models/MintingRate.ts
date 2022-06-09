@@ -17,6 +17,13 @@ export const MintingRateListUncommon: MintingRate[] = [
   },
 ]
 
+export const MintingRateListRare: MintingRate[] = [
+  {
+    gst: 6400,
+    gmt: 1600,
+  },
+]
+
 export const calcAdditionalGmt = (mintingRate: MintingRate, currentGstPrice: number) => {
   if (currentGstPrice < 4) {
     return 0

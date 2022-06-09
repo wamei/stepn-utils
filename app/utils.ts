@@ -14,6 +14,12 @@ const ParamsList = [
   'gmtC',
   'gstU',
   'gmtU',
+  'gstR',
+  'gmtR',
+  'gstE',
+  'gmtE',
+  'gstL',
+  'gmtL',
   'lvsn',
   'unitType',
 ] as const
