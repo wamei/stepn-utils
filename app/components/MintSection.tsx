@@ -269,7 +269,7 @@ export const MintSection: FC = () => {
         <FloatingLabel label={`最低販売価格(${unit})`} className='mb-2'>
           <Form.Control readOnly value={unitedLowestPrice.toFixed(3)} />
         </FloatingLabel>
-        <FloatingLabel label={`利益(${unit})`} className='mb-2'>
+        <FloatingLabel label={`フロアで売却時の利益(${unit})`} className='mb-2'>
           <Form.Control readOnly value={unitedLowestBenefit.toFixed(3)} />
         </FloatingLabel>
       </Form>
