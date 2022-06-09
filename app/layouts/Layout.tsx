@@ -1,3 +1,4 @@
+import { DonationCard } from 'app/components/DonationCard'
 import { Cryptocurrency } from 'app/models/Cryptcurrency'
 import { MintingRate, MintingRateListCommon, MintingRateListUncommon } from 'app/models/MintingRate'
 import { Realm } from 'app/models/Realm'
@@ -125,8 +126,12 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
       query: buildQuery({
         ...router.query,
         realm,
+        t1: shoe1.type,
+        t2: shoe2.type,
         r1: shoe1.rarerity,
         r2: shoe2.rarerity,
+        m1: shoe1.mint,
+        m2: shoe2.mint,
         ...floorPrices,
         gstC: mintingRateCommon.gst,
         gmtC: mintingRateCommon.gmt,
@@ -161,16 +166,42 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
     if (floorPriceString !== router.query[qRealm]) {
       setFloorPriceString(String(router.query[qRealm]))
     }
+    if (router.query.t1 && router.query.t1 !== shoe1.type) {
+      setShoe1(old => ({
+        ...old,
+        type: router.query.t1 as ShoeType,
+      }))
+    }
     if (router.query.r1 && router.query.r1 !== shoe1.rarerity) {
       setShoe1(old => ({
         ...old,
         rarerity: router.query.r1 as ShoeRarerity,
       }))
     }
+    const qM1 = Number(router.query.m1)
+    if (router.query.m1 && qM1 !== shoe1.mint) {
+      setShoe1(old => ({
+        ...old,
+        mint: qM1,
+      }))
+    }
+    if (router.query.t2 && router.query.t2 !== shoe2.type) {
+      setShoe2(old => ({
+        ...old,
+        type: router.query.t2 as ShoeType,
+      }))
+    }
     if (router.query.r2 && router.query.r2 !== shoe2.rarerity) {
       setShoe2(old => ({
         ...old,
         rarerity: router.query.r2 as ShoeRarerity,
+      }))
+    }
+    const qM2 = Number(router.query.m2)
+    if (router.query.m2 && qM2 !== shoe2.mint) {
+      setShoe2(old => ({
+        ...old,
+        mint: qM2,
       }))
     }
     const qGstC = Number(router.query.gstC)
@@ -263,17 +294,23 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
                 <Nav.Link className='pe-1' eventKey='/costs'>
                   Costs
                 </Nav.Link>
-                <Nav.Link className='pe-1' eventKey='/prices'>
-                  Prices
-                </Nav.Link>
                 <Nav.Link className='pe-1' eventKey='/levelup'>
                   Lvup
+                </Nav.Link>
+                <Nav.Link className='pe-1' eventKey='/prices'>
+                  Prices
                 </Nav.Link>
               </Nav>
             </Navbar.Collapse>
           </Container>
         </Navbar>
-        <div className='flex-grod-1 flex-shrink-1 h-100 overflow-auto'>{children}</div>
+        <div className='flex-grod-1 flex-shrink-1 h-100 overflow-auto'>
+          {children}
+          <hr />
+          <Container style={{ maxWidth: '540px' }}>
+            <DonationCard className='border-0' />
+          </Container>
+        </div>
       </div>
     </Context.Provider>
   )

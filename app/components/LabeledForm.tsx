@@ -9,9 +9,9 @@ type LabeledFormProps = {
 
 export const LabeledForm: FC<LabeledFormProps> = ({ children, label, className }) => {
   return (
-    <Form.Group as={Col} className={className}>
-      <Form.Label>
-        <small>{label}</small>
+    <Form.Group as={Col} className={`${className}`}>
+      <Form.Label style={{ transform: 'scale(.82)' }} className='text-muted'>
+        {label}
       </Form.Label>
       <Col>{children}</Col>
     </Form.Group>

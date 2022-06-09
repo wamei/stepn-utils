@@ -32,6 +32,9 @@ export const HomeSection: FC = () => {
 
   return (
     <>
+      <Row className='mb-2'>
+        <RealmSelector value={realm} onChange={setRealm} />
+      </Row>
       <CryptPriceTable
         crypts={crypts.filter(
           c =>
@@ -41,47 +44,42 @@ export const HomeSection: FC = () => {
         )}
       />
       <Form>
-        <Row className='mb-2'>
-          <LabeledForm label='チェーン'>
-            <RealmSelector value={realm} onChange={setRealm} />
-          </LabeledForm>
-          <LabeledForm label='　'>
-            <OverlayTrigger
-              trigger='click'
-              rootClose
-              placement={'bottom'}
-              overlay={
-                <Popover>
-                  <Popover.Body>
-                    <Row>
-                      <LabeledForm label='Common費用' className='mb-2'>
-                        <MintingRateSelector
-                          realm={realm}
-                          crypts={crypts}
-                          mintingRateList={MintingRateListCommon}
-                          value={mintingRateCommon}
-                          onChange={setMintingRateCommon}
-                        />
-                      </LabeledForm>
-                      <LabeledForm label='Uncommon費用' className='mb-2'>
-                        <MintingRateSelector
-                          realm={realm}
-                          crypts={crypts}
-                          mintingRateList={MintingRateListUncommon}
-                          value={mintingRateUncommon}
-                          onChange={setMintingRateUncommon}
-                        />
-                      </LabeledForm>
-                    </Row>
-                  </Popover.Body>
-                </Popover>
-              }
-            >
-              <Button variant='secondary' size='sm' className='mt-'>
-                費用設定
-              </Button>
-            </OverlayTrigger>
-          </LabeledForm>
+        <Row className='m-2'>
+          <OverlayTrigger
+            trigger='click'
+            rootClose
+            placement={'bottom'}
+            overlay={
+              <Popover>
+                <Popover.Body>
+                  <Row>
+                    <LabeledForm label='Common費用' className='mb-2'>
+                      <MintingRateSelector
+                        realm={realm}
+                        crypts={crypts}
+                        mintingRateList={MintingRateListCommon}
+                        value={mintingRateCommon}
+                        onChange={setMintingRateCommon}
+                      />
+                    </LabeledForm>
+                    <LabeledForm label='Uncommon費用' className='mb-2'>
+                      <MintingRateSelector
+                        realm={realm}
+                        crypts={crypts}
+                        mintingRateList={MintingRateListUncommon}
+                        value={mintingRateUncommon}
+                        onChange={setMintingRateUncommon}
+                      />
+                    </LabeledForm>
+                  </Row>
+                </Popover.Body>
+              </Popover>
+            }
+          >
+            <Button variant='outline-secondary' size='sm'>
+              費用設定
+            </Button>
+          </OverlayTrigger>
         </Row>
         <Row className='mb-2'>
           <LabeledForm label='靴1'>
@@ -109,11 +107,7 @@ export const HomeSection: FC = () => {
             />
           </LabeledForm>
         </Row>
-        <FloatingLabel
-          controlId='floatingInput'
-          label={`フロア価格(${RealmToken[realm].unit})`}
-          className='mb-3'
-        >
+        <FloatingLabel label={`フロア価格(${RealmToken[realm].unit})`} className='mb-3'>
           <Form.Control
             type='number'
             value={floorPriceString}

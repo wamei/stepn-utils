@@ -17,7 +17,6 @@ export const RealmSelector: FC<RealmSelectorProps> = ({ value, onChange, classNa
           id={`radio-realm-${realm}`}
           type='radio'
           variant='light'
-          name='radio'
           value={realm}
           checked={value === realm}
           onChange={e => onChange(e.currentTarget.value as Realm)}

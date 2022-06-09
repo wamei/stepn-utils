@@ -30,8 +30,10 @@ export const CryptPriceTable: FC<CryptPriceTableProps> = ({ crypts, className })
           ))}
         </tbody>
       </Table>
-      <div className='text-end'>
-        <small>最終更新日時 {crypts[0]?.lastUpdatedAt.toLocaleString()}</small>
+      <div className='text-end' style={{ marginTop: '-6px' }}>
+        <span style={{ fontSize: '8px' }}>
+          最終更新日時 {crypts[0]?.lastUpdatedAt.toLocaleString()}
+        </span>
       </div>
     </div>
   )

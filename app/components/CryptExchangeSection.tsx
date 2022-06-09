@@ -62,7 +62,7 @@ export const CryptExchangeSection: FC<CryptExchangeSectionProps> = ({ crypts, cl
       <h5>通貨変換</h5>
       <InputGroup className='mb-3'>
         <>
-          <FloatingLabel controlId='floatingInput' label={`${crypt.name}`}>
+          <FloatingLabel label={`${crypt.name}`}>
             <Form.Control
               type='number'
               value={priceString}

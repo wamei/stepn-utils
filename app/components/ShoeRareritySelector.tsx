@@ -12,7 +12,7 @@ export const ShoeRareritySelector: FC<ShoeRareritySelectorProps> = ({ id, value,
   return (
     <>
       <ButtonGroup className='mb-2'>
-        {Object.values(ShoeRarerity).map(rarerity => (
+        {[ShoeRarerity.Common, ShoeRarerity.Uncommon].map(rarerity => (
           <ToggleButton
             key={rarerity}
             id={`radio-rarerity-${id}-${rarerity}`}

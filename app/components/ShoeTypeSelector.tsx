@@ -13,7 +13,7 @@ export const ShoeTypeSelector: FC<ShoeTypeSelectorProps> = ({ value, onChange, c
     <>
       <DropdownButton
         as={ButtonGroup}
-        variant='outline-secondary'
+        variant='light'
         size='sm'
         title={value}
         className={className}

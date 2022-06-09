@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { ShoeTypeSelector } from './ShoeTypeSelector'
 import { ShoeRareritySelector } from './ShoeRareritySelector'
 import { Shoe } from 'app/models/Shoe'
-import { Form } from 'react-bootstrap'
+import { Col, Form, Row } from 'react-bootstrap'
 
 type ShoeSelectorProps = {
   id: string
@@ -11,10 +11,10 @@ type ShoeSelectorProps = {
 }
 export const ShoeSelector: FC<ShoeSelectorProps> = ({ id, shoe, setShoe }) => {
   return (
-    <div>
-      <div style={{ height: '70px' }}>
+    <Row>
+      <Col className='text-center' style={{ height: '70px' }}>
         <img src={`/stepn-utils/${shoe.type}.svg`} width='100' className='mb-2' />
-      </div>
+      </Col>
       <ShoeTypeSelector
         className='mb-2'
         value={shoe.type}
@@ -46,6 +46,7 @@ export const ShoeSelector: FC<ShoeSelectorProps> = ({ id, shoe, setShoe }) => {
           }))
         }}
       />
-    </div>
+      <Col>Mint {shoe.mint}</Col>
+    </Row>
   )
 }

@@ -17,7 +17,7 @@ type MintingCostTableProps = {
 
 const mints = [0, 1, 2, 3, 4, 5, 6]
 
-const calc = (
+export const calcMintCost = (
   realm: Realm,
   crypts: Cryptocurrency[],
   mintingRateCommon: MintingRate,
@@ -26,17 +26,21 @@ const calc = (
   m1: number,
   r2: ShoeRarerity,
   m2: number,
+  floorPrice: number,
 ) => {
   const mintingRate = {
     [ShoeRarerity.Common]: mintingRateCommon,
     [ShoeRarerity.Uncommon]: mintingRateUncommon,
+    [ShoeRarerity.Rare]: mintingRateUncommon,
+    [ShoeRarerity.Epic]: mintingRateUncommon,
+    [ShoeRarerity.Legendary]: mintingRateUncommon,
   }
   const base1gst = mintingRate[r1].gst / 2
   const base2gst = mintingRate[r2].gst / 2
   const base1gmt = mintingRate[r1].gmt / 2
   const base2gmt = mintingRate[r2].gmt / 2
 
-  const gstPrice = crypts.find(c => c.id === RealmToken[realm].gst)?.usd || 0
+  const gstPriceUsd = crypts.find(c => c.id === RealmToken[realm].gst)?.usd || 0
   const base = {
     gst:
       base1gst +
@@ -49,10 +53,48 @@ const calc = (
       base2gmt +
       (base2gmt / 2) * Math.max(0, m2 - 1),
   }
-  const additionalGmt = calcAdditionalGmt(base, gstPrice)
+  const additionalGmt = calcAdditionalGmt(base, gstPriceUsd)
+  const mintCost = {
+    costGst: base.gst,
+    costGmt: base.gmt + additionalGmt,
+  }
+
+  const tokenData = RealmToken[realm]
+  const gstPrice = crypts.find(v => v.id === tokenData.gst)?.jpy || 0
+  const gmtPrice = crypts.find(v => v.id === tokenData.gmt)?.jpy || 0
+  const mainPrice = crypts.find(v => v.id === tokenData.main)?.jpy || 0
+  const mainPriceUsd = crypts.find(v => v.id === tokenData.main)?.usd || 0
+
+  const ETC_FEE = 0.02
+  const SELLING_FEE = 0.06
+  const LEVELUP_TO_5_GST = 20
+  const LEVELUP_TO_5_GMT = 10
+
+  const mintPrice = (mintCost.costGst * gstPrice + mintCost.costGmt * gmtPrice) * (1 + ETC_FEE)
+  const lvupPrice = gstPrice * LEVELUP_TO_5_GST + gmtPrice * LEVELUP_TO_5_GMT
+
+  const lowestPrice = mintPrice / (1 - SELLING_FEE)
+  const lowestLvupPrice = (mintPrice + lvupPrice) / (1 - SELLING_FEE)
+  const lowest2LvupPrice = (mintPrice + 2 * lvupPrice) / (1 - SELLING_FEE)
+
+  const lowestBenefit = floorPrice * mainPrice * (1 - SELLING_FEE) - mintPrice
+  const lowestLvupBenefit = floorPrice * mainPrice * (1 - SELLING_FEE) - mintPrice - lvupPrice
+  const lowest2LvupBenefit = floorPrice * mainPrice * (1 - SELLING_FEE) - mintPrice - 2 * lvupPrice
+
   return {
-    gst: base.gst,
-    gmt: base.gmt + additionalGmt,
+    ...mintCost,
+    gstPrice,
+    gmtPrice,
+    mainPrice,
+    mainPriceUsd,
+    mintPrice,
+    lvupPrice,
+    lowestPrice,
+    lowestLvupPrice,
+    lowest2LvupPrice,
+    lowestBenefit,
+    lowestLvupBenefit,
+    lowest2LvupBenefit,
   }
 }
 
@@ -76,30 +118,38 @@ const Block: FC<{
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
 
-  const ETC_FEE = 0.02
-  const SELLING_FEE = 0.06
-  const LEVELUP_TO_5_GST = 20
-  const LEVELUP_TO_5_GMT = 10
-
-  const data = calc(realm, crypts, mintingRateCommon, mintingRateUncommon, r1, m1, r2, m2)
+  const {
+    costGst,
+    costGmt,
+    mainPrice,
+    mintPrice,
+    lvupPrice,
+    lowestPrice,
+    lowestLvupPrice,
+    lowest2LvupPrice,
+    lowestBenefit,
+    lowestLvupBenefit,
+    lowest2LvupBenefit,
+  } = calcMintCost(
+    realm,
+    crypts,
+    mintingRateCommon,
+    mintingRateUncommon,
+    r1,
+    m1,
+    r2,
+    m2,
+    floorPrice,
+  )
   const tokenData = RealmToken[realm]
-  const gstPrice = crypts.find(v => v.id === tokenData.gst)?.jpy || 0
-  const gmtPrice = crypts.find(v => v.id === tokenData.gmt)?.jpy || 0
-  const mainPrice = crypts.find(v => v.id === tokenData.main)?.jpy || 0
-  const mintPrice = (data.gst * gstPrice + data.gmt * gmtPrice) * (1 + ETC_FEE)
-  const lvupPrice = gstPrice * LEVELUP_TO_5_GST + gmtPrice * LEVELUP_TO_5_GMT
-
-  const lowestPrice = mintPrice / (1 - SELLING_FEE)
-  const lowestLvupPrice = (mintPrice + lvupPrice) / (1 - SELLING_FEE)
-  const lowest2LvupPrice = (mintPrice + 2 * lvupPrice) / (1 - SELLING_FEE)
 
   const CostTable: FC<{
     label: string
     cost: number
+    lowestPrice: number
+    benefit: number
     className?: string
-  }> = ({ label, cost, className }) => {
-    const lowestPrice = cost / (1 - SELLING_FEE)
-    const benefit = floorPrice * mainPrice - lowestPrice
+  }> = ({ label, cost, lowestPrice, benefit, className }) => {
     return (
       <div
         style={{
@@ -149,19 +199,19 @@ const Block: FC<{
     <>
       <div
         style={{
-          ...(floorPrice < lowestPrice / mainPrice
-            ? {
-                backgroundColor: 'rgba(255, 0, 0, 0.3)',
-              }
-            : floorPrice < lowestLvupPrice / mainPrice
-            ? {
-                backgroundColor: 'rgba(255, 0, 0, 0.2)',
-              }
-            : floorPrice < lowest2LvupPrice / mainPrice
+          ...(lowest2LvupBenefit > 0
+            ? {}
+            : lowestLvupBenefit > 0
             ? {
                 backgroundColor: 'rgba(255, 0, 0, 0.1)',
               }
-            : {}),
+            : lowestBenefit > 0
+            ? {
+                backgroundColor: 'rgba(255, 0, 0, 0.2)',
+              }
+            : {
+                backgroundColor: 'rgba(255, 0, 0, 0.3)',
+              }),
         }}
       >
         <Button
@@ -177,7 +227,7 @@ const Block: FC<{
               width='10'
               height='10'
             />
-            <span className='align-middle'>{data.gst}</span>
+            <span className='align-middle'>{costGst}</span>
           </small>
           <br />
           <small className='text-nowrap'>
@@ -188,7 +238,7 @@ const Block: FC<{
               width='10'
               height='10'
             />
-            <span className='align-middle'>{data.gmt}</span>
+            <span className='align-middle'>{costGmt}</span>
           </small>
         </Button>
       </div>
@@ -222,7 +272,7 @@ const Block: FC<{
               width='15'
               height='15'
             />
-            <span className='me-2 align-middle'>{data.gst}GST</span>
+            <span className='me-2 align-middle'>{costGst}GST</span>
             <img
               className='align-middle'
               src={`/stepn-utils/${RealmToken[realm].gmt}.png`}
@@ -230,18 +280,28 @@ const Block: FC<{
               width='15'
               height='15'
             />
-            <span className='align-middle'>{data.gmt}GMT</span>
+            <span className='align-middle'>{costGmt}GMT</span>
           </div>
-          <CostTable className='p-3 border-bottom border-top' label='ミント費用' cost={mintPrice} />
+          <CostTable
+            className='p-3 border-bottom border-top'
+            label='ミント費用'
+            cost={mintPrice}
+            lowestPrice={lowestPrice}
+            benefit={lowestBenefit}
+          />
           <CostTable
             className='p-3 border-bottom'
             label='1足分Lvup費用込'
             cost={mintPrice + lvupPrice}
+            lowestPrice={lowestLvupPrice}
+            benefit={lowestLvupBenefit}
           />
           <CostTable
             className='p-3 border-bottom'
             label='2足分Lvup費用込'
             cost={mintPrice + 2 * lvupPrice}
+            lowestPrice={lowest2LvupPrice}
+            benefit={lowest2LvupBenefit}
           />
           <div className='ms-3 me-3 mt-3'>
             <small>
