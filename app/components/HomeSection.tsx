@@ -9,6 +9,7 @@ import { ShoeRareritySelector } from './ShoeRareritySelector'
 import { CryptPriceTable } from './CryptPriceTable'
 import { Context } from 'app/layouts/Layout'
 import { MintingRateListCommon, MintingRateListUncommon } from 'app/models/MintingRate'
+import { ShoeRarerity } from 'app/models/ShoeRarerity'
 
 export const HomeSection: FC = () => {
   const context = useContext(Context)
@@ -81,32 +82,6 @@ export const HomeSection: FC = () => {
             </Button>
           </OverlayTrigger>
         </Row>
-        <Row className='mb-2'>
-          <LabeledForm label='靴1'>
-            <ShoeRareritySelector
-              id='cr1'
-              value={shoe1.rarerity}
-              onChange={r =>
-                setShoe1(old => ({
-                  ...old,
-                  rarerity: r,
-                }))
-              }
-            />
-          </LabeledForm>
-          <LabeledForm label='靴2'>
-            <ShoeRareritySelector
-              id='cr2'
-              value={shoe2.rarerity}
-              onChange={r =>
-                setShoe2(old => ({
-                  ...old,
-                  rarerity: r,
-                }))
-              }
-            />
-          </LabeledForm>
-        </Row>
         <FloatingLabel label={`フロア価格(${RealmToken[realm].unit})`} className='mb-3'>
           <Form.Control
             type='number'
@@ -120,8 +95,26 @@ export const HomeSection: FC = () => {
       <MintingCostTable
         mintingRateCommon={mintingRateCommon}
         mintingRateUncommon={mintingRateUncommon}
-        rarerity1={shoe1.rarerity}
-        rarerity2={shoe2.rarerity}
+        rarerity1={ShoeRarerity.Common}
+        rarerity2={ShoeRarerity.Common}
+        realm={realm}
+        crypts={crypts}
+        floorPrice={floorPrices[realm] || 0}
+      />
+      <MintingCostTable
+        mintingRateCommon={mintingRateCommon}
+        mintingRateUncommon={mintingRateUncommon}
+        rarerity1={ShoeRarerity.Uncommon}
+        rarerity2={ShoeRarerity.Common}
+        realm={realm}
+        crypts={crypts}
+        floorPrice={floorPrices[realm] || 0}
+      />
+      <MintingCostTable
+        mintingRateCommon={mintingRateCommon}
+        mintingRateUncommon={mintingRateUncommon}
+        rarerity1={ShoeRarerity.Uncommon}
+        rarerity2={ShoeRarerity.Uncommon}
         realm={realm}
         crypts={crypts}
         floorPrice={floorPrices[realm] || 0}
