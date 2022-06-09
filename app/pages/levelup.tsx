@@ -1,7 +1,7 @@
 import { LevelUpCostTable } from 'app/components/LevelUpCostTable'
 import { RealmSelector } from 'app/components/RealmSelector'
 import React, { useContext } from 'react'
-import { Container, Row } from 'react-bootstrap'
+import { Col, Container, Row } from 'react-bootstrap'
 import Layout, { Context } from 'app/layouts/Layout'
 import { BlitzPage } from 'blitz'
 
@@ -11,6 +11,11 @@ const Levelup: BlitzPage = () => {
 
   return (
     <Container className='mt-2' style={{ maxWidth: '540px' }}>
+      <Row className='mb-3 mt-3'>
+        <Col className='text-center'>
+          <h5>レベルアップ費用一覧</h5>
+        </Col>
+      </Row>
       <Row className='mb-2'>
         <RealmSelector value={realm} onChange={setRealm} />
       </Row>
@@ -23,6 +28,6 @@ const Levelup: BlitzPage = () => {
 }
 
 Levelup.suppressFirstRenderFlicker = true
-Levelup.getLayout = page => <Layout title='Levelup'>{page}</Layout>
+Levelup.getLayout = page => <Layout title='レベルアップ費用一覧'>{page}</Layout>
 
 export default Levelup

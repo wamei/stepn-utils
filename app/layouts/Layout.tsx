@@ -336,7 +336,7 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
                   Lvup
                 </Nav.Link>
                 <Nav.Link className='pe-1' eventKey='/prices'>
-                  Prices
+                  Exchange
                 </Nav.Link>
               </Nav>
             </Navbar.Collapse>
@@ -345,7 +345,7 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
         <div className='flex-grod-1 flex-shrink-1 h-100 overflow-auto'>
           {children}
           <hr />
-          <Container style={{ maxWidth: '540px' }}>
+          <Container style={{ maxWidth: '540px' }} className='mb-5'>
             <DonationCard className='border-0' />
           </Container>
         </div>

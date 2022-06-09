@@ -1,11 +1,10 @@
 import { RealmToken } from 'app/models/Realm'
 import React, { FC, useContext } from 'react'
-import { Button, FloatingLabel, Form, OverlayTrigger, Popover, Row } from 'react-bootstrap'
+import { Button, Col, FloatingLabel, Form, OverlayTrigger, Popover, Row } from 'react-bootstrap'
 import { LabeledForm } from './LabeledForm'
 import { MintingCostTable } from './MintingCostTable'
 import { MintingRateSelector } from './MintingRateSelector'
 import { RealmSelector } from './RealmSelector'
-import { ShoeRareritySelector } from './ShoeRareritySelector'
 import { CryptPriceTable } from './CryptPriceTable'
 import { Context } from 'app/layouts/Layout'
 import { MintingRateListCommon, MintingRateListUncommon } from 'app/models/MintingRate'
@@ -33,10 +32,16 @@ export const HomeSection: FC = () => {
 
   return (
     <>
+      <Row className='mb-3 mt-3'>
+        <Col className='text-center'>
+          <h5>ミント費用一覧</h5>
+        </Col>
+      </Row>
       <Row className='mb-2'>
         <RealmSelector value={realm} onChange={setRealm} />
       </Row>
       <CryptPriceTable
+        className='mb-4'
         crypts={crypts.filter(
           c =>
             c.id === RealmToken[realm].main ||
@@ -44,8 +49,19 @@ export const HomeSection: FC = () => {
             c.id === RealmToken[realm].gmt,
         )}
       />
-      <Form>
-        <Row className='m-2'>
+      <Row className='mb-3'>
+        <Col xs={9}>
+          <FloatingLabel label={`フロア価格(${RealmToken[realm].unit})`}>
+            <Form.Control
+              type='number'
+              value={floorPriceString}
+              onChange={e => {
+                setFloorPriceString(e.target.value)
+              }}
+            />
+          </FloatingLabel>
+        </Col>
+        <Col xs={3}>
           <OverlayTrigger
             trigger='click'
             rootClose
@@ -81,17 +97,8 @@ export const HomeSection: FC = () => {
               費用設定
             </Button>
           </OverlayTrigger>
-        </Row>
-        <FloatingLabel label={`フロア価格(${RealmToken[realm].unit})`} className='mb-3'>
-          <Form.Control
-            type='number'
-            value={floorPriceString}
-            onChange={e => {
-              setFloorPriceString(e.target.value)
-            }}
-          />
-        </FloatingLabel>
-      </Form>
+        </Col>
+      </Row>
       <MintingCostTable
         mintingRateCommon={mintingRateCommon}
         mintingRateUncommon={mintingRateUncommon}

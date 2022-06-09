@@ -84,11 +84,17 @@ export const MintSection: FC = () => {
 
   return (
     <>
+      <Row className='mb-3 mt-3'>
+        <Col className='text-center'>
+          <h5>ミント費用エミュレータ</h5>
+        </Col>
+      </Row>
       <Form>
         <Row className='mb-2'>
           <RealmSelector value={realm} onChange={setRealm} />
         </Row>
         <CryptPriceTable
+          className='mb-5'
           crypts={crypts.filter(
             c =>
               c.id === RealmToken[realm].main ||
@@ -96,7 +102,12 @@ export const MintSection: FC = () => {
               c.id === RealmToken[realm].gmt,
           )}
         />
-        <Row className='mb-2'>
+        <Row className='mb-3 mt-3'>
+          <Col className='text-center'>
+            <h5>情報入力</h5>
+          </Col>
+        </Row>
+        <Row className='mb-3'>
           <Col xs={6}>
             <Card>
               <Card.Body className='pt-1 text-center'>
@@ -127,7 +138,7 @@ export const MintSection: FC = () => {
             }}
           />
         </FloatingLabel>
-        <Row className='mb-3'>
+        <Row className='mb-5'>
           <Col>
             <LabeledForm label='レベルアップ費用'>
               <ButtonGroup>
@@ -217,6 +228,11 @@ export const MintSection: FC = () => {
                 </ToggleButton>
               </ButtonGroup>
             </LabeledForm>
+          </Col>
+        </Row>
+        <Row className='mb-3 mt-3'>
+          <Col className='text-center'>
+            <h5>ミント費用</h5>
           </Col>
         </Row>
         <Row className='mb-2'>

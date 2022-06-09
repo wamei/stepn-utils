@@ -59,7 +59,6 @@ export const CryptExchangeSection: FC<CryptExchangeSectionProps> = ({ crypts, cl
 
   return (
     <div className={className}>
-      <h5>通貨変換</h5>
       <InputGroup className='mb-3'>
         <>
           <FloatingLabel label={`${crypt.name}`}>
