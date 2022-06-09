@@ -334,7 +334,7 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
           <Container>
             <Navbar.Brand
               onClick={() => {
-                router.replace({
+                router.push({
                   pathname: '/',
                   query: router.query,
                 })
@@ -349,7 +349,7 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
                 className='me-auto'
                 activeKey={router.pathname}
                 onSelect={tab => {
-                  router.replace({
+                  router.push({
                     pathname: tab,
                     query: router.query,
                   })
