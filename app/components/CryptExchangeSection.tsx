@@ -3,6 +3,7 @@ import React, { FC, useEffect, useState } from 'react'
 import { Col, FloatingLabel, Form, InputGroup, Row, Table } from 'react-bootstrap'
 import { CryptPriceTable } from './CryptPriceTable'
 import { CryptSelector } from './CryptSelector'
+import { SmallDecimal } from './SmallDecimal'
 
 type CryptExchangeSectionProps = {
   crypts: Cryptocurrency[]
@@ -108,7 +109,9 @@ export const CryptExchangeSection: FC<CryptExchangeSectionProps> = ({ crypts, cl
                 />
                 <span className='align-middle'>{c.name}</span>
               </td>
-              <td className='text-end'>{((crypt.jpy * price * 0.9936) / c.jpy).toFixed(2)}</td>
+              <td className='text-end'>
+                <SmallDecimal value={((crypt.jpy * price * 0.9936) / c.jpy).toFixed(3)} />
+              </td>
               <td>{c.symbol}</td>
             </tr>
           ))}

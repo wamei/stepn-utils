@@ -2,6 +2,7 @@ import { Cryptocurrency } from 'app/models/Cryptcurrency'
 import { Realm, RealmToken } from 'app/models/Realm'
 import React, { FC } from 'react'
 import { Table } from 'react-bootstrap'
+import { SmallDecimal } from './SmallDecimal'
 
 type LevelUpCostTableProps = {
   crypts: Cryptocurrency[]
@@ -216,16 +217,24 @@ const Block: FC<{
         )}
       </td>
       <td>
-        <small>{(cost / mainPrice).toFixed(3)}</small>
+        <small>
+          <SmallDecimal value={(cost / mainPrice).toFixed(3)} />
+        </small>
       </td>
       <td>
-        <small>¥{cost.toFixed(0)}</small>
+        <small>
+          ¥<SmallDecimal value={cost.toFixed(0)} />
+        </small>
       </td>
       <td>
-        <small>{(sumCost / mainPrice).toFixed(3)}</small>
+        <small>
+          <SmallDecimal value={(sumCost / mainPrice).toFixed(3)} />
+        </small>
       </td>
       <td>
-        <small>¥{sumCost.toFixed(0)}</small>
+        <small>
+          ¥<SmallDecimal value={sumCost.toFixed(0)} />
+        </small>
       </td>
     </tr>
   )

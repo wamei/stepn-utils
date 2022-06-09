@@ -1,6 +1,7 @@
 import { Cryptocurrency } from 'app/models/Cryptcurrency'
 import React, { FC } from 'react'
 import { Table } from 'react-bootstrap'
+import { SmallDecimal } from './SmallDecimal'
 
 type CryptPriceTableProps = {
   crypts: Cryptocurrency[]
@@ -26,8 +27,12 @@ export const CryptPriceTable: FC<CryptPriceTableProps> = ({ crypts, className })
                   />
                   <span className='align-middle'>{c.name}</span>
                 </td>
-                <td>¥{c.jpy.toFixed(3)}</td>
-                <td>${c.usd.toFixed(3)}</td>
+                <td>
+                  ¥<SmallDecimal value={c.jpy.toFixed(3)} />
+                </td>
+                <td>
+                  $<SmallDecimal value={c.usd.toFixed(3)} />
+                </td>
               </tr>
             ))}
         </tbody>
