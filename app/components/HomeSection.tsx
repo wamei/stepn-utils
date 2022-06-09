@@ -13,6 +13,7 @@ import {
   MintingRateListUncommon,
 } from 'app/models/MintingRate'
 import { ShoeRarerity } from 'app/models/ShoeRarerity'
+import { ShoeRareritySelector } from './ShoeRareritySelector'
 
 export const HomeSection: FC = () => {
   const context = useContext(Context)
@@ -29,6 +30,8 @@ export const HomeSection: FC = () => {
     floorPriceString,
     setFloorPriceString,
     floorPrices,
+    shoe1,
+    setShoe1,
   } = context
 
   return (
@@ -109,66 +112,33 @@ export const HomeSection: FC = () => {
           </OverlayTrigger>
         </Col>
       </Row>
-      <MintingCostTable
-        mintingRateCommon={mintingRateCommon}
-        mintingRateUncommon={mintingRateUncommon}
-        mintingRateRare={mintingRateRare}
-        rarerity1={ShoeRarerity.Common}
-        rarerity2={ShoeRarerity.Common}
-        realm={realm}
-        crypts={crypts}
-        floorPrice={floorPrices[realm] || 0}
-      />
-      <MintingCostTable
-        mintingRateCommon={mintingRateCommon}
-        mintingRateUncommon={mintingRateUncommon}
-        mintingRateRare={mintingRateRare}
-        rarerity1={ShoeRarerity.Uncommon}
-        rarerity2={ShoeRarerity.Common}
-        realm={realm}
-        crypts={crypts}
-        floorPrice={floorPrices[realm] || 0}
-      />
-      <MintingCostTable
-        mintingRateCommon={mintingRateCommon}
-        mintingRateUncommon={mintingRateUncommon}
-        mintingRateRare={mintingRateRare}
-        rarerity1={ShoeRarerity.Uncommon}
-        rarerity2={ShoeRarerity.Uncommon}
-        realm={realm}
-        crypts={crypts}
-        floorPrice={floorPrices[realm] || 0}
-      />
-      <MintingCostTable
-        mintingRateCommon={mintingRateCommon}
-        mintingRateUncommon={mintingRateUncommon}
-        mintingRateRare={mintingRateRare}
-        rarerity1={ShoeRarerity.Rare}
-        rarerity2={ShoeRarerity.Common}
-        realm={realm}
-        crypts={crypts}
-        floorPrice={floorPrices[realm] || 0}
-      />
-      <MintingCostTable
-        mintingRateCommon={mintingRateCommon}
-        mintingRateUncommon={mintingRateUncommon}
-        mintingRateRare={mintingRateRare}
-        rarerity1={ShoeRarerity.Rare}
-        rarerity2={ShoeRarerity.Uncommon}
-        realm={realm}
-        crypts={crypts}
-        floorPrice={floorPrices[realm] || 0}
-      />
-      <MintingCostTable
-        mintingRateCommon={mintingRateCommon}
-        mintingRateUncommon={mintingRateUncommon}
-        mintingRateRare={mintingRateRare}
-        rarerity1={ShoeRarerity.Rare}
-        rarerity2={ShoeRarerity.Rare}
-        realm={realm}
-        crypts={crypts}
-        floorPrice={floorPrices[realm] || 0}
-      />
+      <Row className='mb-3'>
+        <ShoeRareritySelector
+          type='button'
+          value={shoe1.rarerity}
+          onChange={r =>
+            setShoe1(old => ({
+              ...old,
+              rarerity: r as ShoeRarerity,
+            }))
+          }
+        />
+      </Row>
+      {[ShoeRarerity.Common, ShoeRarerity.Uncommon, ShoeRarerity.Rare]
+        .sort(a => (a === shoe1.rarerity ? -1 : 1))
+        .map(rarerity => (
+          <MintingCostTable
+            key={rarerity}
+            mintingRateCommon={mintingRateCommon}
+            mintingRateUncommon={mintingRateUncommon}
+            mintingRateRare={mintingRateRare}
+            rarerity1={shoe1.rarerity}
+            rarerity2={rarerity}
+            realm={realm}
+            crypts={crypts}
+            floorPrice={floorPrices[realm] || 0}
+          />
+        ))}
     </>
   )
 }
