@@ -30,8 +30,8 @@ export const HomeSection: FC = () => {
     floorPriceString,
     setFloorPriceString,
     floorPrices,
-    shoe1,
-    setShoe1,
+    sneaker1,
+    setSneaker1,
   } = context
 
   return (
@@ -115,9 +115,9 @@ export const HomeSection: FC = () => {
       <Row className='mb-3'>
         <SneakerRareritySelector
           type='button'
-          value={shoe1.rarerity}
+          value={sneaker1.rarerity}
           onChange={r =>
-            setShoe1(old => ({
+            setSneaker1(old => ({
               ...old,
               rarerity: r as SneakerRarerity,
             }))
@@ -125,14 +125,14 @@ export const HomeSection: FC = () => {
         />
       </Row>
       {[SneakerRarerity.Common, SneakerRarerity.Uncommon, SneakerRarerity.Rare]
-        .sort(a => (a === shoe1.rarerity ? -1 : 1))
+        .sort(a => (a === sneaker1.rarerity ? -1 : 1))
         .map(rarerity => (
           <MintingCostTable
             key={rarerity}
             mintingRateCommon={mintingRateCommon}
             mintingRateUncommon={mintingRateUncommon}
             mintingRateRare={mintingRateRare}
-            rarerity1={shoe1.rarerity}
+            rarerity1={sneaker1.rarerity}
             rarerity2={rarerity}
             realm={realm}
             crypts={crypts}

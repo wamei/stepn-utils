@@ -5,29 +5,29 @@ import { Sneaker } from 'app/models/Sneaker'
 import { Col, Form, Row } from 'react-bootstrap'
 
 type SneakerSelectorProps = {
-  shoe: Sneaker
-  setShoe(shoe: Sneaker | ((shoe: Sneaker) => Sneaker)): void
+  sneaker: Sneaker
+  setSneaker(dispatch: React.Dispatch<React.SetStateAction<Sneaker>>): void
 }
-export const SneakerSelector: FC<SneakerSelectorProps> = ({ shoe, setShoe }) => {
+export const SneakerSelector: FC<SneakerSelectorProps> = ({ sneaker, setSneaker }) => {
   return (
     <Row>
       <Col className='text-center' style={{ height: '70px' }}>
-        <img src={`/stepn-utils/${shoe.type}.svg`} width='100' className='mb-2' />
+        <img src={`/stepn-utils/${sneaker.type}.svg`} width='100' className='mb-2' />
       </Col>
       <SneakerTypeSelector
         className='mb-2'
-        value={shoe.type}
+        value={sneaker.type}
         onChange={t =>
-          setShoe(old => ({
+          setSneaker(old => ({
             ...old,
             type: t,
           }))
         }
       />
       <SneakerRareritySelector
-        value={shoe.rarerity}
+        value={sneaker.rarerity}
         onChange={r =>
-          setShoe(old => ({
+          setSneaker(old => ({
             ...old,
             rarerity: r,
           }))
@@ -35,17 +35,17 @@ export const SneakerSelector: FC<SneakerSelectorProps> = ({ shoe, setShoe }) => 
         className='mb-2'
       />
       <Form.Range
-        value={shoe.mint}
+        value={sneaker.mint}
         min={0}
         max={7}
         onChange={e => {
-          setShoe(old => ({
+          setSneaker(old => ({
             ...old,
             mint: Number(e.target.value),
           }))
         }}
       />
-      <Col>Mint {shoe.mint}</Col>
+      <Col>Mint {sneaker.mint}</Col>
     </Row>
   )
 }

@@ -44,10 +44,10 @@ type Context = {
   setMintingRateUncommon: React.Dispatch<React.SetStateAction<MintingRate>>
   mintingRateRare: MintingRate
   setMintingRateRare: React.Dispatch<React.SetStateAction<MintingRate>>
-  shoe1: Sneaker
-  setShoe1: React.Dispatch<React.SetStateAction<Sneaker>>
-  shoe2: Sneaker
-  setShoe2: React.Dispatch<React.SetStateAction<Sneaker>>
+  sneaker1: Sneaker
+  setSneaker1: React.Dispatch<React.SetStateAction<Sneaker>>
+  sneaker2: Sneaker
+  setSneaker2: React.Dispatch<React.SetStateAction<Sneaker>>
   lvupSneakerNum: number
   setLvupSneakerNum: React.Dispatch<React.SetStateAction<number>>
   unitType: UnitType
@@ -71,18 +71,18 @@ export const Context = createContext<Context>({
   setMintingRateUncommon: v => v,
   mintingRateRare: MintingRateListRare[0] as MintingRate,
   setMintingRateRare: v => v,
-  shoe1: {
+  sneaker1: {
     type: SneakerType.Walker,
     rarerity: SneakerRarerity.Common,
     mint: 0,
   },
-  setShoe1: v => v,
-  shoe2: {
+  setSneaker1: v => v,
+  sneaker2: {
     type: SneakerType.Walker,
     rarerity: SneakerRarerity.Common,
     mint: 0,
   },
-  setShoe2: v => v,
+  setSneaker2: v => v,
   lvupSneakerNum: 0,
   setLvupSneakerNum: v => v,
   unitType: 'realm',
@@ -102,12 +102,12 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
   const [mintingRateRare, setMintingRateRare] = useState<MintingRate>(
     MintingRateListRare[0] as MintingRate,
   )
-  const [shoe1, setShoe1] = useState<Sneaker>({
+  const [sneaker1, setSneaker1] = useState<Sneaker>({
     type: SneakerType.Walker,
     rarerity: SneakerRarerity.Common,
     mint: 0,
   })
-  const [shoe2, setShoe2] = useState<Sneaker>({
+  const [sneaker2, setSneaker2] = useState<Sneaker>({
     type: SneakerType.Walker,
     rarerity: SneakerRarerity.Common,
     mint: 0,
@@ -152,12 +152,12 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
       query: buildQuery({
         ...router.query,
         realm,
-        t1: shoe1.type,
-        t2: shoe2.type,
-        r1: shoe1.rarerity,
-        r2: shoe2.rarerity,
-        m1: shoe1.mint,
-        m2: shoe2.mint,
+        t1: sneaker1.type,
+        t2: sneaker2.type,
+        r1: sneaker1.rarerity,
+        r2: sneaker2.rarerity,
+        m1: sneaker1.mint,
+        m2: sneaker2.mint,
         ...floorPrices,
         gstC: mintingRateCommon.gst,
         gmtC: mintingRateCommon.gmt,
@@ -173,8 +173,8 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
     router.isReady,
     realm,
     floorPrices,
-    shoe1,
-    shoe2,
+    sneaker1,
+    sneaker2,
     mintingRateCommon,
     mintingRateUncommon,
     mintingRateRare,
@@ -207,40 +207,40 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
     if (Number(floorPriceString) !== Number(router.query[qRealm])) {
       setFloorPriceString(String(router.query[qRealm]))
     }
-    if (router.query.t1 && router.query.t1 !== shoe1.type) {
-      setShoe1(old => ({
+    if (router.query.t1 && router.query.t1 !== sneaker1.type) {
+      setSneaker1(old => ({
         ...old,
         type: router.query.t1 as SneakerType,
       }))
     }
-    if (router.query.r1 && router.query.r1 !== shoe1.rarerity) {
-      setShoe1(old => ({
+    if (router.query.r1 && router.query.r1 !== sneaker1.rarerity) {
+      setSneaker1(old => ({
         ...old,
         rarerity: router.query.r1 as SneakerRarerity,
       }))
     }
     const qM1 = Number(router.query.m1)
-    if (router.query.m1 && qM1 !== shoe1.mint) {
-      setShoe1(old => ({
+    if (router.query.m1 && qM1 !== sneaker1.mint) {
+      setSneaker1(old => ({
         ...old,
         mint: qM1,
       }))
     }
-    if (router.query.t2 && router.query.t2 !== shoe2.type) {
-      setShoe2(old => ({
+    if (router.query.t2 && router.query.t2 !== sneaker2.type) {
+      setSneaker2(old => ({
         ...old,
         type: router.query.t2 as SneakerType,
       }))
     }
-    if (router.query.r2 && router.query.r2 !== shoe2.rarerity) {
-      setShoe2(old => ({
+    if (router.query.r2 && router.query.r2 !== sneaker2.rarerity) {
+      setSneaker2(old => ({
         ...old,
         rarerity: router.query.r2 as SneakerRarerity,
       }))
     }
     const qM2 = Number(router.query.m2)
-    if (router.query.m2 && qM2 !== shoe2.mint) {
-      setShoe2(old => ({
+    if (router.query.m2 && qM2 !== sneaker2.mint) {
+      setSneaker2(old => ({
         ...old,
         mint: qM2,
       }))
@@ -310,10 +310,10 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
         setFloorPriceString,
         floorPrices,
         setFloorPrices,
-        shoe1,
-        setShoe1,
-        shoe2,
-        setShoe2,
+        sneaker1,
+        setSneaker1,
+        sneaker2,
+        setSneaker2,
         mintingRateCommon,
         setMintingRateCommon,
         mintingRateUncommon,

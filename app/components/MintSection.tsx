@@ -21,10 +21,10 @@ export const MintSection: FC = () => {
     floorPriceString,
     setFloorPriceString,
     floorPrices,
-    shoe1,
-    setShoe1,
-    shoe2,
-    setShoe2,
+    sneaker1,
+    setSneaker1,
+    sneaker2,
+    setSneaker2,
     lvupSneakerNum,
     setLvupSneakerNum,
     unitType,
@@ -50,10 +50,10 @@ export const MintSection: FC = () => {
     mintingRateCommon,
     mintingRateUncommon,
     mintingRateRare,
-    shoe1.rarerity,
-    shoe1.mint,
-    shoe2.rarerity,
-    shoe2.mint,
+    sneaker1.rarerity,
+    sneaker1.mint,
+    sneaker2.rarerity,
+    sneaker2.mint,
     floorPrices[realm] || 0,
   )
 
@@ -113,7 +113,7 @@ export const MintSection: FC = () => {
                 <div className='mb-2'>
                   <small className='text-muted'>Sneaker1</small>
                 </div>
-                <SneakerSelector shoe={shoe1} setShoe={setShoe1} />
+                <SneakerSelector sneaker={sneaker1} setSneaker={setSneaker1} />
               </Card.Body>
             </Card>
           </Col>
@@ -123,7 +123,7 @@ export const MintSection: FC = () => {
                 <div className='mb-2'>
                   <small className='text-muted'>Sneaker2</small>
                 </div>
-                <SneakerSelector shoe={shoe2} setShoe={setShoe2} />
+                <SneakerSelector sneaker={sneaker2} setSneaker={setSneaker2} />
               </Card.Body>
             </Card>
           </Col>
