@@ -257,7 +257,8 @@ const Block: FC<{
         <Button
           variant='link'
           onClick={handleShow}
-          className='w-100 text-start d-block p-0 text-body text-decoration-none'
+          className='w-100 text-start d-block p-0 text-body text-decoration-none overflow-hidden'
+          style={{ maxWidth: '12vw' }}
         >
           <small className='text-nowrap'>
             <img
