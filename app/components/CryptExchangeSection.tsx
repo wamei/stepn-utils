@@ -78,56 +78,64 @@ export const CryptExchangeSection: FC<CryptExchangeSectionProps> = ({ crypts, cl
   ].filter(c => c.id !== 'bitcoin')
 
   return (
-    <div className={className}>
-      <Row className='mb-3 mt-3'>
-        <Col className='text-center'>
-          <h5>
-            <Trans>currency_exchange_emulator</Trans>
-          </h5>
-        </Col>
-      </Row>
-      <InputGroup className='mb-3 flex-nowrap'>
-        <FloatingLabel label={`${crypt.short}`}>
-          <Form.Control
-            type='number'
-            value={priceString}
-            onChange={e => {
-              setPriceString(e.target.value)
-            }}
-          />
-        </FloatingLabel>
-        <CryptSelector crypts={jpyAddedCrypts} value={crypt} onChange={setCrypt} />
-      </InputGroup>
-      <Table striped bordered hover size='sm' className='mb-0'>
-        <tbody>
-          {jpyAddedCrypts.map(c => (
-            <tr key={c.id}>
-              <td>
-                <img
-                  className='me-1 align-middle'
-                  src={`/stepn-utils/${c.id}.png`}
-                  alt={c.name}
-                  width='15'
-                  height='15'
-                />
-                <span className='align-middle'>{c.short}</span>
-              </td>
-              <td className='text-end'>
-                <SmallDecimal value={((crypt.jpy * price * 0.9936) / c.jpy).toFixed(3)} />
-              </td>
-              <td>{c.symbol}</td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-      <Row className='mb-3 mt-3'>
-        <Col className='text-center'>
-          <h5>
-            <Trans>currency_exchange_table</Trans>
-          </h5>
-        </Col>
-      </Row>
-      <CryptPriceTable crypts={jpyAddedCrypts} />
-    </div>
+    <Row className={className}>
+      <Col xs={12} md={6} className='order-md-0'>
+        <Row className='mb-3 mt-3'>
+          <Col className='text-center'>
+            <h5>
+              <Trans>currency_exchange_emulator</Trans>
+            </h5>
+          </Col>
+        </Row>
+        <InputGroup className='mb-3 flex-nowrap'>
+          <FloatingLabel label={`${crypt.short}`}>
+            <Form.Control
+              type='number'
+              value={priceString}
+              onChange={e => {
+                setPriceString(e.target.value)
+              }}
+            />
+          </FloatingLabel>
+          <CryptSelector crypts={jpyAddedCrypts} value={crypt} onChange={setCrypt} />
+        </InputGroup>
+      </Col>
+      <Col xs={12} md={6} className='order-md-2'>
+        <Table striped bordered hover size='sm' className='mb-0'>
+          <tbody>
+            {jpyAddedCrypts.map(c => (
+              <tr key={c.id}>
+                <td>
+                  <img
+                    className='me-1 align-middle'
+                    src={`/stepn-utils/${c.id}.png`}
+                    alt={c.name}
+                    width='15'
+                    height='15'
+                  />
+                  <span className='align-middle'>{c.short}</span>
+                </td>
+                <td className='text-end'>
+                  <SmallDecimal value={((crypt.jpy * price * 0.9936) / c.jpy).toFixed(3)} />
+                </td>
+                <td>{c.symbol}</td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </Col>
+      <Col xs={12} md={6} className='order-md-1'>
+        <Row className='mb-3 mt-3'>
+          <Col className='text-center'>
+            <h5>
+              <Trans>currency_exchange_table</Trans>
+            </h5>
+          </Col>
+        </Row>
+      </Col>
+      <Col xs={12} md={6} className='order-md-3'>
+        <CryptPriceTable crypts={jpyAddedCrypts} />
+      </Col>
+    </Row>
   )
 }

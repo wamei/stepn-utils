@@ -9,7 +9,7 @@ const Prices: BlitzPage = () => {
   const { crypts } = context
 
   return (
-    <Container className='mt-2' style={{ maxWidth: '540px' }}>
+    <Container className='mt-2'>
       <CryptExchangeSection crypts={crypts} />
     </Container>
   )

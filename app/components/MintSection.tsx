@@ -394,7 +394,7 @@ export const MintSection: FC = () => {
         <Row>
           {Object.entries(MintedSneakerTypeMatrix[sneaker1.type][sneaker2.type]).map(
             ([type, value]) => (
-              <Col key={type}>
+              <Col key={type} xs={3}>
                 <Row>
                   <Col className='text-center' style={{ height: '40px' }}>
                     <img src={`/stepn-utils/${type}.svg`} width='70' className='mb-2' />

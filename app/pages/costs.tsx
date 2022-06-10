@@ -5,7 +5,7 @@ import Layout from 'app/layouts/Layout'
 
 const Costs: BlitzPage = () => {
   return (
-    <Container className='mt-2' style={{ maxWidth: '540px' }}>
+    <Container className='mt-2'>
       <HomeSection />
     </Container>
   )

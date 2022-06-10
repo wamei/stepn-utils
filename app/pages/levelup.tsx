@@ -11,7 +11,7 @@ const Levelup: BlitzPage = () => {
   const { realm, setRealm, crypts } = context
 
   return (
-    <Container className='mt-2' style={{ maxWidth: '540px' }}>
+    <Container className='mt-2'>
       <Row className='mb-3 mt-3'>
         <Col className='text-center'>
           <h5>
