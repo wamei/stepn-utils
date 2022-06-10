@@ -7,7 +7,7 @@ const resources: Resource = {
       'language': '日本語',
       'minting_cost_emulator': 'Minting Cost Emulator',
       'minting_cost': 'Minting Cost',
-      'input': 'Data Input',
+      'input': 'Input Data',
       'floor_price': 'Floor Price',
       'levelup_cost': 'Level Up Cost',
       'levelup_cost_0': 'None',

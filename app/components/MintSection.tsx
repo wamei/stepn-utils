@@ -8,7 +8,17 @@ import {
 } from 'app/models/SneakerRarity'
 import { MintedSneakerTypeMatrix } from 'app/models/SneakerType'
 import React, { FC, useContext } from 'react'
-import { ButtonGroup, Card, Col, FloatingLabel, Form, Row, ToggleButton } from 'react-bootstrap'
+import {
+  ButtonGroup,
+  Card,
+  Col,
+  FloatingLabel,
+  Form,
+  OverlayTrigger,
+  Popover,
+  Row,
+  ToggleButton,
+} from 'react-bootstrap'
 import { Trans } from 'react-i18next'
 import { CryptPriceTable } from './CryptPriceTable'
 import { LabeledForm } from './LabeledForm'
@@ -88,6 +98,37 @@ export const MintSection: FC = () => {
       ? lowestLvupBenefit
       : lowest2LvupBenefit
   const unitedLowestBenefit = convertUnit(unitType, _unitedLowestBenefit)
+
+  const sneakerRarities = Object.entries(
+    MintedSneakerShoeboxRarityMatrix[sneaker1.rarity][sneaker2.rarity],
+  )
+    .map(([rarity, value]) => {
+      return {
+        [SneakerRarity.Common]: ShoeBoxRarityMatrix[rarity][SneakerRarity.Common] * value,
+        [SneakerRarity.Uncommon]: ShoeBoxRarityMatrix[rarity][SneakerRarity.Uncommon] * value,
+        [SneakerRarity.Rare]: ShoeBoxRarityMatrix[rarity][SneakerRarity.Rare] * value,
+        [SneakerRarity.Epic]: ShoeBoxRarityMatrix[rarity][SneakerRarity.Epic] * value,
+        [SneakerRarity.Legendary]: ShoeBoxRarityMatrix[rarity][SneakerRarity.Legendary] * value,
+      }
+    })
+    .reduce(
+      (p, c) => {
+        return {
+          [SneakerRarity.Common]: p[SneakerRarity.Common] + c[SneakerRarity.Common],
+          [SneakerRarity.Uncommon]: p[SneakerRarity.Uncommon] + c[SneakerRarity.Uncommon],
+          [SneakerRarity.Rare]: p[SneakerRarity.Rare] + c[SneakerRarity.Rare],
+          [SneakerRarity.Epic]: p[SneakerRarity.Epic] + c[SneakerRarity.Epic],
+          [SneakerRarity.Legendary]: p[SneakerRarity.Legendary] + c[SneakerRarity.Legendary],
+        }
+      },
+      {
+        [SneakerRarity.Common]: 0,
+        [SneakerRarity.Uncommon]: 0,
+        [SneakerRarity.Rare]: 0,
+        [SneakerRarity.Epic]: 0,
+        [SneakerRarity.Legendary]: 0,
+      },
+    )
 
   return (
     <Row>
@@ -376,9 +417,91 @@ export const MintSection: FC = () => {
             </h5>
           </Col>
         </Row>
-        <div>
-          {Object.entries(MintedSneakerShoeboxRarityMatrix[sneaker1.rarity][sneaker2.rarity]).map(
-            ([rarity, value]) => (
+        <OverlayTrigger
+          trigger='click'
+          rootClose
+          overlay={
+            <Popover>
+              <Popover.Body>
+                {Object.entries(
+                  MintedSneakerShoeboxRarityMatrix[sneaker1.rarity][sneaker2.rarity],
+                ).map(([rarity, value]) => (
+                  <Row
+                    key={rarity}
+                    style={{
+                      backgroundColor: SneakerRarityColor[rarity],
+                    }}
+                    className={`${value === 0 ? 'd-none' : ''}`}
+                  >
+                    <Col>{rarity}</Col>
+                    <Col className='text-end'>
+                      <SmallDecimal value={(value * 100).toFixed(2)} />%
+                    </Col>
+                  </Row>
+                ))}
+              </Popover.Body>
+            </Popover>
+          }
+        >
+          <div>
+            {Object.entries(MintedSneakerShoeboxRarityMatrix[sneaker1.rarity][sneaker2.rarity]).map(
+              ([rarity, value]) => (
+                <div
+                  key={rarity}
+                  style={{
+                    backgroundColor: SneakerRarityColor[rarity],
+                    width: `${value * 100}%`,
+                    ...(value === 0
+                      ? {
+                          display: 'none',
+                        }
+                      : {
+                          display: 'inline-block',
+                        }),
+                  }}
+                >
+                  <div className='text-center overflow-hidden'>{rarity}</div>
+                  <div className='text-center overflow-hidden'>
+                    <SmallDecimal value={(value * 100).toFixed(2)} />%
+                  </div>
+                </div>
+              ),
+            )}
+          </div>
+        </OverlayTrigger>
+        <Row className='mb-2 mt-2'>
+          <Col className='text-center'>
+            <h5>
+              <Trans>sneaker_rarity</Trans>
+            </h5>
+          </Col>
+        </Row>
+        <OverlayTrigger
+          trigger='click'
+          rootClose
+          overlay={
+            <Popover>
+              <Popover.Body>
+                {Object.entries(sneakerRarities).map(([rarity, value]) => (
+                  <Row
+                    key={rarity}
+                    style={{
+                      backgroundColor: SneakerRarityColor[rarity],
+                    }}
+                    className={`${value === 0 ? 'd-none' : ''}`}
+                  >
+                    <Col>{rarity}</Col>
+                    <Col className='text-end'>
+                      <SmallDecimal value={(value * 100).toFixed(2)} />%
+                    </Col>
+                  </Row>
+                ))}
+              </Popover.Body>
+            </Popover>
+          }
+        >
+          <div>
+            {Object.entries(sneakerRarities).map(([rarity, value]) => (
               <div
                 key={rarity}
                 style={{
@@ -398,71 +521,9 @@ export const MintSection: FC = () => {
                   <SmallDecimal value={(value * 100).toFixed(2)} />%
                 </div>
               </div>
-            ),
-          )}
-        </div>
-        <Row className='mb-2 mt-2'>
-          <Col className='text-center'>
-            <h5>
-              <Trans>sneaker_rarity</Trans>
-            </h5>
-          </Col>
-        </Row>
-        <div>
-          {Object.entries(
-            Object.entries(MintedSneakerShoeboxRarityMatrix[sneaker1.rarity][sneaker2.rarity])
-              .map(([rarity, value]) => {
-                return {
-                  [SneakerRarity.Common]: ShoeBoxRarityMatrix[rarity][SneakerRarity.Common] * value,
-                  [SneakerRarity.Uncommon]:
-                    ShoeBoxRarityMatrix[rarity][SneakerRarity.Uncommon] * value,
-                  [SneakerRarity.Rare]: ShoeBoxRarityMatrix[rarity][SneakerRarity.Rare] * value,
-                  [SneakerRarity.Epic]: ShoeBoxRarityMatrix[rarity][SneakerRarity.Epic] * value,
-                  [SneakerRarity.Legendary]:
-                    ShoeBoxRarityMatrix[rarity][SneakerRarity.Legendary] * value,
-                }
-              })
-              .reduce(
-                (p, c) => {
-                  return {
-                    [SneakerRarity.Common]: p[SneakerRarity.Common] + c[SneakerRarity.Common],
-                    [SneakerRarity.Uncommon]: p[SneakerRarity.Uncommon] + c[SneakerRarity.Uncommon],
-                    [SneakerRarity.Rare]: p[SneakerRarity.Rare] + c[SneakerRarity.Rare],
-                    [SneakerRarity.Epic]: p[SneakerRarity.Epic] + c[SneakerRarity.Epic],
-                    [SneakerRarity.Legendary]:
-                      p[SneakerRarity.Legendary] + c[SneakerRarity.Legendary],
-                  }
-                },
-                {
-                  [SneakerRarity.Common]: 0,
-                  [SneakerRarity.Uncommon]: 0,
-                  [SneakerRarity.Rare]: 0,
-                  [SneakerRarity.Epic]: 0,
-                  [SneakerRarity.Legendary]: 0,
-                },
-              ),
-          ).map(([rarity, value]) => (
-            <div
-              key={rarity}
-              style={{
-                backgroundColor: SneakerRarityColor[rarity],
-                width: `${value * 100}%`,
-                ...(value === 0
-                  ? {
-                      display: 'none',
-                    }
-                  : {
-                      display: 'inline-block',
-                    }),
-              }}
-            >
-              <div className='text-center overflow-hidden'>{rarity}</div>
-              <div className='text-center overflow-hidden'>
-                <SmallDecimal value={(value * 100).toFixed(2)} />%
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        </OverlayTrigger>
       </Col>
     </Row>
   )
