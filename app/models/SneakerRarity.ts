@@ -26,7 +26,7 @@ export const ShoeBoxRarityMatrix = {
   [SneakerRarity.Uncommon]: {
     [SneakerRarity.Common]: 0.25,
     [SneakerRarity.Uncommon]: 0.73,
-    [SneakerRarity.Rare]: 0.2,
+    [SneakerRarity.Rare]: 0.02,
     [SneakerRarity.Epic]: 0,
     [SneakerRarity.Legendary]: 0,
   },
