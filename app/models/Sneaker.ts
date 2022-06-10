@@ -1,8 +1,8 @@
-import { SneakerRarerity } from './SneakerRarerity'
+import { SneakerRarity } from './SneakerRarity'
 import { SneakerType } from './SneakerType'
 
 export type Sneaker = {
   type: SneakerType
-  rarerity: SneakerRarerity
+  rarity: SneakerRarity
   mint: number
 }

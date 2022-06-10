@@ -12,8 +12,8 @@ import {
   MintingRateListRare,
   MintingRateListUncommon,
 } from 'app/models/MintingRate'
-import { SneakerRarerity } from 'app/models/SneakerRarerity'
-import { SneakerRareritySelector } from './SneakerRareritySelector'
+import { SneakerRarity } from 'app/models/SneakerRarity'
+import { SneakerRaritySelector } from './SneakerRaritySelector'
 
 export const HomeSection: FC = () => {
   const context = useContext(Context)
@@ -113,27 +113,27 @@ export const HomeSection: FC = () => {
         </Col>
       </Row>
       <Row className='mb-3'>
-        <SneakerRareritySelector
+        <SneakerRaritySelector
           type='button'
-          value={sneaker1.rarerity}
+          value={sneaker1.rarity}
           onChange={r =>
             setSneaker1(old => ({
               ...old,
-              rarerity: r as SneakerRarerity,
+              rarity: r as SneakerRarity,
             }))
           }
         />
       </Row>
-      {[SneakerRarerity.Common, SneakerRarerity.Uncommon, SneakerRarerity.Rare]
-        .sort(a => (a === sneaker1.rarerity ? -1 : 1))
-        .map(rarerity => (
+      {[SneakerRarity.Common, SneakerRarity.Uncommon, SneakerRarity.Rare]
+        .sort(a => (a === sneaker1.rarity ? -1 : 1))
+        .map(rarity => (
           <MintingCostTable
-            key={rarerity}
+            key={rarity}
             mintingRateCommon={mintingRateCommon}
             mintingRateUncommon={mintingRateUncommon}
             mintingRateRare={mintingRateRare}
-            rarerity1={sneaker1.rarerity}
-            rarerity2={rarerity}
+            rarity1={sneaker1.rarity}
+            rarity2={rarity}
             realm={realm}
             crypts={crypts}
             floorPrice={floorPrices[realm] || 0}

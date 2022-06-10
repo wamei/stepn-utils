@@ -1,11 +1,11 @@
 import { Context, UnitType } from 'app/layouts/Layout'
 import { RealmToken } from 'app/models/Realm'
 import {
-  MintedSneakerShoeboxRarerityMatrix,
-  ShoeBoxRarerityMatrix,
-  SneakerRarerity,
-  SneakerRarerityColor,
-} from 'app/models/SneakerRarerity'
+  MintedSneakerShoeboxRarityMatrix,
+  ShoeBoxRarityMatrix,
+  SneakerRarity,
+  SneakerRarityColor,
+} from 'app/models/SneakerRarity'
 import { MintedSneakerTypeMatrix } from 'app/models/SneakerType'
 import React, { FC, useContext } from 'react'
 import { ButtonGroup, Card, Col, FloatingLabel, Form, Row, ToggleButton } from 'react-bootstrap'
@@ -56,9 +56,9 @@ export const MintSection: FC = () => {
     mintingRateCommon,
     mintingRateUncommon,
     mintingRateRare,
-    sneaker1.rarerity,
+    sneaker1.rarity,
     sneaker1.mint,
-    sneaker2.rarerity,
+    sneaker2.rarity,
     sneaker2.mint,
     floorPrices[realm] || 0,
   )
@@ -153,7 +153,7 @@ export const MintSection: FC = () => {
                   type='radio'
                   variant='light'
                   style={{
-                    backgroundColor: lvupSneakerNum === 0 ? SneakerRarerityColor.Common : '',
+                    backgroundColor: lvupSneakerNum === 0 ? SneakerRarityColor.Common : '',
                   }}
                   onChange={e => setLvupSneakerNum(Number(e.currentTarget.value))}
                   size='sm'
@@ -166,7 +166,7 @@ export const MintSection: FC = () => {
                   type='radio'
                   variant='light'
                   style={{
-                    backgroundColor: lvupSneakerNum === 1 ? SneakerRarerityColor.Common : '',
+                    backgroundColor: lvupSneakerNum === 1 ? SneakerRarityColor.Common : '',
                   }}
                   onChange={e => setLvupSneakerNum(Number(e.currentTarget.value))}
                   size='sm'
@@ -179,7 +179,7 @@ export const MintSection: FC = () => {
                   type='radio'
                   variant='light'
                   style={{
-                    backgroundColor: lvupSneakerNum === 2 ? SneakerRarerityColor.Common : '',
+                    backgroundColor: lvupSneakerNum === 2 ? SneakerRarityColor.Common : '',
                   }}
                   onChange={e => setLvupSneakerNum(Number(e.currentTarget.value))}
                   size='sm'
@@ -198,7 +198,7 @@ export const MintSection: FC = () => {
                   type='radio'
                   variant='light'
                   style={{
-                    backgroundColor: unitType === 'realm' ? SneakerRarerityColor.Common : '',
+                    backgroundColor: unitType === 'realm' ? SneakerRarityColor.Common : '',
                   }}
                   onChange={e => setUnitType(e.currentTarget.value as UnitType)}
                   size='sm'
@@ -211,7 +211,7 @@ export const MintSection: FC = () => {
                   type='radio'
                   variant='light'
                   style={{
-                    backgroundColor: unitType === 'jpy' ? SneakerRarerityColor.Common : '',
+                    backgroundColor: unitType === 'jpy' ? SneakerRarityColor.Common : '',
                   }}
                   onChange={e => setUnitType(e.currentTarget.value as UnitType)}
                   size='sm'
@@ -224,7 +224,7 @@ export const MintSection: FC = () => {
                   type='radio'
                   variant='light'
                   style={{
-                    backgroundColor: unitType === 'usd' ? SneakerRarerityColor.Common : '',
+                    backgroundColor: unitType === 'usd' ? SneakerRarityColor.Common : '',
                   }}
                   onChange={e => setUnitType(e.currentTarget.value as UnitType)}
                   size='sm'
@@ -324,27 +324,27 @@ export const MintSection: FC = () => {
         </Col>
       </Row>
       <div>
-        {Object.entries(
-          MintedSneakerShoeboxRarerityMatrix[sneaker1.rarerity][sneaker2.rarerity],
-        ).map(([rarerity, value]) => (
-          <div
-            key={rarerity}
-            style={{
-              backgroundColor: SneakerRarerityColor[rarerity],
-              width: `${value * 100}%`,
-              ...(value === 0
-                ? {
-                    display: 'none',
-                  }
-                : {
-                    display: 'inline-block',
-                  }),
-            }}
-          >
-            <div className='text-center overflow-hidden'>{rarerity}</div>
-            <div className='text-center overflow-hidden'>{value * 100}%</div>
-          </div>
-        ))}
+        {Object.entries(MintedSneakerShoeboxRarityMatrix[sneaker1.rarity][sneaker2.rarity]).map(
+          ([rarity, value]) => (
+            <div
+              key={rarity}
+              style={{
+                backgroundColor: SneakerRarityColor[rarity],
+                width: `${value * 100}%`,
+                ...(value === 0
+                  ? {
+                      display: 'none',
+                    }
+                  : {
+                      display: 'inline-block',
+                    }),
+              }}
+            >
+              <div className='text-center overflow-hidden'>{rarity}</div>
+              <div className='text-center overflow-hidden'>{value * 100}%</div>
+            </div>
+          ),
+        )}
       </div>
       <Row className='mb-2 mt-2'>
         <Col className='text-center'>
@@ -353,46 +353,42 @@ export const MintSection: FC = () => {
       </Row>
       <div>
         {Object.entries(
-          Object.entries(MintedSneakerShoeboxRarerityMatrix[sneaker1.rarerity][sneaker2.rarerity])
-            .map(([rarerity, value]) => {
+          Object.entries(MintedSneakerShoeboxRarityMatrix[sneaker1.rarity][sneaker2.rarity])
+            .map(([rarity, value]) => {
               return {
-                [SneakerRarerity.Common]:
-                  ShoeBoxRarerityMatrix[rarerity][SneakerRarerity.Common] * value,
-                [SneakerRarerity.Uncommon]:
-                  ShoeBoxRarerityMatrix[rarerity][SneakerRarerity.Uncommon] * value,
-                [SneakerRarerity.Rare]:
-                  ShoeBoxRarerityMatrix[rarerity][SneakerRarerity.Rare] * value,
-                [SneakerRarerity.Epic]:
-                  ShoeBoxRarerityMatrix[rarerity][SneakerRarerity.Epic] * value,
-                [SneakerRarerity.Legendary]:
-                  ShoeBoxRarerityMatrix[rarerity][SneakerRarerity.Legendary] * value,
+                [SneakerRarity.Common]: ShoeBoxRarityMatrix[rarity][SneakerRarity.Common] * value,
+                [SneakerRarity.Uncommon]:
+                  ShoeBoxRarityMatrix[rarity][SneakerRarity.Uncommon] * value,
+                [SneakerRarity.Rare]: ShoeBoxRarityMatrix[rarity][SneakerRarity.Rare] * value,
+                [SneakerRarity.Epic]: ShoeBoxRarityMatrix[rarity][SneakerRarity.Epic] * value,
+                [SneakerRarity.Legendary]:
+                  ShoeBoxRarityMatrix[rarity][SneakerRarity.Legendary] * value,
               }
             })
             .reduce(
               (p, c) => {
                 return {
-                  [SneakerRarerity.Common]: p[SneakerRarerity.Common] + c[SneakerRarerity.Common],
-                  [SneakerRarerity.Uncommon]:
-                    p[SneakerRarerity.Uncommon] + c[SneakerRarerity.Uncommon],
-                  [SneakerRarerity.Rare]: p[SneakerRarerity.Rare] + c[SneakerRarerity.Rare],
-                  [SneakerRarerity.Epic]: p[SneakerRarerity.Epic] + c[SneakerRarerity.Epic],
-                  [SneakerRarerity.Legendary]:
-                    p[SneakerRarerity.Legendary] + c[SneakerRarerity.Legendary],
+                  [SneakerRarity.Common]: p[SneakerRarity.Common] + c[SneakerRarity.Common],
+                  [SneakerRarity.Uncommon]: p[SneakerRarity.Uncommon] + c[SneakerRarity.Uncommon],
+                  [SneakerRarity.Rare]: p[SneakerRarity.Rare] + c[SneakerRarity.Rare],
+                  [SneakerRarity.Epic]: p[SneakerRarity.Epic] + c[SneakerRarity.Epic],
+                  [SneakerRarity.Legendary]:
+                    p[SneakerRarity.Legendary] + c[SneakerRarity.Legendary],
                 }
               },
               {
-                [SneakerRarerity.Common]: 0,
-                [SneakerRarerity.Uncommon]: 0,
-                [SneakerRarerity.Rare]: 0,
-                [SneakerRarerity.Epic]: 0,
-                [SneakerRarerity.Legendary]: 0,
+                [SneakerRarity.Common]: 0,
+                [SneakerRarity.Uncommon]: 0,
+                [SneakerRarity.Rare]: 0,
+                [SneakerRarity.Epic]: 0,
+                [SneakerRarity.Legendary]: 0,
               },
             ),
-        ).map(([rarerity, value]) => (
+        ).map(([rarity, value]) => (
           <div
-            key={rarerity}
+            key={rarity}
             style={{
-              backgroundColor: SneakerRarerityColor[rarerity],
+              backgroundColor: SneakerRarityColor[rarity],
               width: `${value * 100}%`,
               ...(value === 0
                 ? {
@@ -403,7 +399,7 @@ export const MintSection: FC = () => {
                   }),
             }}
           >
-            <div className='text-center overflow-hidden'>{rarerity}</div>
+            <div className='text-center overflow-hidden'>{rarity}</div>
             <div className='text-center overflow-hidden'>{(value * 100).toFixed(2)}%</div>
           </div>
         ))}

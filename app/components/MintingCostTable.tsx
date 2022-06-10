@@ -1,7 +1,7 @@
 import { Cryptocurrency } from 'app/models/Cryptcurrency'
 import { calcAdditionalGmt, MintingRate } from 'app/models/MintingRate'
 import { Realm, RealmColor, RealmToken } from 'app/models/Realm'
-import { SneakerRarerity, SneakerRarerityColor } from 'app/models/SneakerRarerity'
+import { SneakerRarity, SneakerRarityColor } from 'app/models/SneakerRarity'
 import React, { FC, useState } from 'react'
 import { Button, Col, Modal, Row, Table } from 'react-bootstrap'
 import { SmallDecimal } from './SmallDecimal'
@@ -10,8 +10,8 @@ type MintingCostTableProps = {
   mintingRateCommon: MintingRate
   mintingRateUncommon: MintingRate
   mintingRateRare: MintingRate
-  rarerity1: SneakerRarerity
-  rarerity2: SneakerRarerity
+  rarity1: SneakerRarity
+  rarity2: SneakerRarity
   realm: Realm
   crypts: Cryptocurrency[]
   floorPrice: number
@@ -25,18 +25,18 @@ export const calcMintCost = (
   mintingRateCommon: MintingRate,
   mintingRateUncommon: MintingRate,
   mintingRateRare: MintingRate,
-  r1: SneakerRarerity,
+  r1: SneakerRarity,
   m1: number,
-  r2: SneakerRarerity,
+  r2: SneakerRarity,
   m2: number,
   floorPrice: number,
 ) => {
   const mintingRate = {
-    [SneakerRarerity.Common]: mintingRateCommon,
-    [SneakerRarerity.Uncommon]: mintingRateUncommon,
-    [SneakerRarerity.Rare]: mintingRateRare,
-    [SneakerRarerity.Epic]: mintingRateUncommon,
-    [SneakerRarerity.Legendary]: mintingRateUncommon,
+    [SneakerRarity.Common]: mintingRateCommon,
+    [SneakerRarity.Uncommon]: mintingRateUncommon,
+    [SneakerRarity.Rare]: mintingRateRare,
+    [SneakerRarity.Epic]: mintingRateUncommon,
+    [SneakerRarity.Legendary]: mintingRateUncommon,
   }
   const base1gst = mintingRate[r1].gst / 2
   const base2gst = mintingRate[r2].gst / 2
@@ -107,9 +107,9 @@ const Block: FC<{
   mintingRateCommon: MintingRate
   mintingRateUncommon: MintingRate
   mintingRateRare: MintingRate
-  r1: SneakerRarerity
+  r1: SneakerRarity
   m1: number
-  r2: SneakerRarerity
+  r2: SneakerRarity
   m2: number
   floorPrice: number
 }> = ({
@@ -275,11 +275,11 @@ const Block: FC<{
               height='20'
             />
             <span className='align-middle'>
-              <span className='rounded p-1' style={{ backgroundColor: SneakerRarerityColor[r1] }}>
+              <span className='rounded p-1' style={{ backgroundColor: SneakerRarityColor[r1] }}>
                 {r1} {m1}
               </span>{' '}
               x{' '}
-              <span className='rounded p-1' style={{ backgroundColor: SneakerRarerityColor[r2] }}>
+              <span className='rounded p-1' style={{ backgroundColor: SneakerRarityColor[r2] }}>
                 {r2} {m2}
               </span>
             </span>
@@ -351,8 +351,8 @@ export const MintingCostTable: FC<MintingCostTableProps> = ({
   mintingRateCommon,
   mintingRateUncommon,
   mintingRateRare,
-  rarerity1,
-  rarerity2,
+  rarity1,
+  rarity2,
   realm,
   crypts,
   floorPrice,
@@ -370,7 +370,7 @@ export const MintingCostTable: FC<MintingCostTableProps> = ({
               <td
                 key={m1}
                 className='pt-0 pb-0'
-                style={{ backgroundColor: SneakerRarerityColor[rarerity1] }}
+                style={{ backgroundColor: SneakerRarityColor[rarity1] }}
               >
                 <small>{m1}</small>
               </td>
@@ -378,7 +378,7 @@ export const MintingCostTable: FC<MintingCostTableProps> = ({
           </tr>
           {mints.map(m2 => (
             <tr key={m2}>
-              <td className='pe-0' style={{ backgroundColor: SneakerRarerityColor[rarerity2] }}>
+              <td className='pe-0' style={{ backgroundColor: SneakerRarityColor[rarity2] }}>
                 <small>{m2}</small>
               </td>
               {mints.map(m1 => (
@@ -389,9 +389,9 @@ export const MintingCostTable: FC<MintingCostTableProps> = ({
                     mintingRateCommon={mintingRateCommon}
                     mintingRateUncommon={mintingRateUncommon}
                     mintingRateRare={mintingRateRare}
-                    r1={rarerity1}
+                    r1={rarity1}
                     m1={m1}
-                    r2={rarerity2}
+                    r2={rarity2}
                     m2={m2}
                     floorPrice={floorPrice}
                   />

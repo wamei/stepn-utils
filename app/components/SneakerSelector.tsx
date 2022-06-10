@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import { SneakerTypeSelector } from './SneakerTypeSelector'
-import { SneakerRareritySelector } from './SneakerRareritySelector'
+import { SneakerRaritySelector } from './SneakerRaritySelector'
 import { Sneaker } from 'app/models/Sneaker'
 import { Col, Form, Row } from 'react-bootstrap'
 
@@ -24,12 +24,12 @@ export const SneakerSelector: FC<SneakerSelectorProps> = ({ sneaker, setSneaker 
           }))
         }
       />
-      <SneakerRareritySelector
-        value={sneaker.rarerity}
+      <SneakerRaritySelector
+        value={sneaker.rarity}
         onChange={r =>
           setSneaker(old => ({
             ...old,
-            rarerity: r,
+            rarity: r,
           }))
         }
         className='mb-2'
