@@ -92,7 +92,7 @@ export const MintSection: FC = () => {
     <>
       <Row className='mb-3 mt-3'>
         <Col className='text-center'>
-          <h5>ミント費用エミュレータ</h5>
+          <h5>Minting Cost Emulator</h5>
         </Col>
       </Row>
       <Form>

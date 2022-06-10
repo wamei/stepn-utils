@@ -37,7 +37,7 @@ export const SneakerSelector: FC<SneakerSelectorProps> = ({ sneaker, setSneaker 
       <Form.Range
         value={sneaker.mint}
         min={0}
-        max={7}
+        max={6}
         onChange={e => {
           setSneaker(old => ({
             ...old,

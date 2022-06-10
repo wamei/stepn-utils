@@ -17,7 +17,7 @@ import {
 import { buildQuery } from 'app/utils'
 import { Head, useRouter } from 'blitz'
 import React, { FC, ReactNode, createContext, useEffect, useState } from 'react'
-import { Container, Nav, Navbar } from 'react-bootstrap'
+import { Container, Nav, Navbar, Row } from 'react-bootstrap'
 
 type LayoutProps = {
   title?: string
@@ -339,9 +339,18 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
                   query: router.query,
                 })
               }}
+              className='pt-0 pb-0'
             >
-              <img src='/stepn-utils/stepn.svg' width='40' height='40' />
-              STEPN utils
+              <Row>
+                <img src='/stepn-utils/stepn.svg' width='20' height='20' />
+              </Row>
+              <Row className=''>
+                <small>
+                  <small>
+                    <small>STEPN utils</small>
+                  </small>
+                </small>
+              </Row>
             </Navbar.Brand>
             <Navbar.Toggle aria-controls='responsive-navbar-nav' />
             <Navbar.Collapse id='responsive-navbar-nav'>
@@ -355,16 +364,16 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
                   })
                 }}
               >
-                <Nav.Link className='pe-1' eventKey='/'>
+                <Nav.Link className='pe-1 pt-0 pb-0' eventKey='/'>
                   Mint
                 </Nav.Link>
-                <Nav.Link className='pe-1' eventKey='/costs'>
+                <Nav.Link className='pe-1 pt-0 pb-0' eventKey='/costs'>
                   Costs
                 </Nav.Link>
-                <Nav.Link className='pe-1' eventKey='/levelup'>
+                <Nav.Link className='pe-1 pt-0 pb-0' eventKey='/levelup'>
                   Lvup
                 </Nav.Link>
-                <Nav.Link className='pe-1' eventKey='/prices'>
+                <Nav.Link className='pe-1 pt-0 pb-0' eventKey='/prices'>
                   Exchange
                 </Nav.Link>
               </Nav>

@@ -80,7 +80,7 @@ export const CryptExchangeSection: FC<CryptExchangeSectionProps> = ({ crypts, cl
     <div className={className}>
       <Row className='mb-3 mt-3'>
         <Col className='text-center'>
-          <h5>両替エミュレータ</h5>
+          <h5>Currency Exchange Emulator</h5>
         </Col>
       </Row>
       <InputGroup className='mb-3 flex-nowrap'>
@@ -119,7 +119,7 @@ export const CryptExchangeSection: FC<CryptExchangeSectionProps> = ({ crypts, cl
       </Table>
       <Row className='mb-3 mt-3'>
         <Col className='text-center'>
-          <h5>価格一覧</h5>
+          <h5>Currency Exchange Table</h5>
         </Col>
       </Row>
       <CryptPriceTable crypts={jpyAddedCrypts} />

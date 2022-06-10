@@ -13,7 +13,7 @@ const Levelup: BlitzPage = () => {
     <Container className='mt-2' style={{ maxWidth: '540px' }}>
       <Row className='mb-3 mt-3'>
         <Col className='text-center'>
-          <h5>レベルアップ費用一覧</h5>
+          <h5>Level Up Cost Table</h5>
         </Col>
       </Row>
       <Row className='mb-2'>
@@ -21,13 +21,13 @@ const Levelup: BlitzPage = () => {
       </Row>
       <LevelUpCostTable crypts={crypts} realm={realm} />
       <div className='text-end'>
-        <small>最終更新日時 {crypts[0]?.lastUpdatedAt.toLocaleString()}</small>
+        <small>Last updated at {crypts[0]?.lastUpdatedAt.toLocaleString()}</small>
       </div>
     </Container>
   )
 }
 
 Levelup.suppressFirstRenderFlicker = true
-Levelup.getLayout = page => <Layout title='レベルアップ費用一覧'>{page}</Layout>
+Levelup.getLayout = page => <Layout title='Level Up Cost Table'>{page}</Layout>
 
 export default Levelup

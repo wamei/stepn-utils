@@ -13,6 +13,6 @@ const Home: BlitzPage = () => {
 }
 
 Home.suppressFirstRenderFlicker = true
-Home.getLayout = page => <Layout title='ミント費用エミュレータ'>{page}</Layout>
+Home.getLayout = page => <Layout title='Minting Cost Emulator'>{page}</Layout>
 
 export default Home

@@ -38,7 +38,7 @@ export const HomeSection: FC = () => {
     <>
       <Row className='mb-3 mt-3'>
         <Col className='text-center'>
-          <h5>ミント費用一覧</h5>
+          <h5>Minting Cost Table</h5>
         </Col>
       </Row>
       <Row className='mb-2'>

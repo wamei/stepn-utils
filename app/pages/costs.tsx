@@ -12,6 +12,6 @@ const Costs: BlitzPage = () => {
 }
 
 Costs.suppressFirstRenderFlicker = true
-Costs.getLayout = page => <Layout title='ミント費用一覧'>{page}</Layout>
+Costs.getLayout = page => <Layout title='Minting Cost Table'>{page}</Layout>
 
 export default Costs

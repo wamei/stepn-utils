@@ -16,6 +16,6 @@ const Prices: BlitzPage = () => {
 }
 
 Prices.suppressFirstRenderFlicker = true
-Prices.getLayout = page => <Layout title='両替エミュレータ'>{page}</Layout>
+Prices.getLayout = page => <Layout title='Currency Exchange Emulator'>{page}</Layout>
 
 export default Prices
