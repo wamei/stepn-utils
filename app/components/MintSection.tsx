@@ -13,6 +13,7 @@ import { CryptPriceTable } from './CryptPriceTable'
 import { LabeledForm } from './LabeledForm'
 import { calcMintCost } from './MintingCostTable'
 import { RealmSelector } from './RealmSelector'
+import { SmallDecimal } from './SmallDecimal'
 import { SneakerSelector } from './SneakerSelector'
 
 export const MintSection: FC = () => {
@@ -312,7 +313,7 @@ export const MintSection: FC = () => {
                 <Col className='text-center'>{type}</Col>
               </Row>
               <Row>
-                <Col className='text-center'>{value * 100}%</Col>
+                <Col className='text-center'>{(value * 100).toFixed(0)}%</Col>
               </Row>
             </Col>
           ),
@@ -341,7 +342,9 @@ export const MintSection: FC = () => {
               }}
             >
               <div className='text-center overflow-hidden'>{rarity}</div>
-              <div className='text-center overflow-hidden'>{value * 100}%</div>
+              <div className='text-center overflow-hidden'>
+                <SmallDecimal value={(value * 100).toFixed(2)} />%
+              </div>
             </div>
           ),
         )}
@@ -400,7 +403,9 @@ export const MintSection: FC = () => {
             }}
           >
             <div className='text-center overflow-hidden'>{rarity}</div>
-            <div className='text-center overflow-hidden'>{(value * 100).toFixed(2)}%</div>
+            <div className='text-center overflow-hidden'>
+              <SmallDecimal value={(value * 100).toFixed(2)} />%
+            </div>
           </div>
         ))}
       </div>
