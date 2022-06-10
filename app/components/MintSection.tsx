@@ -26,6 +26,7 @@ import { calcMintCost } from './MintingCostTable'
 import { RealmSelector } from './RealmSelector'
 import { SmallDecimal } from './SmallDecimal'
 import { SneakerSelector } from './SneakerSelector'
+import { UnitSelector } from './UnitSelector'
 
 export const MintSection: FC = () => {
   const context = useContext(Context)
@@ -246,47 +247,7 @@ export const MintSection: FC = () => {
           </Col>
           <Col>
             <LabeledForm label={<Trans>currency_unit</Trans>}>
-              <ButtonGroup>
-                <ToggleButton
-                  value={'realm'}
-                  id={`radio-unit-0`}
-                  type='radio'
-                  variant='light'
-                  style={{
-                    backgroundColor: unitType === 'realm' ? SneakerRarityColor.Common : '',
-                  }}
-                  onChange={e => setUnitType(e.currentTarget.value as UnitType)}
-                  size='sm'
-                >
-                  {RealmToken[realm].unit}
-                </ToggleButton>
-                <ToggleButton
-                  value={'jpy'}
-                  id={`radio-unit-1`}
-                  type='radio'
-                  variant='light'
-                  style={{
-                    backgroundColor: unitType === 'jpy' ? SneakerRarityColor.Common : '',
-                  }}
-                  onChange={e => setUnitType(e.currentTarget.value as UnitType)}
-                  size='sm'
-                >
-                  JPY
-                </ToggleButton>
-                <ToggleButton
-                  value={'usd'}
-                  id={`radio-unit-2`}
-                  type='radio'
-                  variant='light'
-                  style={{
-                    backgroundColor: unitType === 'usd' ? SneakerRarityColor.Common : '',
-                  }}
-                  onChange={e => setUnitType(e.currentTarget.value as UnitType)}
-                  size='sm'
-                >
-                  USD
-                </ToggleButton>
-              </ButtonGroup>
+              <UnitSelector realm={realm} value={unitType} onChange={setUnitType} />
             </LabeledForm>
           </Col>
         </Row>

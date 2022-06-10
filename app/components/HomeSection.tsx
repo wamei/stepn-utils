@@ -30,7 +30,6 @@ export const HomeSection: FC = () => {
     setMintingRateRare,
     floorPriceString,
     setFloorPriceString,
-    floorPrices,
     sneaker1,
     setSneaker1,
   } = context
@@ -164,17 +163,7 @@ export const HomeSection: FC = () => {
       {[SneakerRarity.Common, SneakerRarity.Uncommon, SneakerRarity.Rare]
         .sort(a => (a === sneaker1.rarity ? -1 : 1))
         .map(rarity => (
-          <MintingCostTable
-            key={rarity}
-            mintingRateCommon={mintingRateCommon}
-            mintingRateUncommon={mintingRateUncommon}
-            mintingRateRare={mintingRateRare}
-            rarity1={sneaker1.rarity}
-            rarity2={rarity}
-            realm={realm}
-            crypts={crypts}
-            floorPrice={floorPrices[realm] || 0}
-          />
+          <MintingCostTable key={rarity} rarity1={sneaker1.rarity} rarity2={rarity} />
         ))}
     </>
   )

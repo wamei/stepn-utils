@@ -1,22 +1,18 @@
+import { Context, UnitType } from 'app/layouts/Layout'
 import { Cryptocurrency } from 'app/models/Cryptcurrency'
 import { calcAdditionalGmt, MintingRate } from 'app/models/MintingRate'
 import { Realm, RealmColor, RealmToken } from 'app/models/Realm'
 import { SneakerRarity, SneakerRarityColor } from 'app/models/SneakerRarity'
-import React, { FC, useState } from 'react'
+import React, { FC, useContext, useState } from 'react'
 import { Button, Col, Modal, Row, Table } from 'react-bootstrap'
 import { Trans } from 'react-i18next'
 import { ReactNode } from 'react-transition-group/node_modules/@types/react'
 import { SmallDecimal } from './SmallDecimal'
+import { UnitSelector } from './UnitSelector'
 
 type MintingCostTableProps = {
-  mintingRateCommon: MintingRate
-  mintingRateUncommon: MintingRate
-  mintingRateRare: MintingRate
   rarity1: SneakerRarity
   rarity2: SneakerRarity
-  realm: Realm
-  crypts: Cryptocurrency[]
-  floorPrice: number
 }
 
 const mints = [0, 1, 2, 3, 4, 5, 6]
@@ -104,33 +100,24 @@ export const calcMintCost = (
 }
 
 const Block: FC<{
-  realm: Realm
-  crypts: Cryptocurrency[]
-  mintingRateCommon: MintingRate
-  mintingRateUncommon: MintingRate
-  mintingRateRare: MintingRate
   r1: SneakerRarity
   m1: number
   r2: SneakerRarity
   m2: number
-  floorPrice: number
-}> = ({
-  realm,
-  crypts,
-  mintingRateCommon,
-  mintingRateUncommon,
-  mintingRateRare,
-  r1,
-  m1,
-  r2,
-  m2,
-  floorPrice,
-}) => {
-  if (!realm) {
-    throw new Promise(r => {
-      r('realm not found')
-    })
-  }
+}> = ({ r1, m1, r2, m2 }) => {
+  const context = useContext(Context)
+  const {
+    crypts,
+    realm,
+    mintingRateCommon,
+    mintingRateUncommon,
+    mintingRateRare,
+    floorPrices,
+    unitType,
+    setUnitType,
+  } = context
+
+  const floorPrice = floorPrices[realm] || 0
   const [show, setShow] = useState(false)
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
@@ -139,6 +126,7 @@ const Block: FC<{
     costGst,
     costGmt,
     mainPrice,
+    mainPriceUsd,
     mintPrice,
     lvupPrice,
     lowestPrice,
@@ -163,11 +151,12 @@ const Block: FC<{
 
   const CostTable: FC<{
     label: ReactNode
+    unitType: UnitType
     cost: number
     lowestPrice: number
     benefit: number
     className?: string
-  }> = ({ label, cost, lowestPrice, benefit, className }) => {
+  }> = ({ label, unitType, cost, lowestPrice, benefit, className }) => {
     return (
       <div
         style={{
@@ -180,44 +169,67 @@ const Block: FC<{
         className={className}
       >
         <Row>
-          <Col xs={6}>{label}</Col>
-          <Col className='text-end'>
-            <SmallDecimal value={(cost / mainPrice).toFixed(2)} />
-            {tokenData.unit}
-          </Col>
-          <Col className='text-end'>
-            ¥<SmallDecimal value={cost.toFixed(2)} />
-          </Col>
+          <Col xs={8}>{label}</Col>
+          {unitType === 'realm' ? (
+            <Col className='text-end'>
+              <SmallDecimal value={(cost / mainPrice).toFixed(2)} />
+              {tokenData.unit}
+            </Col>
+          ) : unitType === 'jpy' ? (
+            <Col className='text-end'>
+              ¥<SmallDecimal value={cost.toFixed(2)} />
+            </Col>
+          ) : (
+            <Col className='text-end'>
+              $<SmallDecimal value={((cost / mainPrice) * mainPriceUsd).toFixed(2)} />
+            </Col>
+          )}
         </Row>
         <Row className='fw-bold'>
-          <Col xs={6}>
-            <Trans>selling_price</Trans>
+          <Col xs={8}>
+            <Trans>selling_price_include_fee</Trans>
           </Col>
-          <Col className='text-end'>
-            <SmallDecimal value={(lowestPrice / mainPrice).toFixed(2)} />
-            {tokenData.unit}
-          </Col>
-          <Col className='text-end'>
-            ¥<SmallDecimal value={lowestPrice.toFixed(2)} />
-          </Col>
+          {unitType === 'realm' ? (
+            <Col className='text-end'>
+              <SmallDecimal value={(lowestPrice / mainPrice).toFixed(2)} />
+              {tokenData.unit}
+            </Col>
+          ) : unitType === 'jpy' ? (
+            <Col className='text-end'>
+              ¥<SmallDecimal value={lowestPrice.toFixed(2)} />
+            </Col>
+          ) : (
+            <Col className='text-end'>
+              $<SmallDecimal value={((lowestPrice / mainPrice) * mainPriceUsd).toFixed(2)} />
+            </Col>
+          )}
         </Row>
         <Row>
-          <Col xs={6}>
+          <Col xs={8}>
             <small>
               <Trans>profit_at_floor_price</Trans>
             </small>
           </Col>
-          <Col className='text-end'>
-            <small className={`${benefit < 0 ? 'text-danger' : ''}`}>
-              <SmallDecimal value={(benefit / mainPrice).toFixed(2)} />
-              {tokenData.unit}
-            </small>
-          </Col>
-          <Col className='text-end'>
-            <small className={`${benefit < 0 ? 'text-danger' : ''}`}>
-              ¥<SmallDecimal value={benefit.toFixed(2)} />
-            </small>
-          </Col>
+          {unitType === 'realm' ? (
+            <Col className='text-end'>
+              <small className={`${benefit < 0 ? 'text-danger' : ''}`}>
+                <SmallDecimal value={(benefit / mainPrice).toFixed(2)} />
+                {tokenData.unit}
+              </small>
+            </Col>
+          ) : unitType === 'jpy' ? (
+            <Col className='text-end'>
+              <small className={`${benefit < 0 ? 'text-danger' : ''}`}>
+                ¥<SmallDecimal value={benefit.toFixed(2)} />
+              </small>
+            </Col>
+          ) : (
+            <Col className='text-end'>
+              <small className={`${benefit < 0 ? 'text-danger' : ''}`}>
+                $<SmallDecimal value={((benefit / mainPrice) * mainPriceUsd).toFixed(2)} />
+              </small>
+            </Col>
+          )}
         </Row>
       </div>
     )
@@ -292,27 +304,33 @@ const Block: FC<{
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className='ps-0 pe-0'>
-          <div className='pb-3 ms-3 me-3 fw-bold'>
-            <img
-              className='align-middle'
-              src={`/stepn-utils/${RealmToken[realm].gst}.png`}
-              alt='GST'
-              width='15'
-              height='15'
-            />
-            <span className='me-2 align-middle'>{costGst}GST</span>
-            <img
-              className='align-middle'
-              src={`/stepn-utils/${RealmToken[realm].gmt}.png`}
-              alt='GMT'
-              width='15'
-              height='15'
-            />
-            <span className='align-middle'>{costGmt}GMT</span>
-          </div>
+          <Row className='pb-3 ms-3 me-3 fw-bold text-nowrap'>
+            <Col xs={7}>
+              <img
+                className='align-middle'
+                src={`/stepn-utils/${RealmToken[realm].gst}.png`}
+                alt='GST'
+                width='15'
+                height='15'
+              />
+              <span className='me-2 align-middle'>{costGst}GST</span>
+              <img
+                className='align-middle'
+                src={`/stepn-utils/${RealmToken[realm].gmt}.png`}
+                alt='GMT'
+                width='15'
+                height='15'
+              />
+              <span className='align-middle'>{costGmt}GMT</span>
+            </Col>
+            <Col xs={3} className='text-end'>
+              <UnitSelector realm={realm} value={unitType} onChange={setUnitType} />
+            </Col>
+          </Row>
           <CostTable
             className='p-3 border-bottom border-top'
             label={<Trans>minting_cost</Trans>}
+            unitType={unitType}
             cost={mintPrice}
             lowestPrice={lowestPrice}
             benefit={lowestBenefit}
@@ -320,6 +338,7 @@ const Block: FC<{
           <CostTable
             className='p-3 border-bottom'
             label={<Trans>selling_price_include_1</Trans>}
+            unitType={unitType}
             cost={mintPrice + lvupPrice}
             lowestPrice={lowestLvupPrice}
             benefit={lowestLvupBenefit}
@@ -327,27 +346,37 @@ const Block: FC<{
           <CostTable
             className='p-3 border-bottom'
             label={<Trans>selling_price_include_2</Trans>}
+            unitType={unitType}
             cost={mintPrice + 2 * lvupPrice}
             lowestPrice={lowest2LvupPrice}
             benefit={lowest2LvupBenefit}
           />
           <Row className='p-3 pb-0'>
-            <Col xs={6}>
+            <Col xs={8}>
               <small>
                 <Trans>levelup_cost</Trans>(<Trans>levelup_cost_1</Trans>)
               </small>
             </Col>
-            <Col className='text-end'>
-              <small>
-                <SmallDecimal value={(lvupPrice / mainPrice).toFixed(2)} />
-                {tokenData.unit}
-              </small>
-            </Col>
-            <Col className='text-end'>
-              <small>
-                ¥<SmallDecimal value={lvupPrice.toFixed(2)} />
-              </small>
-            </Col>
+            {unitType === 'realm' ? (
+              <Col className='text-end'>
+                <small>
+                  <SmallDecimal value={(lvupPrice / mainPrice).toFixed(2)} />
+                  {tokenData.unit}
+                </small>
+              </Col>
+            ) : unitType === 'jpy' ? (
+              <Col className='text-end'>
+                <small>
+                  ¥<SmallDecimal value={lvupPrice.toFixed(2)} />
+                </small>
+              </Col>
+            ) : (
+              <Col className='text-end'>
+                <small>
+                  $<SmallDecimal value={((lvupPrice / mainPrice) * mainPriceUsd).toFixed(2)} />
+                </small>
+              </Col>
+            )}
           </Row>
         </Modal.Body>
       </Modal>
@@ -355,16 +384,7 @@ const Block: FC<{
   )
 }
 
-export const MintingCostTable: FC<MintingCostTableProps> = ({
-  mintingRateCommon,
-  mintingRateUncommon,
-  mintingRateRare,
-  rarity1,
-  rarity2,
-  realm,
-  crypts,
-  floorPrice,
-}) => {
+export const MintingCostTable: FC<MintingCostTableProps> = ({ rarity1, rarity2 }) => {
   return (
     <>
       <div className='text-start'>
@@ -393,18 +413,7 @@ export const MintingCostTable: FC<MintingCostTableProps> = ({
               </td>
               {mints.map(m1 => (
                 <td key={m1} className='p-0'>
-                  <Block
-                    realm={realm}
-                    crypts={crypts}
-                    mintingRateCommon={mintingRateCommon}
-                    mintingRateUncommon={mintingRateUncommon}
-                    mintingRateRare={mintingRateRare}
-                    r1={rarity1}
-                    m1={m1}
-                    r2={rarity2}
-                    m2={m2}
-                    floorPrice={floorPrice}
-                  />
+                  <Block r1={rarity1} m1={m1} r2={rarity2} m2={m2} />
                 </td>
               ))}
             </tr>
