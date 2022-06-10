@@ -7,7 +7,7 @@ import {
   MintingRateListUncommon,
 } from 'app/models/MintingRate'
 import { Realm } from 'app/models/Realm'
-import { Shoe } from 'app/models/Shoe'
+import { Sneaker } from 'app/models/Sneaker'
 import { SneakerRarerity } from 'app/models/SneakerRarerity'
 import { SneakerType } from 'app/models/SneakerType'
 import {
@@ -44,10 +44,10 @@ type Context = {
   setMintingRateUncommon: React.Dispatch<React.SetStateAction<MintingRate>>
   mintingRateRare: MintingRate
   setMintingRateRare: React.Dispatch<React.SetStateAction<MintingRate>>
-  shoe1: Shoe
-  setShoe1: React.Dispatch<React.SetStateAction<Shoe>>
-  shoe2: Shoe
-  setShoe2: React.Dispatch<React.SetStateAction<Shoe>>
+  shoe1: Sneaker
+  setShoe1: React.Dispatch<React.SetStateAction<Sneaker>>
+  shoe2: Sneaker
+  setShoe2: React.Dispatch<React.SetStateAction<Sneaker>>
   lvupSneakerNum: number
   setLvupSneakerNum: React.Dispatch<React.SetStateAction<number>>
   unitType: UnitType
@@ -102,12 +102,12 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
   const [mintingRateRare, setMintingRateRare] = useState<MintingRate>(
     MintingRateListRare[0] as MintingRate,
   )
-  const [shoe1, setShoe1] = useState<Shoe>({
+  const [shoe1, setShoe1] = useState<Sneaker>({
     type: SneakerType.Walker,
     rarerity: SneakerRarerity.Common,
     mint: 0,
   })
-  const [shoe2, setShoe2] = useState<Shoe>({
+  const [shoe2, setShoe2] = useState<Sneaker>({
     type: SneakerType.Walker,
     rarerity: SneakerRarerity.Common,
     mint: 0,

@@ -1,12 +1,12 @@
 import React, { FC } from 'react'
 import { SneakerTypeSelector } from './SneakerTypeSelector'
 import { SneakerRareritySelector } from './SneakerRareritySelector'
-import { Shoe } from 'app/models/Shoe'
+import { Sneaker } from 'app/models/Sneaker'
 import { Col, Form, Row } from 'react-bootstrap'
 
 type SneakerSelectorProps = {
-  shoe: Shoe
-  setShoe(shoe: Shoe | ((shoe: Shoe) => Shoe)): void
+  shoe: Sneaker
+  setShoe(shoe: Sneaker | ((shoe: Sneaker) => Sneaker)): void
 }
 export const SneakerSelector: FC<SneakerSelectorProps> = ({ shoe, setShoe }) => {
   return (
