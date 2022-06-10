@@ -17,7 +17,8 @@ import {
 import { buildQuery } from 'app/utils'
 import { Head, useRouter } from 'blitz'
 import React, { FC, ReactNode, createContext, useEffect, useState } from 'react'
-import { Container, Nav, Navbar, Row } from 'react-bootstrap'
+import { Button, Container, Nav, Navbar, Row } from 'react-bootstrap'
+import { Trans, useTranslation } from 'react-i18next'
 
 type LayoutProps = {
   title?: string
@@ -32,6 +33,8 @@ export type UnitType = 'realm' | 'jpy' | 'usd'
 
 type Context = {
   crypts: Cryptocurrency[]
+  language: string
+  setLanguage: React.Dispatch<React.SetStateAction<string>>
   realm: Realm
   setRealm: React.Dispatch<React.SetStateAction<Realm>>
   floorPriceString: string
@@ -56,6 +59,8 @@ type Context = {
 
 export const Context = createContext<Context>({
   crypts: [],
+  language: 'en',
+  setLanguage: v => v,
   realm: Realm.Solana,
   setRealm: v => v,
   floorPriceString: '',
@@ -92,6 +97,7 @@ export const Context = createContext<Context>({
 const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
   const router = useRouter()
   const [crypts, setCrypts] = useState<Cryptocurrency[]>([])
+  const [language, setLanguage] = useState('en')
   const [realm, setRealm] = useState<Realm>(Realm.Solana)
   const [mintingRateCommon, setMintingRateCommon] = useState<MintingRate>(
     MintingRateListCommon[0] as MintingRate,
@@ -151,6 +157,7 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
       pathname: router.pathname,
       query: buildQuery({
         ...router.query,
+        lng: language,
         realm,
         t1: sneaker1.type,
         t2: sneaker2.type,
@@ -171,6 +178,7 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
     })
   }, [
     router.isReady,
+    language,
     realm,
     floorPrices,
     sneaker1,
@@ -199,6 +207,9 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
   useEffect(() => {
     if (!router.isReady) {
       return
+    }
+    if (router.query.lng && router.query.lng != language) {
+      setLanguage(router.query.lng as string)
     }
     const qRealm = router.query.realm as Realm
     if (qRealm && qRealm != realm) {
@@ -300,10 +311,18 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
     setIsInited(true)
   }, [router.query, router.isReady])
 
+  const { i18n } = useTranslation()
+
+  useEffect(() => {
+    i18n.changeLanguage(language)
+  }, [language])
+
   return (
     <Context.Provider
       value={{
         crypts,
+        language,
+        setLanguage,
         realm,
         setRealm,
         floorPriceString,
@@ -339,12 +358,12 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
                   query: router.query,
                 })
               }}
-              className='pt-0 pb-0'
+              className='pt-0 pb-0 pe-0'
             >
-              <Row>
+              <Row className='pe-0'>
                 <img src='/stepn-utils/stepn.svg' width='20' height='20' />
               </Row>
-              <Row className=''>
+              <Row className='pe-0'>
                 <small>
                   <small>
                     <small>STEPN utils</small>
@@ -378,6 +397,21 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
                 </Nav.Link>
               </Nav>
             </Navbar.Collapse>
+            <Button
+              variant='outline-secondary'
+              onClick={() => {
+                if (language === 'en') {
+                  setLanguage('ja')
+                } else {
+                  setLanguage('en')
+                }
+              }}
+              size='sm'
+            >
+              <small className='text-decoration-none'>
+                <Trans>language</Trans>
+              </small>
+            </Button>
           </Container>
         </Navbar>
         <div className='flex-grod-1 flex-shrink-1 h-100 overflow-auto'>

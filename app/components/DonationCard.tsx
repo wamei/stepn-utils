@@ -2,6 +2,7 @@ import { RealmToken } from 'app/models/Realm'
 import Link from 'next/link'
 import React, { FC } from 'react'
 import { Card, Col, FloatingLabel, Form, Row } from 'react-bootstrap'
+import { Trans } from 'react-i18next'
 
 type DonationCardProps = {
   className?: string
@@ -16,7 +17,9 @@ export const DonationCard: FC<DonationCardProps> = ({ className }) => {
       <Card.Body>
         <div className='mb-2'>
           <Row>
-            <Col>Support Project</Col>
+            <Col>
+              <Trans>support_project</Trans>
+            </Col>
             <Col className='text-end'>
               <Link href='https://twitter.com/Wam_Ei'>
                 <small>@Wam_Ei</small>

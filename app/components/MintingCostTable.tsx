@@ -4,6 +4,8 @@ import { Realm, RealmColor, RealmToken } from 'app/models/Realm'
 import { SneakerRarity, SneakerRarityColor } from 'app/models/SneakerRarity'
 import React, { FC, useState } from 'react'
 import { Button, Col, Modal, Row, Table } from 'react-bootstrap'
+import { Trans } from 'react-i18next'
+import { ReactNode } from 'react-transition-group/node_modules/@types/react'
 import { SmallDecimal } from './SmallDecimal'
 
 type MintingCostTableProps = {
@@ -160,7 +162,7 @@ const Block: FC<{
   const tokenData = RealmToken[realm]
 
   const CostTable: FC<{
-    label: string
+    label: ReactNode
     cost: number
     lowestPrice: number
     benefit: number
@@ -178,7 +180,7 @@ const Block: FC<{
         className={className}
       >
         <Row>
-          <Col xs={5}>{label}</Col>
+          <Col xs={6}>{label}</Col>
           <Col className='text-end'>
             <SmallDecimal value={(cost / mainPrice).toFixed(2)} />
             {tokenData.unit}
@@ -188,7 +190,9 @@ const Block: FC<{
           </Col>
         </Row>
         <Row className='fw-bold'>
-          <Col xs={5}>最低販売価格</Col>
+          <Col xs={6}>
+            <Trans>selling_price</Trans>
+          </Col>
           <Col className='text-end'>
             <SmallDecimal value={(lowestPrice / mainPrice).toFixed(2)} />
             {tokenData.unit}
@@ -198,8 +202,10 @@ const Block: FC<{
           </Col>
         </Row>
         <Row>
-          <Col xs={5}>
-            <small>フロア売却時の利益</small>
+          <Col xs={6}>
+            <small>
+              <Trans>profit_at_floor_price</Trans>
+            </small>
           </Col>
           <Col className='text-end'>
             <small className={`${benefit < 0 ? 'text-danger' : ''}`}>
@@ -306,28 +312,30 @@ const Block: FC<{
           </div>
           <CostTable
             className='p-3 border-bottom border-top'
-            label='ミント費用'
+            label={<Trans>minting_cost</Trans>}
             cost={mintPrice}
             lowestPrice={lowestPrice}
             benefit={lowestBenefit}
           />
           <CostTable
             className='p-3 border-bottom'
-            label='1足分Lvup費用込'
+            label={<Trans>selling_price_include_1</Trans>}
             cost={mintPrice + lvupPrice}
             lowestPrice={lowestLvupPrice}
             benefit={lowestLvupBenefit}
           />
           <CostTable
             className='p-3 border-bottom'
-            label='2足分Lvup費用込'
+            label={<Trans>selling_price_include_2</Trans>}
             cost={mintPrice + 2 * lvupPrice}
             lowestPrice={lowest2LvupPrice}
             benefit={lowest2LvupBenefit}
           />
           <Row className='p-3 pb-0'>
-            <Col xs={5}>
-              <small>1足分Lvup費用</small>
+            <Col xs={6}>
+              <small>
+                <Trans>levelup_cost</Trans>(<Trans>levelup_cost_1</Trans>)
+              </small>
             </Col>
             <Col className='text-end'>
               <small>
@@ -360,7 +368,9 @@ export const MintingCostTable: FC<MintingCostTableProps> = ({
   return (
     <>
       <div className='text-start'>
-        <small>費用表タップで詳細を確認</small>
+        <small>
+          <Trans>tap_to_show_details</Trans>
+        </small>
       </div>
       <Table bordered size='sm'>
         <tbody>

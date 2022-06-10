@@ -4,6 +4,7 @@ import React, { useContext } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
 import Layout, { Context } from 'app/layouts/Layout'
 import { BlitzPage } from 'blitz'
+import { Trans } from 'react-i18next'
 
 const Levelup: BlitzPage = () => {
   const context = useContext(Context)
@@ -13,7 +14,9 @@ const Levelup: BlitzPage = () => {
     <Container className='mt-2' style={{ maxWidth: '540px' }}>
       <Row className='mb-3 mt-3'>
         <Col className='text-center'>
-          <h5>Level Up Cost Table</h5>
+          <h5>
+            <Trans>levelup_cost_table</Trans>
+          </h5>
         </Col>
       </Row>
       <Row className='mb-2'>

@@ -9,6 +9,7 @@ import {
 import { MintedSneakerTypeMatrix } from 'app/models/SneakerType'
 import React, { FC, useContext } from 'react'
 import { ButtonGroup, Card, Col, FloatingLabel, Form, Row, ToggleButton } from 'react-bootstrap'
+import { Trans } from 'react-i18next'
 import { CryptPriceTable } from './CryptPriceTable'
 import { LabeledForm } from './LabeledForm'
 import { calcMintCost } from './MintingCostTable'
@@ -92,7 +93,9 @@ export const MintSection: FC = () => {
     <>
       <Row className='mb-3 mt-3'>
         <Col className='text-center'>
-          <h5>Minting Cost Emulator</h5>
+          <h5>
+            <Trans>minting_cost_emulator</Trans>
+          </h5>
         </Col>
       </Row>
       <Form>
@@ -110,7 +113,9 @@ export const MintSection: FC = () => {
         />
         <Row className='mb-3 mt-3'>
           <Col className='text-center'>
-            <h5>情報入力</h5>
+            <h5>
+              <Trans>input</Trans>
+            </h5>
           </Col>
         </Row>
         <Row className='mb-3'>
@@ -135,7 +140,15 @@ export const MintSection: FC = () => {
             </Card>
           </Col>
         </Row>
-        <FloatingLabel label={`フロア価格(${RealmToken[realm]?.unit})`} className='mb-3'>
+        <FloatingLabel
+          label={
+            <>
+              <Trans>floor_price</Trans>
+              {`(${RealmToken[realm]?.unit})`}
+            </>
+          }
+          className='mb-3'
+        >
           <Form.Control
             type='number'
             value={floorPriceString}
@@ -146,7 +159,7 @@ export const MintSection: FC = () => {
         </FloatingLabel>
         <Row className='mb-5'>
           <Col>
-            <LabeledForm label='レベルアップ費用'>
+            <LabeledForm label={<Trans>levelup_cost</Trans>}>
               <ButtonGroup>
                 <ToggleButton
                   value={0}
@@ -159,7 +172,7 @@ export const MintSection: FC = () => {
                   onChange={e => setLvupSneakerNum(Number(e.currentTarget.value))}
                   size='sm'
                 >
-                  なし
+                  <Trans>levelup_cost_0</Trans>
                 </ToggleButton>
                 <ToggleButton
                   value={1}
@@ -172,7 +185,7 @@ export const MintSection: FC = () => {
                   onChange={e => setLvupSneakerNum(Number(e.currentTarget.value))}
                   size='sm'
                 >
-                  1足分
+                  <Trans>levelup_cost_1</Trans>
                 </ToggleButton>
                 <ToggleButton
                   value={2}
@@ -185,13 +198,13 @@ export const MintSection: FC = () => {
                   onChange={e => setLvupSneakerNum(Number(e.currentTarget.value))}
                   size='sm'
                 >
-                  2足分
+                  <Trans>levelup_cost_2</Trans>
                 </ToggleButton>
               </ButtonGroup>
             </LabeledForm>
           </Col>
           <Col>
-            <LabeledForm label='通貨単位'>
+            <LabeledForm label={<Trans>currency_unit</Trans>}>
               <ButtonGroup>
                 <ToggleButton
                   value={'realm'}
@@ -238,7 +251,9 @@ export const MintSection: FC = () => {
         </Row>
         <Row className='mb-3 mt-3'>
           <Col className='text-center'>
-            <h5>ミント費用</h5>
+            <h5>
+              <Trans>minting_cost</Trans>
+            </h5>
           </Col>
         </Row>
         <Row className='mb-2'>
@@ -279,25 +294,59 @@ export const MintSection: FC = () => {
             </FloatingLabel>
           </Col>
         </Row>
-        <FloatingLabel label={`ミント費用(${unit})`} className='mb-2'>
+        <FloatingLabel
+          label={
+            <>
+              <Trans>minting_cost</Trans>
+              {`(${unit})`}
+            </>
+          }
+          className='mb-2'
+        >
           <Form.Control readOnly value={convertUnit(unitType, mintPrice).toFixed(3)} />
         </FloatingLabel>
-        <FloatingLabel label={`レベル上げ費用(${unit})`} className='mb-2'>
+        <FloatingLabel
+          label={
+            <>
+              <Trans>levelup_cost</Trans>
+              {`(${unit})`}
+            </>
+          }
+          className='mb-2'
+        >
           <Form.Control
             readOnly
             value={convertUnit(unitType, lvupPrice * lvupSneakerNum).toFixed(3)}
           />
         </FloatingLabel>
-        <FloatingLabel label={`最低販売価格(${unit})`} className='mb-2'>
+        <FloatingLabel
+          label={
+            <>
+              <Trans>selling_price_include_fee</Trans>
+              {`(${unit})`}
+            </>
+          }
+          className='mb-2'
+        >
           <Form.Control readOnly value={unitedLowestPrice.toFixed(3)} />
         </FloatingLabel>
-        <FloatingLabel label={`フロアで売却時の利益(${unit})`} className='mb-2'>
+        <FloatingLabel
+          label={
+            <>
+              <Trans>profit_at_floor_price</Trans>
+              {`(${unit})`}
+            </>
+          }
+          className='mb-2'
+        >
           <Form.Control readOnly value={unitedLowestBenefit.toFixed(3)} />
         </FloatingLabel>
       </Form>
       <Row className='mb-3 mt-5'>
         <Col className='text-center'>
-          <h5>Sneaker Type</h5>
+          <h5>
+            <Trans>sneaker_type</Trans>
+          </h5>
         </Col>
       </Row>
       <Row>
@@ -321,7 +370,9 @@ export const MintSection: FC = () => {
       </Row>
       <Row className='mb-2 mt-2'>
         <Col className='text-center'>
-          <h5>Shoebox Rarity</h5>
+          <h5>
+            <Trans>shoebox_rarity</Trans>
+          </h5>
         </Col>
       </Row>
       <div>
@@ -351,7 +402,9 @@ export const MintSection: FC = () => {
       </div>
       <Row className='mb-2 mt-2'>
         <Col className='text-center'>
-          <h5>Sneaker Rarity</h5>
+          <h5>
+            <Trans>sneaker_rarity</Trans>
+          </h5>
         </Col>
       </Row>
       <div>

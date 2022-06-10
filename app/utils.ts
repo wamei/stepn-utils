@@ -22,6 +22,7 @@ const ParamsList = [
   'gmtL',
   'lvsn',
   'unitType',
+  'lng',
 ] as const
 type ParamsList = typeof ParamsList[number]
 type Params = {

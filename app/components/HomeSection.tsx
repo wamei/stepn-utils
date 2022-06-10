@@ -14,6 +14,7 @@ import {
 } from 'app/models/MintingRate'
 import { SneakerRarity } from 'app/models/SneakerRarity'
 import { SneakerRaritySelector } from './SneakerRaritySelector'
+import { Trans } from 'react-i18next'
 
 export const HomeSection: FC = () => {
   const context = useContext(Context)
@@ -38,7 +39,9 @@ export const HomeSection: FC = () => {
     <>
       <Row className='mb-3 mt-3'>
         <Col className='text-center'>
-          <h5>Minting Cost Table</h5>
+          <h5>
+            <Trans>minting_cost_table</Trans>
+          </h5>
         </Col>
       </Row>
       <Row className='mb-2'>
@@ -55,7 +58,14 @@ export const HomeSection: FC = () => {
       />
       <Row className='mb-3'>
         <Col xs={9}>
-          <FloatingLabel label={`フロア価格(${RealmToken[realm].unit})`}>
+          <FloatingLabel
+            label={
+              <>
+                <Trans>floor_price</Trans>
+                {`(${RealmToken[realm].unit})`}
+              </>
+            }
+          >
             <Form.Control
               type='number'
               value={floorPriceString}
@@ -74,7 +84,14 @@ export const HomeSection: FC = () => {
               <Popover>
                 <Popover.Body>
                   <Row>
-                    <LabeledForm label='Common費用' className='mb-2'>
+                    <LabeledForm
+                      label={
+                        <>
+                          Common <Trans>minting_cost</Trans>
+                        </>
+                      }
+                      className='mb-2'
+                    >
                       <MintingRateSelector
                         realm={realm}
                         crypts={crypts}
@@ -83,7 +100,14 @@ export const HomeSection: FC = () => {
                         onChange={setMintingRateCommon}
                       />
                     </LabeledForm>
-                    <LabeledForm label='Uncommon費用' className='mb-2'>
+                    <LabeledForm
+                      label={
+                        <>
+                          Uncommon <Trans>minting_cost</Trans>
+                        </>
+                      }
+                      className='mb-2'
+                    >
                       <MintingRateSelector
                         realm={realm}
                         crypts={crypts}
@@ -92,7 +116,14 @@ export const HomeSection: FC = () => {
                         onChange={setMintingRateUncommon}
                       />
                     </LabeledForm>
-                    <LabeledForm label='Rare費用' className='mb-2'>
+                    <LabeledForm
+                      label={
+                        <>
+                          Rare <Trans>minting_cost</Trans>
+                        </>
+                      }
+                      className='mb-2'
+                    >
                       <MintingRateSelector
                         realm={realm}
                         crypts={crypts}
@@ -107,7 +138,7 @@ export const HomeSection: FC = () => {
             }
           >
             <Button variant='outline-secondary' size='sm'>
-              費用設定
+              <Trans>settings</Trans>
             </Button>
           </OverlayTrigger>
         </Col>

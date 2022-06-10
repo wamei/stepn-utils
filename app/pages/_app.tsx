@@ -7,6 +7,7 @@ import {
 } from 'blitz'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './app.css'
+import 'app/i18n'
 
 export default function App({ Component, pageProps }: AppProps) {
   const getLayout = Component.getLayout || (page => page)

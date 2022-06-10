@@ -3,6 +3,7 @@ import { calcAdditionalGmt, MintingRate } from 'app/models/MintingRate'
 import { Realm, RealmToken } from 'app/models/Realm'
 import React, { FC, useEffect, useState } from 'react'
 import { ButtonGroup, Col, Dropdown, DropdownButton, Form, Row } from 'react-bootstrap'
+import { Trans } from 'react-i18next'
 
 type MintingRateSelectorProps = {
   realm: Realm
@@ -162,7 +163,9 @@ export const MintingRateSelector: FC<MintingRateSelectorProps> = ({
           setIsFreeInput(true)
         }}
       >
-        <small>自由入力</small>
+        <small>
+          <Trans>free_input</Trans>
+        </small>
         <Row>
           <Col xs={5}>
             <img

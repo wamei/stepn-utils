@@ -1,0 +1,81 @@
+import i18n, { Resource } from 'i18next'
+import { initReactI18next } from 'react-i18next'
+
+const resources: Resource = {
+  en: {
+    translation: {
+      'language': '日本語',
+      'minting_cost_emulator': 'Minting Cost Emulator',
+      'minting_cost': 'Minting Cost',
+      'input': 'Data Input',
+      'floor_price': 'Floor Price',
+      'levelup_cost': 'Level Up Cost',
+      'levelup_cost_0': 'None',
+      'levelup_cost_1': '1Pair',
+      'levelup_cost_2': '2Pairs',
+      'currency_unit': 'Currency Unit',
+      'selling_price': 'Selling Price',
+      'selling_price_include_fee': 'Selling Price (Fee Included)',
+      'profit_at_floor_price': 'Profit at sale at floor price',
+      'sneaker_type': 'Sneaker Type',
+      'sneaker_rarity': 'Sneaker Rarity',
+      'shoebox_rarity': 'Shoe Box Rarity',
+      'minting_cost_table': 'Miting Cost Table',
+      'tap_to_show_details': 'Tap table to show details',
+      'selling_price_include_1': 'Included Lvup Cost (1pair)',
+      'selling_price_include_2': 'Included Lvup Cost (2pairs)',
+      'settings': 'Settings',
+      'free_input': 'Free Input',
+      'levelup_cost_table': 'Level Up Cost Table',
+      'level': 'Level',
+      'cost': 'Cost',
+      'total': 'Total',
+      'currency_exchange_emulator': 'Currency Exchange Emulator',
+      'currency_exchange_table': 'Currency Exchange Table',
+      'support_project': 'Support Project',
+    },
+  },
+  ja: {
+    translation: {
+      'language': 'English',
+      'minting_cost_emulator': 'ミント費用エミュレータ',
+      'minting_cost': 'ミント費用',
+      'input': '情報入力',
+      'floor_price': 'フロア価格',
+      'levelup_cost': 'レベルアップ費用',
+      'levelup_cost_0': 'なし',
+      'levelup_cost_1': '1足分',
+      'levelup_cost_2': '2足分',
+      'currency_unit': '通貨単位',
+      'selling_price': '販売価格',
+      'selling_price_include_fee': '手数料込み販売価格',
+      'profit_at_floor_price': 'フロアで売却時の利益',
+      'sneaker_type': 'スニーカーの種類',
+      'sneaker_rarity': 'スニーカーのレアリティ',
+      'shoebox_rarity': 'シューボックスのレアリティ',
+      'minting_cost_table': 'ミント費用表',
+      'tap_to_show_details': 'タップして詳細を確認',
+      'selling_price_include_1': '1足分Lvup費用込',
+      'selling_price_include_2': '2足分Lvup費用込',
+      'settings': '設定',
+      'free_input': '自由入力',
+      'levelup_cost_table': 'レベルアップ費用表',
+      'level': 'レベル',
+      'cost': '費用',
+      'total': '累計',
+      'currency_exchange_emulator': '通貨両替エミュレータ',
+      'currency_exchange_table': '通貨価格表',
+      'support_project': 'カンパはこちら',
+    },
+  },
+}
+
+i18n.use(initReactI18next).init({
+  resources,
+  lng: 'en',
+  interpolation: {
+    escapeValue: false,
+  },
+})
+
+export default i18n

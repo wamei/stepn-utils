@@ -3,7 +3,7 @@ import { Col, Form } from 'react-bootstrap'
 
 type LabeledFormProps = {
   children: ReactNode
-  label: string
+  label: ReactNode
   className?: string
 }
 

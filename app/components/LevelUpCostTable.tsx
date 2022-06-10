@@ -2,6 +2,7 @@ import { Cryptocurrency } from 'app/models/Cryptcurrency'
 import { Realm, RealmToken } from 'app/models/Realm'
 import React, { FC } from 'react'
 import { Table } from 'react-bootstrap'
+import { Trans } from 'react-i18next'
 import { SmallDecimal } from './SmallDecimal'
 
 type LevelUpCostTableProps = {
@@ -247,10 +248,14 @@ export const LevelUpCostTable: FC<LevelUpCostTableProps> = ({ crypts, realm }) =
         <thead className='sticky-top'>
           <tr style={{ backgroundColor: '#ffffff' }}>
             <th>
-              <small>Level</small>
+              <small>
+                <Trans>level</Trans>
+              </small>
             </th>
             <th>
-              <small>Cost</small>
+              <small>
+                <Trans>cost</Trans>
+              </small>
             </th>
             <th>
               <small>{RealmToken[realm].unit}</small>
@@ -259,7 +264,9 @@ export const LevelUpCostTable: FC<LevelUpCostTableProps> = ({ crypts, realm }) =
               <small>JPY</small>
             </th>
             <th>
-              <small>Total</small>
+              <small>
+                <Trans>total</Trans>
+              </small>
             </th>
             <th>
               <small>JPY</small>

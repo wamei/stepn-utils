@@ -1,6 +1,7 @@
 import { Cryptocurrency } from 'app/models/Cryptcurrency'
 import React, { FC, useEffect, useState } from 'react'
 import { Col, FloatingLabel, Form, InputGroup, Row, Table } from 'react-bootstrap'
+import { Trans } from 'react-i18next'
 import { CryptPriceTable } from './CryptPriceTable'
 import { CryptSelector } from './CryptSelector'
 import { SmallDecimal } from './SmallDecimal'
@@ -80,7 +81,9 @@ export const CryptExchangeSection: FC<CryptExchangeSectionProps> = ({ crypts, cl
     <div className={className}>
       <Row className='mb-3 mt-3'>
         <Col className='text-center'>
-          <h5>Currency Exchange Emulator</h5>
+          <h5>
+            <Trans>currency_exchange_emulator</Trans>
+          </h5>
         </Col>
       </Row>
       <InputGroup className='mb-3 flex-nowrap'>
@@ -119,7 +122,9 @@ export const CryptExchangeSection: FC<CryptExchangeSectionProps> = ({ crypts, cl
       </Table>
       <Row className='mb-3 mt-3'>
         <Col className='text-center'>
-          <h5>Currency Exchange Table</h5>
+          <h5>
+            <Trans>currency_exchange_table</Trans>
+          </h5>
         </Col>
       </Row>
       <CryptPriceTable crypts={jpyAddedCrypts} />
