@@ -84,7 +84,7 @@ export const CryptExchangeSection: FC<CryptExchangeSectionProps> = ({ crypts, cl
         </Col>
       </Row>
       <InputGroup className='mb-3 flex-nowrap'>
-        <FloatingLabel label={`${crypt.name}`}>
+        <FloatingLabel label={`${crypt.short}`}>
           <Form.Control
             type='number'
             value={priceString}
