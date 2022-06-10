@@ -4,6 +4,7 @@ import { Realm, RealmColor, RealmToken } from 'app/models/Realm'
 import { SneakerRarerity, SneakerRarerityColor } from 'app/models/SneakerRarerity'
 import React, { FC, useState } from 'react'
 import { Button, Col, Modal, Row, Table } from 'react-bootstrap'
+import { SmallDecimal } from './SmallDecimal'
 
 type MintingCostTableProps = {
   mintingRateCommon: MintingRate
@@ -178,32 +179,38 @@ const Block: FC<{
       >
         <Row>
           <Col xs={5}>{label}</Col>
-          <Col>
-            {(cost / mainPrice).toFixed(2)}
+          <Col className='text-end'>
+            <SmallDecimal value={(cost / mainPrice).toFixed(2)} />
             {tokenData.unit}
           </Col>
-          <Col>¥{cost.toFixed(2)}</Col>
+          <Col className='text-end'>
+            ¥<SmallDecimal value={cost.toFixed(2)} />
+          </Col>
         </Row>
         <Row className='fw-bold'>
           <Col xs={5}>最低販売価格</Col>
-          <Col>
-            {(lowestPrice / mainPrice).toFixed(2)}
+          <Col className='text-end'>
+            <SmallDecimal value={(lowestPrice / mainPrice).toFixed(2)} />
             {tokenData.unit}
           </Col>
-          <Col>¥{lowestPrice.toFixed(2)}</Col>
+          <Col className='text-end'>
+            ¥<SmallDecimal value={lowestPrice.toFixed(2)} />
+          </Col>
         </Row>
         <Row>
           <Col xs={5}>
             <small>利益</small>
           </Col>
-          <Col>
+          <Col className='text-end'>
             <small className={`${benefit < 0 ? 'text-danger' : ''}`}>
-              {(benefit / mainPrice).toFixed(2)}
+              <SmallDecimal value={(benefit / mainPrice).toFixed(2)} />
               {tokenData.unit}
             </small>
           </Col>
-          <Col>
-            <small className={`${benefit < 0 ? 'text-danger' : ''}`}>¥{benefit.toFixed(2)}</small>
+          <Col className='text-end'>
+            <small className={`${benefit < 0 ? 'text-danger' : ''}`}>
+              ¥<SmallDecimal value={benefit.toFixed(2)} />
+            </small>
           </Col>
         </Row>
       </div>
@@ -318,19 +325,22 @@ const Block: FC<{
             lowestPrice={lowest2LvupPrice}
             benefit={lowest2LvupBenefit}
           />
-          <div className='ms-3 me-3 mt-3'>
-            <small>
-              1足分Lvup費用
-              <br />
-              <Row>
-                <Col>
-                  {(lvupPrice / mainPrice).toFixed(2)}
-                  {tokenData.unit}
-                </Col>
-                <Col>¥{lvupPrice.toFixed(2)}</Col>
-              </Row>
-            </small>
-          </div>
+          <Row className='p-3 pb-0'>
+            <Col xs={5}>
+              <small>1足分Lvup費用</small>
+            </Col>
+            <Col className='text-end'>
+              <small>
+                <SmallDecimal value={(lvupPrice / mainPrice).toFixed(2)} />
+                {tokenData.unit}
+              </small>
+            </Col>
+            <Col className='text-end'>
+              <small>
+                ¥<SmallDecimal value={lvupPrice.toFixed(2)} />
+              </small>
+            </Col>
+          </Row>
         </Modal.Body>
       </Modal>
     </>

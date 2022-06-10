@@ -27,10 +27,10 @@ export const CryptPriceTable: FC<CryptPriceTableProps> = ({ crypts, className })
                   />
                   <span className='align-middle'>{c.short}</span>
                 </td>
-                <td>
+                <td className='text-end'>
                   ¥<SmallDecimal value={c.jpy.toFixed(3)} />
                 </td>
-                <td>
+                <td className='text-end'>
                   $<SmallDecimal value={c.usd.toFixed(3)} />
                 </td>
               </tr>

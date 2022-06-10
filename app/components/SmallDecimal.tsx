@@ -11,10 +11,7 @@ export const SmallDecimal: FC<SmallDecimalProps> = ({ value }) => {
       {splited[0]}
       {splited[1] !== undefined && (
         <>
-          .
-          <small className='d-inline-block' style={{ transform: 'scale(0.9)' }}>
-            {splited[1] || '0'}
-          </small>
+          .<span style={{ fontSize: '.875em' }}>{splited[1] || '0'}</span>
         </>
       )}
     </>
