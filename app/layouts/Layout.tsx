@@ -8,7 +8,7 @@ import {
 } from 'app/models/MintingRate'
 import { Realm } from 'app/models/Realm'
 import { Shoe } from 'app/models/Shoe'
-import { ShoeRarerity } from 'app/models/ShoeRarerity'
+import { SneakerRarerity } from 'app/models/SneakerRarerity'
 import { SneakerType } from 'app/models/SneakerType'
 import {
   fetchCryptocurrencies,
@@ -73,13 +73,13 @@ export const Context = createContext<Context>({
   setMintingRateRare: v => v,
   shoe1: {
     type: SneakerType.Walker,
-    rarerity: ShoeRarerity.Common,
+    rarerity: SneakerRarerity.Common,
     mint: 0,
   },
   setShoe1: v => v,
   shoe2: {
     type: SneakerType.Walker,
-    rarerity: ShoeRarerity.Common,
+    rarerity: SneakerRarerity.Common,
     mint: 0,
   },
   setShoe2: v => v,
@@ -104,12 +104,12 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
   )
   const [shoe1, setShoe1] = useState<Shoe>({
     type: SneakerType.Walker,
-    rarerity: ShoeRarerity.Common,
+    rarerity: SneakerRarerity.Common,
     mint: 0,
   })
   const [shoe2, setShoe2] = useState<Shoe>({
     type: SneakerType.Walker,
-    rarerity: ShoeRarerity.Common,
+    rarerity: SneakerRarerity.Common,
     mint: 0,
   })
   const [floorPriceString, setFloorPriceString] = useState('')
@@ -216,7 +216,7 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
     if (router.query.r1 && router.query.r1 !== shoe1.rarerity) {
       setShoe1(old => ({
         ...old,
-        rarerity: router.query.r1 as ShoeRarerity,
+        rarerity: router.query.r1 as SneakerRarerity,
       }))
     }
     const qM1 = Number(router.query.m1)
@@ -235,7 +235,7 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
     if (router.query.r2 && router.query.r2 !== shoe2.rarerity) {
       setShoe2(old => ({
         ...old,
-        rarerity: router.query.r2 as ShoeRarerity,
+        rarerity: router.query.r2 as SneakerRarerity,
       }))
     }
     const qM2 = Number(router.query.m2)

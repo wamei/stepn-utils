@@ -1,6 +1,6 @@
 import { Context, UnitType } from 'app/layouts/Layout'
 import { RealmToken } from 'app/models/Realm'
-import { ShoeRarerityColor } from 'app/models/ShoeRarerity'
+import { SneakerRarerityColor } from 'app/models/SneakerRarerity'
 import React, { FC, useContext } from 'react'
 import { ButtonGroup, Card, Col, FloatingLabel, Form, Row, ToggleButton } from 'react-bootstrap'
 import { CryptPriceTable } from './CryptPriceTable'
@@ -147,7 +147,7 @@ export const MintSection: FC = () => {
                   type='radio'
                   variant='light'
                   style={{
-                    backgroundColor: lvupSneakerNum === 0 ? ShoeRarerityColor.Common : '',
+                    backgroundColor: lvupSneakerNum === 0 ? SneakerRarerityColor.Common : '',
                   }}
                   onChange={e => setLvupSneakerNum(Number(e.currentTarget.value))}
                   size='sm'
@@ -160,7 +160,7 @@ export const MintSection: FC = () => {
                   type='radio'
                   variant='light'
                   style={{
-                    backgroundColor: lvupSneakerNum === 1 ? ShoeRarerityColor.Common : '',
+                    backgroundColor: lvupSneakerNum === 1 ? SneakerRarerityColor.Common : '',
                   }}
                   onChange={e => setLvupSneakerNum(Number(e.currentTarget.value))}
                   size='sm'
@@ -173,7 +173,7 @@ export const MintSection: FC = () => {
                   type='radio'
                   variant='light'
                   style={{
-                    backgroundColor: lvupSneakerNum === 2 ? ShoeRarerityColor.Common : '',
+                    backgroundColor: lvupSneakerNum === 2 ? SneakerRarerityColor.Common : '',
                   }}
                   onChange={e => setLvupSneakerNum(Number(e.currentTarget.value))}
                   size='sm'
@@ -192,7 +192,7 @@ export const MintSection: FC = () => {
                   type='radio'
                   variant='light'
                   style={{
-                    backgroundColor: unitType === 'realm' ? ShoeRarerityColor.Common : '',
+                    backgroundColor: unitType === 'realm' ? SneakerRarerityColor.Common : '',
                   }}
                   onChange={e => setUnitType(e.currentTarget.value as UnitType)}
                   size='sm'
@@ -205,7 +205,7 @@ export const MintSection: FC = () => {
                   type='radio'
                   variant='light'
                   style={{
-                    backgroundColor: unitType === 'jpy' ? ShoeRarerityColor.Common : '',
+                    backgroundColor: unitType === 'jpy' ? SneakerRarerityColor.Common : '',
                   }}
                   onChange={e => setUnitType(e.currentTarget.value as UnitType)}
                   size='sm'
@@ -218,7 +218,7 @@ export const MintSection: FC = () => {
                   type='radio'
                   variant='light'
                   style={{
-                    backgroundColor: unitType === 'usd' ? ShoeRarerityColor.Common : '',
+                    backgroundColor: unitType === 'usd' ? SneakerRarerityColor.Common : '',
                   }}
                   onChange={e => setUnitType(e.currentTarget.value as UnitType)}
                   size='sm'

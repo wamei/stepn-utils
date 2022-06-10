@@ -1,19 +1,19 @@
-import { ShoeRarerity, ShoeRarerityColor } from 'app/models/ShoeRarerity'
+import { SneakerRarerity, SneakerRarerityColor } from 'app/models/SneakerRarerity'
 import React, { FC } from 'react'
 import { ButtonGroup, Dropdown, ToggleButton } from 'react-bootstrap'
 
-type ShoeRareritySelectorType = 'dropdown' | 'button'
+type SneakerRareritySelectorType = 'dropdown' | 'button'
 
-type ShoeRareritySelectorProps = {
-  value: ShoeRarerity
-  onChange(v: ShoeRarerity): void
+type SneakerRareritySelectorProps = {
+  value: SneakerRarerity
+  onChange(v: SneakerRarerity): void
   className?: string
-  type?: ShoeRareritySelectorType
+  type?: SneakerRareritySelectorType
 }
 
-const RarerityList = [ShoeRarerity.Common, ShoeRarerity.Uncommon, ShoeRarerity.Rare]
+const RarerityList = [SneakerRarerity.Common, SneakerRarerity.Uncommon, SneakerRarerity.Rare]
 
-export const ShoeRareritySelector: FC<ShoeRareritySelectorProps> = ({
+export const SneakerRareritySelector: FC<SneakerRareritySelectorProps> = ({
   value,
   onChange,
   className,
@@ -30,9 +30,9 @@ export const ShoeRareritySelector: FC<ShoeRareritySelectorProps> = ({
             variant='light'
             value={rarerity}
             checked={value === rarerity}
-            onChange={e => onChange(e.currentTarget.value as ShoeRarerity)}
+            onChange={e => onChange(e.currentTarget.value as SneakerRarerity)}
             style={{
-              backgroundColor: value === rarerity ? ShoeRarerityColor[rarerity] : '',
+              backgroundColor: value === rarerity ? SneakerRarerityColor[rarerity] : '',
             }}
             size='sm'
           >
@@ -47,7 +47,7 @@ export const ShoeRareritySelector: FC<ShoeRareritySelectorProps> = ({
         <Dropdown.Toggle
           variant='light'
           style={{
-            backgroundColor: ShoeRarerityColor[value],
+            backgroundColor: SneakerRarerityColor[value],
           }}
           className='w-100'
           size='sm'
@@ -60,7 +60,7 @@ export const ShoeRareritySelector: FC<ShoeRareritySelectorProps> = ({
               key={rarerity}
               onClick={() => onChange(rarerity)}
               style={{
-                backgroundColor: ShoeRarerityColor[rarerity],
+                backgroundColor: SneakerRarerityColor[rarerity],
               }}
             >
               {rarerity}

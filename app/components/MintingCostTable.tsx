@@ -1,7 +1,7 @@
 import { Cryptocurrency } from 'app/models/Cryptcurrency'
 import { calcAdditionalGmt, MintingRate } from 'app/models/MintingRate'
 import { Realm, RealmColor, RealmToken } from 'app/models/Realm'
-import { ShoeRarerity, ShoeRarerityColor } from 'app/models/ShoeRarerity'
+import { SneakerRarerity, SneakerRarerityColor } from 'app/models/SneakerRarerity'
 import React, { FC, useState } from 'react'
 import { Button, Col, Modal, Row, Table } from 'react-bootstrap'
 
@@ -9,8 +9,8 @@ type MintingCostTableProps = {
   mintingRateCommon: MintingRate
   mintingRateUncommon: MintingRate
   mintingRateRare: MintingRate
-  rarerity1: ShoeRarerity
-  rarerity2: ShoeRarerity
+  rarerity1: SneakerRarerity
+  rarerity2: SneakerRarerity
   realm: Realm
   crypts: Cryptocurrency[]
   floorPrice: number
@@ -24,18 +24,18 @@ export const calcMintCost = (
   mintingRateCommon: MintingRate,
   mintingRateUncommon: MintingRate,
   mintingRateRare: MintingRate,
-  r1: ShoeRarerity,
+  r1: SneakerRarerity,
   m1: number,
-  r2: ShoeRarerity,
+  r2: SneakerRarerity,
   m2: number,
   floorPrice: number,
 ) => {
   const mintingRate = {
-    [ShoeRarerity.Common]: mintingRateCommon,
-    [ShoeRarerity.Uncommon]: mintingRateUncommon,
-    [ShoeRarerity.Rare]: mintingRateRare,
-    [ShoeRarerity.Epic]: mintingRateUncommon,
-    [ShoeRarerity.Legendary]: mintingRateUncommon,
+    [SneakerRarerity.Common]: mintingRateCommon,
+    [SneakerRarerity.Uncommon]: mintingRateUncommon,
+    [SneakerRarerity.Rare]: mintingRateRare,
+    [SneakerRarerity.Epic]: mintingRateUncommon,
+    [SneakerRarerity.Legendary]: mintingRateUncommon,
   }
   const base1gst = mintingRate[r1].gst / 2
   const base2gst = mintingRate[r2].gst / 2
@@ -106,9 +106,9 @@ const Block: FC<{
   mintingRateCommon: MintingRate
   mintingRateUncommon: MintingRate
   mintingRateRare: MintingRate
-  r1: ShoeRarerity
+  r1: SneakerRarerity
   m1: number
-  r2: ShoeRarerity
+  r2: SneakerRarerity
   m2: number
   floorPrice: number
 }> = ({
@@ -268,11 +268,11 @@ const Block: FC<{
               height='20'
             />
             <span className='align-middle'>
-              <span className='rounded p-1' style={{ backgroundColor: ShoeRarerityColor[r1] }}>
+              <span className='rounded p-1' style={{ backgroundColor: SneakerRarerityColor[r1] }}>
                 {r1} {m1}
               </span>{' '}
               x{' '}
-              <span className='rounded p-1' style={{ backgroundColor: ShoeRarerityColor[r2] }}>
+              <span className='rounded p-1' style={{ backgroundColor: SneakerRarerityColor[r2] }}>
                 {r2} {m2}
               </span>
             </span>
@@ -360,7 +360,7 @@ export const MintingCostTable: FC<MintingCostTableProps> = ({
               <td
                 key={m1}
                 className='pt-0 pb-0'
-                style={{ backgroundColor: ShoeRarerityColor[rarerity1] }}
+                style={{ backgroundColor: SneakerRarerityColor[rarerity1] }}
               >
                 <small>{m1}</small>
               </td>
@@ -368,7 +368,7 @@ export const MintingCostTable: FC<MintingCostTableProps> = ({
           </tr>
           {mints.map(m2 => (
             <tr key={m2}>
-              <td className='pe-0' style={{ backgroundColor: ShoeRarerityColor[rarerity2] }}>
+              <td className='pe-0' style={{ backgroundColor: SneakerRarerityColor[rarerity2] }}>
                 <small>{m2}</small>
               </td>
               {mints.map(m1 => (

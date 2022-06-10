@@ -12,8 +12,8 @@ import {
   MintingRateListRare,
   MintingRateListUncommon,
 } from 'app/models/MintingRate'
-import { ShoeRarerity } from 'app/models/ShoeRarerity'
-import { ShoeRareritySelector } from './ShoeRareritySelector'
+import { SneakerRarerity } from 'app/models/SneakerRarerity'
+import { SneakerRareritySelector } from './SneakerRareritySelector'
 
 export const HomeSection: FC = () => {
   const context = useContext(Context)
@@ -113,18 +113,18 @@ export const HomeSection: FC = () => {
         </Col>
       </Row>
       <Row className='mb-3'>
-        <ShoeRareritySelector
+        <SneakerRareritySelector
           type='button'
           value={shoe1.rarerity}
           onChange={r =>
             setShoe1(old => ({
               ...old,
-              rarerity: r as ShoeRarerity,
+              rarerity: r as SneakerRarerity,
             }))
           }
         />
       </Row>
-      {[ShoeRarerity.Common, ShoeRarerity.Uncommon, ShoeRarerity.Rare]
+      {[SneakerRarerity.Common, SneakerRarerity.Uncommon, SneakerRarerity.Rare]
         .sort(a => (a === shoe1.rarerity ? -1 : 1))
         .map(rarerity => (
           <MintingCostTable
