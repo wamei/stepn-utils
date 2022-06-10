@@ -107,7 +107,7 @@ export const CryptExchangeSection: FC<CryptExchangeSectionProps> = ({ crypts, cl
                   width='15'
                   height='15'
                 />
-                <span className='align-middle'>{c.name}</span>
+                <span className='align-middle'>{c.short}</span>
               </td>
               <td className='text-end'>
                 <SmallDecimal value={((crypt.jpy * price * 0.9936) / c.jpy).toFixed(3)} />

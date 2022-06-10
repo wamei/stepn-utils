@@ -6,7 +6,7 @@ import { Col, Form, Row } from 'react-bootstrap'
 
 type SneakerSelectorProps = {
   sneaker: Sneaker
-  setSneaker(dispatch: React.Dispatch<React.SetStateAction<Sneaker>>): void
+  setSneaker: React.Dispatch<React.SetStateAction<Sneaker>>
 }
 export const SneakerSelector: FC<SneakerSelectorProps> = ({ sneaker, setSneaker }) => {
   return (
