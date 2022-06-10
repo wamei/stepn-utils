@@ -9,7 +9,7 @@ import {
 import { Realm } from 'app/models/Realm'
 import { Shoe } from 'app/models/Shoe'
 import { ShoeRarerity } from 'app/models/ShoeRarerity'
-import { ShoeType } from 'app/models/ShoeType'
+import { SneakerType } from 'app/models/SneakerType'
 import {
   fetchCryptocurrencies,
   fetchCryptocurrenciesFromCache,
@@ -72,13 +72,13 @@ export const Context = createContext<Context>({
   mintingRateRare: MintingRateListRare[0] as MintingRate,
   setMintingRateRare: v => v,
   shoe1: {
-    type: ShoeType.Walker,
+    type: SneakerType.Walker,
     rarerity: ShoeRarerity.Common,
     mint: 0,
   },
   setShoe1: v => v,
   shoe2: {
-    type: ShoeType.Walker,
+    type: SneakerType.Walker,
     rarerity: ShoeRarerity.Common,
     mint: 0,
   },
@@ -103,12 +103,12 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
     MintingRateListRare[0] as MintingRate,
   )
   const [shoe1, setShoe1] = useState<Shoe>({
-    type: ShoeType.Walker,
+    type: SneakerType.Walker,
     rarerity: ShoeRarerity.Common,
     mint: 0,
   })
   const [shoe2, setShoe2] = useState<Shoe>({
-    type: ShoeType.Walker,
+    type: SneakerType.Walker,
     rarerity: ShoeRarerity.Common,
     mint: 0,
   })
@@ -210,7 +210,7 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
     if (router.query.t1 && router.query.t1 !== shoe1.type) {
       setShoe1(old => ({
         ...old,
-        type: router.query.t1 as ShoeType,
+        type: router.query.t1 as SneakerType,
       }))
     }
     if (router.query.r1 && router.query.r1 !== shoe1.rarerity) {
@@ -229,7 +229,7 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
     if (router.query.t2 && router.query.t2 !== shoe2.type) {
       setShoe2(old => ({
         ...old,
-        type: router.query.t2 as ShoeType,
+        type: router.query.t2 as SneakerType,
       }))
     }
     if (router.query.r2 && router.query.r2 !== shoe2.rarerity) {

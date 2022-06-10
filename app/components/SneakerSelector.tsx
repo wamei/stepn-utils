@@ -1,21 +1,20 @@
 import React, { FC } from 'react'
-import { ShoeTypeSelector } from './ShoeTypeSelector'
+import { SneakerTypeSelector } from './SneakerTypeSelector'
 import { ShoeRareritySelector } from './ShoeRareritySelector'
 import { Shoe } from 'app/models/Shoe'
 import { Col, Form, Row } from 'react-bootstrap'
 
-type ShoeSelectorProps = {
-  id: string
+type SneakerSelectorProps = {
   shoe: Shoe
   setShoe(shoe: Shoe | ((shoe: Shoe) => Shoe)): void
 }
-export const ShoeSelector: FC<ShoeSelectorProps> = ({ id, shoe, setShoe }) => {
+export const SneakerSelector: FC<SneakerSelectorProps> = ({ shoe, setShoe }) => {
   return (
     <Row>
       <Col className='text-center' style={{ height: '70px' }}>
         <img src={`/stepn-utils/${shoe.type}.svg`} width='100' className='mb-2' />
       </Col>
-      <ShoeTypeSelector
+      <SneakerTypeSelector
         className='mb-2'
         value={shoe.type}
         onChange={t =>

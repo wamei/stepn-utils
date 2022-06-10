@@ -1,14 +1,18 @@
-import { ShoeType } from 'app/models/ShoeType'
+import { SneakerType } from 'app/models/SneakerType'
 import React, { FC } from 'react'
 import { ButtonGroup, Dropdown, DropdownButton } from 'react-bootstrap'
 
-type ShoeTypeSelectorProps = {
-  value: ShoeType
-  onChange(v: ShoeType): void
+type SneakerTypeSelectorProps = {
+  value: SneakerType
+  onChange(v: SneakerType): void
   className?: string
 }
 
-export const ShoeTypeSelector: FC<ShoeTypeSelectorProps> = ({ value, onChange, className }) => {
+export const SneakerTypeSelector: FC<SneakerTypeSelectorProps> = ({
+  value,
+  onChange,
+  className,
+}) => {
   return (
     <>
       <DropdownButton
@@ -18,7 +22,7 @@ export const ShoeTypeSelector: FC<ShoeTypeSelectorProps> = ({ value, onChange, c
         title={value}
         className={className}
       >
-        {Object.values(ShoeType).map(type => (
+        {Object.values(SneakerType).map(type => (
           <Dropdown.Item key={type} onClick={() => onChange(type)}>
             {type}
           </Dropdown.Item>

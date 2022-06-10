@@ -7,7 +7,7 @@ import { CryptPriceTable } from './CryptPriceTable'
 import { LabeledForm } from './LabeledForm'
 import { calcMintCost } from './MintingCostTable'
 import { RealmSelector } from './RealmSelector'
-import { ShoeSelector } from './ShoeSelector'
+import { SneakerSelector } from './SneakerSelector'
 
 export const MintSection: FC = () => {
   const context = useContext(Context)
@@ -113,7 +113,7 @@ export const MintSection: FC = () => {
                 <div className='mb-2'>
                   <small className='text-muted'>Sneaker1</small>
                 </div>
-                <ShoeSelector id='mintshoe1' shoe={shoe1} setShoe={setShoe1} />
+                <SneakerSelector shoe={shoe1} setShoe={setShoe1} />
               </Card.Body>
             </Card>
           </Col>
@@ -123,7 +123,7 @@ export const MintSection: FC = () => {
                 <div className='mb-2'>
                   <small className='text-muted'>Sneaker2</small>
                 </div>
-                <ShoeSelector id='mintshoe2' shoe={shoe2} setShoe={setShoe2} />
+                <SneakerSelector shoe={shoe2} setShoe={setShoe2} />
               </Card.Body>
             </Card>
           </Col>
