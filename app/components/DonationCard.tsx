@@ -16,7 +16,7 @@ export const DonationCard: FC<DonationCardProps> = ({ className }) => {
       <Card.Body>
         <div className='mb-2'>
           <Row>
-            <Col>チップはこちら</Col>
+            <Col>カンパはこちら</Col>
             <Col className='text-end'>
               <Link href='https://twitter.com/Wam_Ei'>
                 <small>@Wam_Ei</small>
