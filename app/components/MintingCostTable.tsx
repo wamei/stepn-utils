@@ -199,7 +199,7 @@ const Block: FC<{
         </Row>
         <Row>
           <Col xs={5}>
-            <small>利益</small>
+            <small>フロア売却時の利益</small>
           </Col>
           <Col className='text-end'>
             <small className={`${benefit < 0 ? 'text-danger' : ''}`}>

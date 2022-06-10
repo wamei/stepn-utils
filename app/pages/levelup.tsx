@@ -20,8 +20,10 @@ const Levelup: BlitzPage = () => {
         <RealmSelector value={realm} onChange={setRealm} />
       </Row>
       <LevelUpCostTable crypts={crypts} realm={realm} />
-      <div className='text-end'>
-        <small>Last updated at {crypts[0]?.lastUpdatedAt.toLocaleString()}</small>
+      <div className='text-end' style={{ marginTop: '-6px' }}>
+        <span style={{ fontSize: '8px' }}>
+          Last updated at {crypts[0]?.lastUpdatedAt.toLocaleString()}
+        </span>
       </div>
     </Container>
   )
