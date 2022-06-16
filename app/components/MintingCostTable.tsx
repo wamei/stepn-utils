@@ -131,6 +131,7 @@ const Block: FC<{
   const {
     costGst,
     costGmt,
+    costScroll,
     mainPrice,
     mainPriceUsd,
     mintPrice,
@@ -312,26 +313,51 @@ const Block: FC<{
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className='ps-0 pe-0'>
-          <Row className='pb-3 ms-3 me-3 fw-bold text-nowrap'>
-            <Col xs={7}>
-              <img
-                className='align-middle'
-                src={`/stepn-utils/${RealmToken[realm].gst}.png`}
-                alt='GST'
-                width='15'
-                height='15'
-              />
-              <span className='me-2 align-middle'>{costGst}GST</span>
-              <img
-                className='align-middle'
-                src={`/stepn-utils/${RealmToken[realm].gmt}.png`}
-                alt='GMT'
-                width='15'
-                height='15'
-              />
-              <span className='align-middle'>{costGmt}GMT</span>
+          <Row className='pb-3 ms-0 me-3 fw-bold text-nowrap'>
+            <Col xs={8}>
+              <Row>
+                <Col xs={4}>
+                  <img
+                    className='align-middle'
+                    src={`/stepn-utils/${RealmToken[realm].gst}.png`}
+                    alt='GST'
+                    width='15'
+                    height='15'
+                  />
+                  <span className='me-2 align-middle'>
+                    {costGst}
+                    <small>GST</small>
+                  </span>
+                </Col>
+                <Col xs={4}>
+                  <img
+                    className='align-middle'
+                    src={`/stepn-utils/${RealmToken[realm].gmt}.png`}
+                    alt='GMT'
+                    width='15'
+                    height='15'
+                  />
+                  <span className='me-2 align-middle'>
+                    {costGmt}
+                    <small>GMT</small>
+                  </span>
+                </Col>
+                <Col xs={4}>
+                  <img
+                    className='align-middle'
+                    src={`/stepn-utils/Common-minting-scroll.png`}
+                    alt='minting-scroll'
+                    width='15'
+                    height='15'
+                  />
+                  <span className='align-middle'>
+                    {costScroll}
+                    <small>GMT</small>
+                  </span>
+                </Col>
+              </Row>
             </Col>
-            <Col xs={3} className='text-end'>
+            <Col xs={4} className='text-end'>
               <UnitSelector realm={realm} value={unitType} onChange={setUnitType} />
             </Col>
           </Row>
