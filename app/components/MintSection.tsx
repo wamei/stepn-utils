@@ -366,7 +366,7 @@ export const MintSection: FC = () => {
                 <>
                   <img
                     className='me-1 align-middle'
-                    src={`/stepn-utils/common-minting-scroll.png`}
+                    src={`/stepn-utils/Common-minting-scroll.png`}
                     alt={t('minting_scroll')}
                     width='20'
                     height='20'
