@@ -5,6 +5,7 @@ const resources: Resource = {
   en: {
     translation: {
       'language': '日本語',
+      'support_project': 'Support Project',
       'minting_cost_emulator': 'Minting Cost Emulator',
       'minting_cost': 'Minting Cost',
       'input': 'Input Data',
@@ -32,12 +33,16 @@ const resources: Resource = {
       'total': 'Total',
       'currency_exchange_emulator': 'Currency Exchange Emulator',
       'currency_exchange_table': 'Currency Exchange Table',
-      'support_project': 'Support Project',
+      'minting_scroll': 'Minting Scroll',
+      'gem_cost_emulator': 'Gem Upgrade Cost Emulator',
+      'gem_cost': 'Gem Cost',
+      'gem_floor_price': 'Gem Floor Price',
     },
   },
   ja: {
     translation: {
       'language': 'English',
+      'support_project': 'カンパはこちら',
       'minting_cost_emulator': 'ミント費用エミュレータ',
       'minting_cost': 'ミント費用',
       'input': '情報入力',
@@ -65,7 +70,10 @@ const resources: Resource = {
       'total': '累計',
       'currency_exchange_emulator': '通貨両替エミュレータ',
       'currency_exchange_table': '通貨価格表',
-      'support_project': 'カンパはこちら',
+      'minting_scroll': 'ミントスクロール',
+      'gem_cost_emulator': 'ジェム合成費用エミュレータ',
+      'gem_cost': 'ジェム費用',
+      'gem_floor_price': 'ジェムフロア価格',
     },
   },
 }

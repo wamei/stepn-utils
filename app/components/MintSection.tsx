@@ -7,6 +7,7 @@ import {
   SneakerRarityColor,
 } from 'app/models/SneakerRarity'
 import { MintedSneakerTypeMatrix } from 'app/models/SneakerType'
+import { t } from 'i18next'
 import React, { FC, useContext } from 'react'
 import {
   ButtonGroup,
@@ -40,6 +41,9 @@ export const MintSection: FC = () => {
     floorPriceString,
     setFloorPriceString,
     floorPrices,
+    mintingScrollPricesString,
+    setMintingScrollPricesString,
+    mintingScrollPrices,
     sneaker1,
     setSneaker1,
     sneaker2,
@@ -53,6 +57,8 @@ export const MintSection: FC = () => {
   const {
     costGst,
     costGmt,
+    costScroll,
+    gmtPrice,
     mainPrice,
     mainPriceUsd,
     mintPrice,
@@ -74,6 +80,7 @@ export const MintSection: FC = () => {
     sneaker2.rarity,
     sneaker2.mint,
     floorPrices[realm] || 0,
+    mintingScrollPrices,
   )
 
   const gst = crypts.find(v => v.id === RealmToken[realm].gst)
@@ -160,7 +167,7 @@ export const MintSection: FC = () => {
             </h5>
           </Col>
         </Row>
-        <Row className='mb-3'>
+        <Row className='mb-2'>
           <Col xs={6}>
             <Card>
               <Card.Body className='pt-1 text-center'>
@@ -169,6 +176,34 @@ export const MintSection: FC = () => {
                 </div>
                 <SneakerSelector sneaker={sneaker1} setSneaker={setSneaker1} />
               </Card.Body>
+              <FloatingLabel
+                as={Card.Footer}
+                label={
+                  <span className='text-nowrap'>
+                    <img
+                      className='me-1 align-middle'
+                      src={`/stepn-utils/${sneaker1.rarity}-minting-scroll.png`}
+                      alt={t('minting_scroll')}
+                      width='20'
+                      height='20'
+                    />
+                    {gmt?.symbol}
+                  </span>
+                }
+                className='p-0'
+              >
+                <Form.Control
+                  className='border-0'
+                  type='number'
+                  value={mintingScrollPricesString[sneaker1.rarity]}
+                  onChange={e => {
+                    setMintingScrollPricesString(old => ({
+                      ...old,
+                      [sneaker1.rarity]: e.target.value,
+                    }))
+                  }}
+                />
+              </FloatingLabel>
             </Card>
           </Col>
           <Col xs={6}>
@@ -179,6 +214,34 @@ export const MintSection: FC = () => {
                 </div>
                 <SneakerSelector sneaker={sneaker2} setSneaker={setSneaker2} />
               </Card.Body>
+              <FloatingLabel
+                as={Card.Footer}
+                label={
+                  <span className='text-nowrap'>
+                    <img
+                      className='me-1 align-middle'
+                      src={`/stepn-utils/${sneaker2.rarity}-minting-scroll.png`}
+                      alt={t('minting_scroll')}
+                      width='20'
+                      height='20'
+                    />
+                    {gmt?.symbol}
+                  </span>
+                }
+                className='p-0'
+              >
+                <Form.Control
+                  className='border-0'
+                  type='number'
+                  value={mintingScrollPricesString[sneaker2.rarity]}
+                  onChange={e => {
+                    setMintingScrollPricesString(old => ({
+                      ...old,
+                      [sneaker2.rarity]: e.target.value,
+                    }))
+                  }}
+                />
+              </FloatingLabel>
             </Card>
           </Col>
         </Row>
@@ -189,7 +252,7 @@ export const MintSection: FC = () => {
               {`(${RealmToken[realm]?.unit})`}
             </>
           }
-          className='mb-3'
+          className='mb-2'
         >
           <Form.Control
             type='number'
@@ -261,7 +324,7 @@ export const MintSection: FC = () => {
           </Col>
         </Row>
         <Row className='mb-2'>
-          <Col>
+          <Col className='pe-2'>
             <FloatingLabel
               label={
                 <>
@@ -279,7 +342,7 @@ export const MintSection: FC = () => {
               <Form.Control readOnly value={costGst} />
             </FloatingLabel>
           </Col>
-          <Col>
+          <Col className='p-0'>
             <FloatingLabel
               label={
                 <>
@@ -295,6 +358,25 @@ export const MintSection: FC = () => {
               }
             >
               <Form.Control readOnly value={costGmt} />
+            </FloatingLabel>
+          </Col>
+          <Col className='ps-2'>
+            <FloatingLabel
+              label={
+                <>
+                  <img
+                    className='me-1 align-middle'
+                    src={`/stepn-utils/common-minting-scroll.png`}
+                    alt={t('minting_scroll')}
+                    width='20'
+                    height='20'
+                  />
+                  {gmt?.symbol}
+                </>
+              }
+              className='mb-2'
+            >
+              <Form.Control readOnly value={costScroll} />
             </FloatingLabel>
           </Col>
         </Row>

@@ -26,7 +26,14 @@ type LayoutProps = {
 }
 
 type FloorPrices = {
-  [key: string]: number
+  [key in Realm]: number
+}
+
+type MintingScrollPricesString = {
+  [key in SneakerRarity]: string
+}
+export type MintingScrollPrices = {
+  [key in SneakerRarity]: number
 }
 
 export type UnitType = 'realm' | 'jpy' | 'usd'
@@ -41,6 +48,10 @@ type Context = {
   setFloorPriceString: React.Dispatch<React.SetStateAction<string>>
   floorPrices: FloorPrices
   setFloorPrices: React.Dispatch<React.SetStateAction<FloorPrices>>
+  mintingScrollPricesString: MintingScrollPricesString
+  setMintingScrollPricesString: React.Dispatch<React.SetStateAction<MintingScrollPricesString>>
+  mintingScrollPrices: MintingScrollPrices
+  setMintingScrollPrices: React.Dispatch<React.SetStateAction<MintingScrollPrices>>
   mintingRateCommon: MintingRate
   setMintingRateCommon: React.Dispatch<React.SetStateAction<MintingRate>>
   mintingRateUncommon: MintingRate
@@ -70,6 +81,22 @@ export const Context = createContext<Context>({
     [Realm.BSC]: 0,
   },
   setFloorPrices: v => v,
+  mintingScrollPricesString: {
+    [SneakerRarity.Common]: '',
+    [SneakerRarity.Uncommon]: '',
+    [SneakerRarity.Rare]: '',
+    [SneakerRarity.Epic]: '',
+    [SneakerRarity.Legendary]: '',
+  },
+  setMintingScrollPricesString: v => v,
+  mintingScrollPrices: {
+    [SneakerRarity.Common]: 0,
+    [SneakerRarity.Uncommon]: 0,
+    [SneakerRarity.Rare]: 0,
+    [SneakerRarity.Epic]: 0,
+    [SneakerRarity.Legendary]: 0,
+  },
+  setMintingScrollPrices: v => v,
   mintingRateCommon: MintingRateListCommon[0] as MintingRate,
   setMintingRateCommon: v => v,
   mintingRateUncommon: MintingRateListUncommon[0] as MintingRate,
@@ -119,7 +146,25 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
     mint: 0,
   })
   const [floorPriceString, setFloorPriceString] = useState('')
-  const [floorPrices, setFloorPrices] = useState<FloorPrices>({})
+  const [floorPrices, setFloorPrices] = useState<FloorPrices>({
+    [Realm.Solana]: 0,
+    [Realm.BSC]: 0,
+  })
+  const [mintingScrollPricesString, setMintingScrollPricesString] =
+    useState<MintingScrollPricesString>({
+      [SneakerRarity.Common]: '',
+      [SneakerRarity.Uncommon]: '',
+      [SneakerRarity.Rare]: '',
+      [SneakerRarity.Epic]: '',
+      [SneakerRarity.Legendary]: '',
+    })
+  const [mintingScrollPrices, setMintingScrollPrices] = useState<MintingScrollPrices>({
+    [SneakerRarity.Common]: 0,
+    [SneakerRarity.Uncommon]: 0,
+    [SneakerRarity.Rare]: 0,
+    [SneakerRarity.Epic]: 0,
+    [SneakerRarity.Legendary]: 0,
+  })
 
   const [lvupSneakerNum, setLvupSneakerNum] = useState(0)
   const [unitType, setUnitType] = useState<UnitType>('realm')
@@ -166,6 +211,9 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
         m1: sneaker1.mint,
         m2: sneaker2.mint,
         ...floorPrices,
+        mspC: mintingScrollPrices.Common,
+        mspU: mintingScrollPrices.Uncommon,
+        mspR: mintingScrollPrices.Rare,
         gstC: mintingRateCommon.gst,
         gmtC: mintingRateCommon.gmt,
         gstU: mintingRateUncommon.gst,
@@ -181,6 +229,7 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
     language,
     realm,
     floorPrices,
+    mintingScrollPrices,
     sneaker1,
     sneaker2,
     mintingRateCommon,
@@ -205,6 +254,36 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
   }, [floorPriceString])
 
   useEffect(() => {
+    if (mintingScrollPricesString.Common === '') {
+      return
+    }
+    setMintingScrollPrices(old => ({
+      ...old,
+      [SneakerRarity.Common]: Number(mintingScrollPricesString.Common),
+    }))
+  }, [mintingScrollPricesString.Common])
+
+  useEffect(() => {
+    if (mintingScrollPricesString.Uncommon === '') {
+      return
+    }
+    setMintingScrollPrices(old => ({
+      ...old,
+      [SneakerRarity.Uncommon]: Number(mintingScrollPricesString.Uncommon),
+    }))
+  }, [mintingScrollPricesString.Uncommon])
+
+  useEffect(() => {
+    if (mintingScrollPricesString.Rare === '') {
+      return
+    }
+    setMintingScrollPrices(old => ({
+      ...old,
+      [SneakerRarity.Rare]: Number(mintingScrollPricesString.Rare),
+    }))
+  }, [mintingScrollPricesString.Rare])
+
+  useEffect(() => {
     if (!router.isReady) {
       return
     }
@@ -217,6 +296,47 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
     }
     if (Number(floorPriceString) !== Number(router.query[qRealm])) {
       setFloorPriceString(String(router.query[qRealm]))
+    }
+    Object.values(Realm).forEach(realm => {
+      if (router.query[realm] && Number(router.query[realm]) != floorPrices[realm]) {
+        setFloorPrices(old => ({
+          ...old,
+          [realm]: Number(router.query[realm]),
+        }))
+      }
+    })
+    const qMspC = Number(router.query.mspC)
+    if (Number(mintingScrollPricesString[SneakerRarity.Common]) !== qMspC) {
+      setMintingScrollPricesString(old => ({
+        ...old,
+        [SneakerRarity.Common]: String(qMspC),
+      }))
+      setMintingScrollPrices(old => ({
+        ...old,
+        [SneakerRarity.Common]: qMspC,
+      }))
+    }
+    const qMspU = Number(router.query.mspU)
+    if (Number(mintingScrollPricesString[SneakerRarity.Uncommon]) !== qMspU) {
+      setMintingScrollPricesString(old => ({
+        ...old,
+        [SneakerRarity.Uncommon]: String(qMspU),
+      }))
+      setMintingScrollPrices(old => ({
+        ...old,
+        [SneakerRarity.Uncommon]: qMspU,
+      }))
+    }
+    const qMspR = Number(router.query.mspR)
+    if (Number(mintingScrollPricesString[SneakerRarity.Rare]) !== qMspR) {
+      setMintingScrollPricesString(old => ({
+        ...old,
+        [SneakerRarity.Rare]: String(qMspR),
+      }))
+      setMintingScrollPrices(old => ({
+        ...old,
+        [SneakerRarity.Rare]: qMspR,
+      }))
     }
     if (router.query.t1 && router.query.t1 !== sneaker1.type) {
       setSneaker1(old => ({
@@ -300,14 +420,6 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
         gmt: Number(qGmtR),
       })
     }
-    Object.values(Realm).forEach(realm => {
-      if (router.query[realm] && router.query[realm] != floorPrices[realm]) {
-        setFloorPrices(old => ({
-          ...old,
-          [realm]: Number(router.query[realm]),
-        }))
-      }
-    })
     setIsInited(true)
   }, [router.query, router.isReady])
 
@@ -329,6 +441,10 @@ const LayoutImpl: FC<LayoutProps> = ({ title, children }) => {
         setFloorPriceString,
         floorPrices,
         setFloorPrices,
+        mintingScrollPricesString,
+        setMintingScrollPricesString,
+        mintingScrollPrices,
+        setMintingScrollPrices,
         sneaker1,
         setSneaker1,
         sneaker2,

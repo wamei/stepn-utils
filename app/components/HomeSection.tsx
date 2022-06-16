@@ -15,6 +15,7 @@ import {
 import { SneakerRarity } from 'app/models/SneakerRarity'
 import { SneakerRaritySelector } from './SneakerRaritySelector'
 import { Trans } from 'react-i18next'
+import { t } from 'i18next'
 
 export const HomeSection: FC = () => {
   const context = useContext(Context)
@@ -30,6 +31,8 @@ export const HomeSection: FC = () => {
     setMintingRateRare,
     floorPriceString,
     setFloorPriceString,
+    mintingScrollPricesString,
+    setMintingScrollPricesString,
     sneaker1,
     setSneaker1,
   } = context
@@ -144,6 +147,90 @@ export const HomeSection: FC = () => {
                   <Trans>settings</Trans>
                 </Button>
               </OverlayTrigger>
+            </Col>
+          </Row>
+
+          <Row className='mb-2'>
+            <Col className='pe-2'>
+              <FloatingLabel
+                label={
+                  <>
+                    <img
+                      className='me-1 align-middle'
+                      src={`/stepn-utils/Common-minting-scroll.png`}
+                      alt={t('minting_scroll')}
+                      width='20'
+                      height='20'
+                    />
+                    GMT
+                  </>
+                }
+                className='mb-2'
+              >
+                <Form.Control
+                  value={mintingScrollPricesString.Common}
+                  onChange={e =>
+                    setMintingScrollPricesString(old => ({
+                      ...old,
+                      [SneakerRarity.Common]: e.target.value,
+                    }))
+                  }
+                />
+              </FloatingLabel>
+            </Col>
+            <Col className='p-0'>
+              <FloatingLabel
+                label={
+                  <>
+                    <img
+                      className='me-1 align-middle'
+                      src={`/stepn-utils/Uncommon-minting-scroll.png`}
+                      alt={t('minting_scroll')}
+                      width='20'
+                      height='20'
+                    />
+                    GMT
+                  </>
+                }
+                className='mb-2'
+              >
+                <Form.Control
+                  value={mintingScrollPricesString.Uncommon}
+                  onChange={e =>
+                    setMintingScrollPricesString(old => ({
+                      ...old,
+                      [SneakerRarity.Uncommon]: e.target.value,
+                    }))
+                  }
+                />
+              </FloatingLabel>
+            </Col>
+            <Col className='ps-2'>
+              <FloatingLabel
+                label={
+                  <>
+                    <img
+                      className='me-1 align-middle'
+                      src={`/stepn-utils/Rare-minting-scroll.png`}
+                      alt={t('minting_scroll')}
+                      width='20'
+                      height='20'
+                    />
+                    GMT
+                  </>
+                }
+                className='mb-2'
+              >
+                <Form.Control
+                  value={mintingScrollPricesString.Rare}
+                  onChange={e =>
+                    setMintingScrollPricesString(old => ({
+                      ...old,
+                      [SneakerRarity.Rare]: e.target.value,
+                    }))
+                  }
+                />
+              </FloatingLabel>
             </Col>
           </Row>
           <Row className='mb-3'>

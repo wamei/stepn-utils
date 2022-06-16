@@ -1,4 +1,4 @@
-import { Context, UnitType } from 'app/layouts/Layout'
+import { Context, MintingScrollPrices, UnitType } from 'app/layouts/Layout'
 import { Cryptocurrency } from 'app/models/Cryptcurrency'
 import { calcAdditionalGmt, MintingRate } from 'app/models/MintingRate'
 import { Realm, RealmColor, RealmToken } from 'app/models/Realm'
@@ -28,6 +28,7 @@ export const calcMintCost = (
   r2: SneakerRarity,
   m2: number,
   floorPrice: number,
+  mintingScrollPrices: MintingScrollPrices,
 ) => {
   const mintingRate = {
     [SneakerRarity.Common]: mintingRateCommon,
@@ -53,11 +54,13 @@ export const calcMintCost = (
       (base1gmt / 2) * Math.max(0, m1 - 1) +
       base2gmt +
       (base2gmt / 2) * Math.max(0, m2 - 1),
+    scroll: mintingScrollPrices[r1] + mintingScrollPrices[r2],
   }
   const additionalGmt = calcAdditionalGmt(base, gstPriceUsd)
   const mintCost = {
     costGst: base.gst,
     costGmt: base.gmt + additionalGmt,
+    costScroll: base.scroll,
   }
 
   const tokenData = RealmToken[realm]
@@ -71,7 +74,9 @@ export const calcMintCost = (
   const LEVELUP_TO_5_GST = 20
   const LEVELUP_TO_5_GMT = 10
 
-  const mintPrice = (mintCost.costGst * gstPrice + mintCost.costGmt * gmtPrice) * (1 + ETC_FEE)
+  const mintPrice =
+    (mintCost.costGst * gstPrice + (mintCost.costGmt + mintCost.costScroll) * gmtPrice) *
+    (1 + ETC_FEE)
   const lvupPrice = gstPrice * LEVELUP_TO_5_GST + gmtPrice * LEVELUP_TO_5_GMT
 
   const lowestPrice = mintPrice / (1 - SELLING_FEE)
@@ -112,6 +117,7 @@ const Block: FC<{
     mintingRateCommon,
     mintingRateUncommon,
     mintingRateRare,
+    mintingScrollPrices,
     floorPrices,
     unitType,
     setUnitType,
@@ -146,6 +152,7 @@ const Block: FC<{
     r2,
     m2,
     floorPrice,
+    mintingScrollPrices,
   )
   const tokenData = RealmToken[realm]
 
