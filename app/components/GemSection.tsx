@@ -1,8 +1,8 @@
 import { Context, UnitType } from 'app/layouts/Layout'
 import { Gem, GemUpgradeParams } from 'app/models/Gem'
-import { GemType } from 'app/models/GemType'
+import { GemType, GemTypeColor } from 'app/models/GemType'
 import { RealmToken } from 'app/models/Realm'
-import { FC, useContext, useEffect, useState } from 'react'
+import { FC, useContext, useState } from 'react'
 import { Col, Dropdown, FloatingLabel, Form, Row, Table } from 'react-bootstrap'
 import { Trans } from 'react-i18next'
 import { LabeledForm } from './LabeledForm'
@@ -58,7 +58,7 @@ export const GemSection: FC = () => {
 
   return (
     <Row>
-      <Col xs={12} md={6}>
+      <Col xs={12} md={12}>
         <Row className='mb-3 mt-3'>
           <Col className='text-center'>
             <h5>
@@ -67,11 +67,45 @@ export const GemSection: FC = () => {
           </Col>
         </Row>
       </Col>
-      <Col xs={12} md={6}>
-        <Row className='mb-2'>
+      <Col xs={12} md={12}>
+        <Row className='mb-4'>
           <RealmSelector value={realm} onChange={setRealm} />
         </Row>
         <Row className='mb-2'>
+          <Col xs={6}>
+            <LabeledForm label={<Trans>gem_type</Trans>}>
+              <Dropdown>
+                <Dropdown.Toggle
+                  variant='light'
+                  className='w-100'
+                  size='sm'
+                  style={{
+                    backgroundColor: GemTypeColor[gem.type],
+                  }}
+                >
+                  {gem.type}
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  {Object.values(GemType).map(type => (
+                    <Dropdown.Item
+                      key={type}
+                      onClick={() =>
+                        setGem(old => ({
+                          ...old,
+                          type,
+                        }))
+                      }
+                      style={{
+                        backgroundColor: GemTypeColor[type],
+                      }}
+                    >
+                      {type}
+                    </Dropdown.Item>
+                  ))}
+                </Dropdown.Menu>
+              </Dropdown>
+            </LabeledForm>
+          </Col>
           <Col xs={6}>
             <LabeledForm label={<Trans>gem_level</Trans>}>
               <Dropdown>
@@ -97,45 +131,7 @@ export const GemSection: FC = () => {
             </LabeledForm>
           </Col>
         </Row>
-        <Row>
-          <Col>
-            <FloatingLabel
-              label={
-                <>
-                  <Trans>level</Trans>
-                  {gem.level} <Trans>gem_price</Trans>
-                  {`(${unit})`}
-                </>
-              }
-              className='mb-2'
-            >
-              <Form.Control
-                value={gemPriceString}
-                onChange={e => setGemPriceString(e.target.value)}
-              />
-            </FloatingLabel>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <FloatingLabel
-              label={
-                <>
-                  <Trans>level</Trans>
-                  {gem.level + 1} <Trans>gem_floor_price</Trans>
-                  {`(${unit})`}
-                </>
-              }
-              className='mb-2'
-            >
-              <Form.Control
-                value={gemFloorPriceString}
-                onChange={e => setGemFloorPriceString(e.target.value)}
-              />
-            </FloatingLabel>
-          </Col>
-        </Row>
-        <Row className='mb-2'>
+        <Row className='mb-3'>
           <Col>
             <FloatingLabel
               label={
@@ -170,6 +166,44 @@ export const GemSection: FC = () => {
               }
             >
               <Form.Control readOnly value={GemUpgradeParams[gem.level].costGmt} />
+            </FloatingLabel>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <FloatingLabel
+              label={
+                <>
+                  <Trans>level</Trans>
+                  {gem.level} <Trans>gem_floor_price</Trans>
+                  {`(${unit})`}
+                </>
+              }
+              className='mb-2'
+            >
+              <Form.Control
+                value={gemPriceString}
+                onChange={e => setGemPriceString(e.target.value)}
+              />
+            </FloatingLabel>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <FloatingLabel
+              label={
+                <>
+                  <Trans>level</Trans>
+                  {gem.level + 1} <Trans>gem_floor_price</Trans>
+                  {`(${unit})`}
+                </>
+              }
+              className='mb-2'
+            >
+              <Form.Control
+                value={gemFloorPriceString}
+                onChange={e => setGemFloorPriceString(e.target.value)}
+              />
             </FloatingLabel>
           </Col>
         </Row>

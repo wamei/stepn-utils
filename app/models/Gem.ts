@@ -1,6 +1,6 @@
 import { GemType } from './GemType'
 
-export type GemLevel = 1 | 2 | 3 | 4
+export type GemLevel = 1 | 2 | 3 | 4 | 5
 
 export type Gem = {
   level: GemLevel
@@ -45,5 +45,12 @@ export const GemUpgradeParams: {
     numberOfGems: 3,
     costGst: 300,
     costGmt: 200,
+  },
+  5: {
+    level: 5,
+    successRate: 0.85,
+    numberOfGems: 3,
+    costGst: 500,
+    costGmt: 500,
   },
 } as const
